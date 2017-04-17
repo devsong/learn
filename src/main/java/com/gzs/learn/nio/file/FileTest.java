@@ -1,4 +1,4 @@
-package com.gzs.learn.nio;
+package com.gzs.learn.nio.file;
 
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -8,6 +8,8 @@ import java.nio.channels.Channels;
 import java.nio.channels.WritableByteChannel;
 
 import org.springframework.stereotype.Component;
+
+import com.gzs.learn.CostLog;
 
 @Component
 public class FileTest {

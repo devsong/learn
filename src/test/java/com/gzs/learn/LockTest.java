@@ -7,9 +7,10 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.gzs.learn.nio.file.FileTest;
+import com.gzs.learn.juc.lock.MainTest;
+import com.gzs.learn.juc.lock.SpinLock;
 
-public class NioTest {
+public class LockTest {
     ApplicationContext ctx = null;
 
     @Before()
@@ -18,14 +19,8 @@ public class NioTest {
     }
 
     @Test
-    public void t() {
-
-    }
-
-    @Test
-    public void testFile() throws IOException {
-        FileTest test = ctx.getBean(FileTest.class);
-        test.writeFile();
-        test.writeNioFile();
+    public void testLock() throws Exception {
+        MainTest test = ctx.getBean(MainTest.class);
+        test.testMethod(10, new SpinLock());
     }
 }

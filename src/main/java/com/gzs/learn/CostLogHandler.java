@@ -1,13 +1,15 @@
-package com.gzs.learn.nio;
+package com.gzs.learn;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
 
 @Aspect
+@Component
 public class CostLogHandler {
 
-    @Around("@annotation(com.gzs.learn.nio.CostLog)")
+    @Around("@annotation(com.gzs.learn.nio.test.CostLog)")
     public Object logTime(ProceedingJoinPoint joinPoint) {
         long start = System.currentTimeMillis();
         Object object = null;
