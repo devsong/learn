@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class CostLogHandler {
 
-    @Around("@annotation(com.gzs.learn.nio.test.CostLog)")
+    @Around("@annotation(com.gzs.learn.CostLog)")
     public Object logTime(ProceedingJoinPoint joinPoint) {
         long start = System.currentTimeMillis();
         Object object = null;

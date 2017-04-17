@@ -9,8 +9,11 @@ import org.springframework.stereotype.Component;
 
 import com.gzs.learn.CostLog;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
-public class MainTest {
+@Slf4j
+public class Main {
     @CostLog
     public void testMethod(int threadNum, Lock lock) throws Exception {
         CountDownLatch startLatch = new CountDownLatch(1);
@@ -21,9 +24,8 @@ public class MainTest {
                 try {
                     startLatch.await();
                     lock.lock();
-                    for (int j = 0; j < 10; j++) {
-                        System.out
-                                .println("in thread " + Thread.currentThread().getName() + " " + j);
+                    for (int j = 0; j < 10000; j++) {
+                        log.info("in thread " + Thread.currentThread().getName() + " " + j);
                     }
                     lock.unlock();
                 } catch (InterruptedException e) {
