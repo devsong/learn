@@ -7,6 +7,7 @@ import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
+import com.gzs.learn.juc.lock.CLHLock;
 import com.gzs.learn.juc.lock.Main;
 import com.gzs.learn.juc.lock.NoLock;
 import com.gzs.learn.juc.lock.SpinLock;
@@ -23,13 +24,14 @@ public class LockTest {
     @Test
     public void testLock() throws Exception {
         Main test = ctx.getBean(Main.class);
-        int[] threadNum = {10, 50, 100};
+        int[] threadNum = {2, 10, 20, 50};
         for (int i : threadNum) {
             System.out.println("thread num is:" + i + "==========");
-            test.testMethod(i, new NoLock());
-            test.testMethod(i, new SpinLock());
-            test.testMethod(i, new TicketLock());
-            test.testMethod(i, new ReentrantLock());
+            test.testMethod(i, new NoLock(), "nolock");
+            test.testMethod(i, new SpinLock(), "spin lock");
+            test.testMethod(i, new TicketLock(), "ticket lock");
+            test.testMethod(i, new ReentrantLock(), "reentrant lock");
+            test.testMethod(i, new CLHLock(), "clhlock");
         }
     }
 }

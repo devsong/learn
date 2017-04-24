@@ -23,6 +23,6 @@
 	</appender>
 	<root>
 		<level value="info"/>
-		<appender-ref ref="FILE"/>
+		<appender-ref ref="STDOUT"/>
 	</root>
 </configuration>  

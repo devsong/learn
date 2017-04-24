@@ -14,8 +14,9 @@ import lombok.extern.slf4j.Slf4j;
 @Component
 @Slf4j
 public class Main {
+
     @CostLog
-    public void testMethod(int threadNum, Lock lock) throws Exception {
+    public void testMethod(int threadNum, Lock lock, String tag) throws Exception {
         CountDownLatch startLatch = new CountDownLatch(1);
         ExecutorService pool = Executors.newFixedThreadPool(threadNum);
         CountDownLatch endDownLatch = new CountDownLatch(threadNum);
@@ -24,8 +25,12 @@ public class Main {
                 try {
                     startLatch.await();
                     lock.lock();
-                    for (int j = 0; j < 10000; j++) {
-                        log.info("in thread " + Thread.currentThread().getName() + " " + j);
+                    for (int j = 0; j < 100; j++) {
+                        Thread.sleep(1);
+                        /*
+                         * log.info("tag:{} in thread {},data:{}", tag,
+                         * Thread.currentThread().getName(), j);
+                         */
                     }
                     lock.unlock();
                 } catch (InterruptedException e) {
