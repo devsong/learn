@@ -1,6 +1,8 @@
 package com.gzs.learn;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -27,5 +29,11 @@ public class NioTest {
         FileTest test = ctx.getBean(FileTest.class);
         test.writeFile();
         test.writeNioFile();
+    }
+
+    @Test
+    public void testHashPut() {
+        Map<String, Integer> map = new HashMap<>();
+        map.put("key", 123);
     }
 }
