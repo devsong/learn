@@ -1,4 +1,4 @@
-package com.gzs.learn.gc;
+package com.gzs.learn.juc;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
@@ -24,7 +24,7 @@ public class ConcurrentHashMapTest {
 		});
 
 		service.submit(() -> {
-			for (int i = 20; i < 30; i++) {
+			for (int i = 10; i < 20; i++) {
 				map.put("" + i, i + "");
 				System.out.println(map.size());
 			}
@@ -32,7 +32,7 @@ public class ConcurrentHashMapTest {
 		});
 
 		service.submit(() -> {
-			for (int i = 40; i < 50; i++) {
+			for (int i = 20; i < 30; i++) {
 				map.put("" + i, i + "");
 				System.out.println(map.size());
 			}

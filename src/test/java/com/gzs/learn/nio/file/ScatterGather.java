@@ -3,7 +3,6 @@ package com.gzs.learn.nio.file;
 import java.io.RandomAccessFile;
 import java.nio.ByteBuffer;
 import java.nio.channels.FileChannel;
-
 import org.junit.Test;
 
 public class ScatterGather {

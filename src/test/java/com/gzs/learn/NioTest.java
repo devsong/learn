@@ -1,5 +1,6 @@
 package com.gzs.learn;
 
+import com.gzs.learn.nio.file.FileTest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,8 +9,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
-
-import com.gzs.learn.nio.file.FileTest;
 
 public class NioTest {
     ApplicationContext ctx = null;
