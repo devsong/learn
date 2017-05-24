@@ -18,5 +18,6 @@ target
 /.project
 bin
 logs
-.iml
+*.iml
 *.project
+.idea

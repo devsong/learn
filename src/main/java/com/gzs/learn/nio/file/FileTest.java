@@ -16,7 +16,7 @@ public class FileTest {
     int len = 1024 * 1024 * 10;
     int buf_size = 1024;
 
-    @CostLog
+    @CostLog(tag = "writeFile")
     public void writeFile() throws IOException {
         int loopTimes = len / buf_size;
         byte[] buf = new byte[buf_size];
@@ -32,7 +32,7 @@ public class FileTest {
     }
 
 
-    @CostLog
+    @CostLog(tag = "writeNioFile")
     public void writeNioFile() throws IOException {
         int loopTimes = len / buf_size;
         byte[] buf = new byte[buf_size];
