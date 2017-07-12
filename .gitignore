@@ -14,9 +14,8 @@ hs_err_pid*
 .DS_Store
 .settings
 target
-/.classpath
-/.project
-bin
+*.classpath
+.project
 logs
 *.iml
 *.project
