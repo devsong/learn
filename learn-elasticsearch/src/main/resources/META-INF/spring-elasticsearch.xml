@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:dubbo="http://code.alibabatech.com/schema/dubbo" xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+	xsi:schemaLocation="
+		http://www.springframework.org/schema/beans  
+        http://www.springframework.org/schema/beans/spring-beans.xsd 
+        http://code.alibabatech.com/schema/dubbo  
+        http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+        http://www.springframework.org/schema/data/elasticsearch
+        http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch.xsd">
+
+	<elasticsearch:repositories base-package="com.gzs.learn.elasticsearch.repository"/>
+	<elasticsearch:transport-client id="esClient" cluster-nodes="${es.addr}"
+		cluster-name="${es.cluster.name}"/>
+
+	<bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+		<constructor-arg name="client" ref="esClient"/>
+	</bean>
+</beans>
