@@ -69,4 +69,9 @@ public class LockTest {
         startLatch.countDown();
         latch.await();
     }
+
+    @Test
+    public void testLockSupport() {
+
+    }
 }

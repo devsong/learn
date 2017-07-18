@@ -24,4 +24,14 @@ public class JkxOrderTest {
         Assert.assertNotNull(order);
         System.out.println(JSON.toJSONString(order));
     }
+
+    @Test
+    public void testUpdateById() {
+        final String orderId = "J0134733074244323";
+        final JkxOrder order = jkxRepository.findOne(orderId);
+        order.setDeviceId(83);
+        jkxRepository.save(order);
+        Assert.assertNotNull(order);
+        System.out.println(JSON.toJSONString(order));
+    }
 }
