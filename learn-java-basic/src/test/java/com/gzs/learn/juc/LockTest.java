@@ -76,4 +76,25 @@ public class LockTest {
         }
         latch.await();
     }
+
+    @Test
+    public void testParkInterrupt() {
+        final Thread main = Thread.currentThread();
+        final int size = 1;
+        new CountDownLatch(size);
+        final ExecutorService executorService = Executors.newFixedThreadPool(5);
+        for (int i = 0; i < size; i++) {
+            executorService.submit(() -> {
+                try {
+                    Thread.sleep(5 * 1000);
+                } catch (final InterruptedException e) {
+                }
+                // interrupt main thread
+                main.interrupt();
+            });
+        }
+        LockSupport.park();
+        System.out.println(Thread.interrupted());
+        System.out.println(Thread.interrupted());
+    }
 }

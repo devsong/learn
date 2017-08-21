@@ -1,6 +1,5 @@
 package com.gzs.learn;
 
-import com.gzs.learn.nio.file.FileTest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -9,6 +8,8 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import com.gzs.learn.nio.file.FileTest;
 
 public class NioTest {
     ApplicationContext ctx = null;
@@ -25,14 +26,15 @@ public class NioTest {
 
     @Test
     public void testFile() throws IOException {
-        FileTest test = ctx.getBean(FileTest.class);
+        final FileTest test = ctx.getBean(FileTest.class);
         test.writeFile();
         test.writeNioFile();
     }
 
     @Test
     public void testHashPut() {
-        Map<String, Integer> map = new HashMap<>();
+        final Map<String, Integer> map = new HashMap<>();
         map.put("key", 123);
+        System.out.println("DZORD7493989779944505515".length());
     }
 }
