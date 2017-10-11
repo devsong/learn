@@ -17,7 +17,11 @@ public class GcDemo {
                 latch.countDown();
             }).start();
         }
-
+        final String b = null;
+        switch (b) {
+            case "123":
+                break;
+        }
         latch.await();
         // final StringBuffer sb1 = new StringBuffer("a");
         //

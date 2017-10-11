@@ -11,5 +11,7 @@ public class Main {
         cls2.getField("a").set(null, 2);
         System.out.println(cls1.getField("a").get(null));
         System.out.println(cls2.getField("a").get(null));
+        final ClassA a = new ClassA();
+        System.out.println(a.b);
     }
 }
