@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Map;
 
+import lombok.Data;
+
+@Data
 public class User implements Serializable {
     private static final long serialVersionUID = 1L;
     public static Map<Integer, User> datas = new HashMap<>();
