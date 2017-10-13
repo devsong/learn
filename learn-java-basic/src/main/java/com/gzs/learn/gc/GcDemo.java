@@ -1,7 +1,11 @@
 package com.gzs.learn.gc;
 
 import java.util.concurrent.CountDownLatch;
-
+/**
+ * add -XX:+PrintGCDetails vm args
+ * @author guanzhisong
+ * @date 2017年10月12日
+ */
 public class GcDemo {
     public static byte[] s_arr = new byte[1024 * 1024 * 2];
 
@@ -12,15 +16,13 @@ public class GcDemo {
         for (int i = 0; i < looptime; i++) {
             new java.lang.Thread(() -> {
                 final byte[] arr = new byte[1024 * 1024 * 10];
+                for (int j = 0; j < args.length; j++) {
+                    arr[j] = 0;
+                }
                 // System.gc();
                 System.out.println(arr.length);
                 latch.countDown();
             }).start();
-        }
-        final String b = null;
-        switch (b) {
-            case "123":
-                break;
         }
         latch.await();
         // final StringBuffer sb1 = new StringBuffer("a");

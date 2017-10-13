@@ -72,6 +72,8 @@ public class LockTest {
 
     @Test
     public void testLockSupport() {
-
+        System.out.println(Math.floorDiv(11, 5));
+        System.out.println(Math.floorMod(11, 5));
+        System.out.println(Math.ceil(2.2d));
     }
 }

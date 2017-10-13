@@ -12,12 +12,12 @@ import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
 import java.time.temporal.ChronoField;
+import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
 import org.junit.Test;
 
 public class DateTimeTest {
-
     static final String ZONE_DARWIN = "Australia/Darwin";
 
     static final String ZONE_CHONGQING = "Asia/Chongqing";
@@ -62,7 +62,12 @@ public class DateTimeTest {
         System.out.println(instant.getLong(ChronoField.MILLI_OF_SECOND));
         System.out.println(instant.getLong(ChronoField.INSTANT_SECONDS));
         System.out.println(System.currentTimeMillis());
-        System.out.println(Date.from(instant));
+        // System.out.println(Date.from(instant));
+        long start = System.nanoTime();
+        long current = LocalDateTime.now().toInstant(ZoneOffset.of("+08:00")).toEpochMilli();
+        long cost = System.nanoTime() - start;
+        System.out.println(current + " cost:" + cost);
+        System.out.println(System.currentTimeMillis());
     }
 
     @Test
@@ -86,10 +91,21 @@ public class DateTimeTest {
 
     @Test
     public void testZoneDateTime() {
-        System.out.println(ZonedDateTime.now());
-        System.out.println(ZonedDateTime.now(ZoneId.of(ZONE_CHONGQING)));
-        System.out.println(ZonedDateTime.now(ZoneId.of(ZONE_HARBIN)));
-        System.out.println(ZonedDateTime.now(ZoneId.of(ZONE_DARWIN)).toInstant().toEpochMilli());
+        System.out.println("current time:" + ZonedDateTime.now());
+        System.out.println("current time for timezone:" + ZONE_CHONGQING
+                + ZonedDateTime.now(ZoneId.of(ZONE_CHONGQING)));
+        System.out.println("current time for timezone:" + ZONE_HARBIN
+                + ZonedDateTime.now(ZoneId.of(ZONE_HARBIN)));
+        System.out.println("current time for timezone:" + ZONE_DARWIN + " "
+                + ZonedDateTime.now(ZoneId.of(ZONE_DARWIN)).toInstant().toEpochMilli());
         System.out.println(System.currentTimeMillis());
+    }
+
+    @Test
+    public void testTemporal() {
+        LocalDateTime temporal = LocalDateTime.now();
+        System.out.println(temporal.get(ChronoField.HOUR_OF_DAY));
+        System.out.println(temporal.truncatedTo(ChronoUnit.MINUTES));
+        System.out.println(temporal.adjustInto(LocalDateTime.of(2017, 10, 14, 18, 10, 0)));
     }
 }
