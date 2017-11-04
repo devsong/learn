@@ -1,11 +1,16 @@
 package com.gzs.learn.juc;
 
+import org.junit.Test;
+
+import lombok.extern.slf4j.Slf4j;
+
 /**
  * cpu 缓存测试用例
  *
  * @author guanzhisong
  * @date 2017年7月12日
  */
+@Slf4j
 public class CacheLineHit {
     private static final int RUNS = 3;
     private static final int DIMENSION_1 = 1024 * 1024;
@@ -14,7 +19,8 @@ public class CacheLineHit {
     private static long[][] longs = new long[DIMENSION_1][DIMENSION_2];
     private static long[] longs_direct = new long[DIMENSION_1 * DIMENSION_2];
 
-    public static void main(String[] args) throws Exception {
+    @Test
+    public void startUp() {
         for (int i = 0; i < DIMENSION_1; i++) {
             for (int j = 0; j < DIMENSION_2; j++) {
                 longs[i][j] = j;
@@ -30,8 +36,13 @@ public class CacheLineHit {
         addByDirect(RUNS);
     }
 
+    /**
+     * 按行顺序添加
+     *
+     * @param runs
+     */
     private static void addByRowFirst(int runs) {
-        System.out.println("starting....");
+        log.info("add by row order  order starting....");
         for (int r = 0; r < runs; r++) {
             final long start = System.nanoTime();
             long sum = 0L;
@@ -41,13 +52,18 @@ public class CacheLineHit {
                 }
             }
 
-            System.out.println("sum=" + sum);
-            System.out.println("cost:" + (System.nanoTime() - start));
+            long cost = System.nanoTime() - start;
+            log.info("add by row order end result sum:{}, cost time:{}", sum, cost);
         }
     }
 
+    /**
+     * 按列顺序添加
+     *
+     * @param runs 运行次数
+     */
     private static void addByColumnFirst(int runs) {
-        System.out.println("starting....");
+        log.info("add by column order starting....");
         for (int r = 0; r < runs; r++) {
             final long start = System.nanoTime();
             long sum = 0L;
@@ -56,14 +72,18 @@ public class CacheLineHit {
                     sum += longs[i][j];
                 }
             }
-
-            System.out.println("sum=" + sum);
-            System.out.println("cost:" + (System.nanoTime() - start));
+            long cost = System.nanoTime() - start;
+            log.info("add by column order end result sum:{}, cost time:{}", sum, cost);
         }
     }
 
+    /**
+     * 直接添加
+     *
+     * @param runs 运行次数
+     */
     private static void addByDirect(int runs) {
-        System.out.println("starting....");
+        log.info("add by direct starting....");
         for (int r = 0; r < runs; r++) {
             final long start = System.nanoTime();
             long sum = 0L;
@@ -72,8 +92,8 @@ public class CacheLineHit {
                 sum += longs_direct[j];
             }
 
-            System.out.println("sum=" + sum);
-            System.out.println("cost:" + (System.nanoTime() - start));
+            long cost = System.nanoTime() - start;
+            log.info("add by column order end result sum:{}, cost time:{}", sum, cost);
         }
     }
 }

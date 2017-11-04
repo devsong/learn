@@ -34,6 +34,18 @@ public class DateTimeTest {
         LocalDate specifyDate = LocalDate.of(2016, Month.OCTOBER, 9);
         System.out.println(specifyDate);
         System.out.println(specifyDate.isLeapYear());
+        System.out.println(010);
+        System.out.println(0x12);
+
+        one: for (int i = 0; i < 10; i++) {
+            System.out.println(i);
+            for (int j = 0; j < 10; j++) {
+                System.out.println(j);
+                if (i == 3 && j == 3) {
+                    break one;
+                }
+            }
+        }
     }
 
     @Test

@@ -7,15 +7,11 @@ import java.util.concurrent.locks.Lock;
 
 import org.springframework.stereotype.Component;
 
-import com.gzs.learn.CostLog;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Component
 @Slf4j
 public class Main {
-
-    @CostLog
     public void testMethod(int threadNum, Lock lock, String tag) throws Exception {
         final CountDownLatch startLatch = new CountDownLatch(1);
         final ExecutorService pool = Executors.newFixedThreadPool(threadNum);

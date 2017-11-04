@@ -12,8 +12,6 @@ public class Main {
         };
     };
 
-
-
     public static void main(String[] args) throws InterruptedException {
         ExecutorService executorService = Executors.newFixedThreadPool(100);
         for (int i = 0; i < 10000; i++) {
