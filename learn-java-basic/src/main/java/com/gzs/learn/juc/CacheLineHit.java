@@ -1,5 +1,8 @@
 package com.gzs.learn.juc;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.junit.Test;
 
 import lombok.extern.slf4j.Slf4j;
@@ -95,5 +98,13 @@ public class CacheLineHit {
             long cost = System.nanoTime() - start;
             log.info("add by column order end result sum:{}, cost time:{}", sum, cost);
         }
+    }
+
+    @Test
+    public void testCalender() {
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(new Date());
+        System.out.println("hours:" + calendar.get(Calendar.HOUR_OF_DAY));
+        System.out.println("minute:" + calendar.get(Calendar.MINUTE));
     }
 }
