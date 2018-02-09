@@ -20,7 +20,7 @@ public class DataConsumer implements MessageConsumer {
                     body.getScore());
             return MQMessageStatus.SUCCESS;
         } catch (Exception e) {
-            return MQMessageStatus.SUCCESS;
+            return MQMessageStatus.FAIL;
         }
     }
 
