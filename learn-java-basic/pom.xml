@@ -39,5 +39,11 @@
 			<artifactId>netty-all</artifactId>
 			<version>4.1.0.Final</version>
 		</dependency>
+
+		<dependency>
+			<groupId>fr.ujm.tse.lt2c.satin</groupId>
+			<artifactId>cachesize</artifactId>
+			<version>0.2.1</version>
+		</dependency>
 	</dependencies>
 </project>

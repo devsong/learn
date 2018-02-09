@@ -20,6 +20,11 @@ public class CacheLineHit {
     private static long[] longs_direct = new long[DIMENSION_1 * DIMENSION_2];
 
     @Test
+    public void testLen() {
+        System.out.println(new int[3].length);
+    }
+
+    @Test
     public void startUp() {
         for (int i = 0; i < DIMENSION_1; i++) {
             for (int j = 0; j < DIMENSION_2; j++) {

@@ -11,7 +11,7 @@ import sun.misc.Unsafe;
 @SuppressWarnings("restriction")
 public class LongAddrExample {
 
-    private static Unsafe getUnsafe() {
+    public static Unsafe getUnsafe() {
         try {
             return Unsafe.getUnsafe();
         } catch (SecurityException tryReflectionInstead) {
@@ -35,6 +35,11 @@ public class LongAddrExample {
     }
 
     @Test
+    public void testThreadProbe() {
+
+    }
+
+    @Test
     public void testUnSafe() throws NoSuchFieldException, SecurityException {
         Unsafe unsafe = getUnsafe();
         UnSafeTest test = new UnSafeTest(1);
@@ -46,11 +51,18 @@ public class LongAddrExample {
     }
 
     @Test
-    public void testMultiThread() {
+    public synchronized void testMultiThread() throws NoSuchFieldException, SecurityException {
         LongAdder adder = new LongAdder();
+
         for (int i = 0; i < 10; i++) {
-            new Example(adder).start();
+            Thread t = new Example(adder);
+            t.start();
         }
+    }
+
+    @Test
+    public void testNcpu() {
+        System.out.println(Runtime.getRuntime().availableProcessors());
     }
 }
 
@@ -68,7 +80,7 @@ class UnSafeTest {
 class Example extends Thread {
     private LongAdder adder;
 
-    public Example(LongAdder adder) {
+    public Example(LongAdder adder) throws NoSuchFieldException, SecurityException {
         this.adder = adder;
     }
 
