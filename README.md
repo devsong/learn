@@ -3,3 +3,4 @@
 ## 模块说明:
 - learn-java-basic: java基础知识,包含juc lamda io 等
 - learn-elasticsearch: elasticsearch学习代码
+- learn-rocketmq: rocketmq学习代码
