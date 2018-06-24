@@ -11,6 +11,7 @@ import java.time.OffsetTime;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 import java.time.temporal.ChronoField;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
@@ -119,5 +120,13 @@ public class DateTimeTest {
         System.out.println(temporal.get(ChronoField.HOUR_OF_DAY));
         System.out.println(temporal.truncatedTo(ChronoUnit.MINUTES));
         System.out.println(temporal.adjustInto(LocalDateTime.of(2017, 10, 14, 18, 10, 0)));
+    }
+
+    @Test
+    public void testFormatDatetime() {
+        Date date = new Date();
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd");
+        System.out.println(
+                dtf.format(LocalDateTime.ofInstant(date.toInstant(), ZoneId.systemDefault())));
     }
 }
