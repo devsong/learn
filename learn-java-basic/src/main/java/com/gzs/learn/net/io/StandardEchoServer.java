@@ -8,13 +8,15 @@ import static com.gzs.learn.net.NetConstants.PORT;
 import static com.gzs.learn.net.NetConstants.THREAD_POOL;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
 import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-import com.gzs.learn.net.DiscardServer;
+import com.gzs.learn.net.EchoServer;
 import com.gzs.learn.net.ResourceHandler;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class StandardDiscardServer implements DiscardServer {
+public class StandardEchoServer implements EchoServer {
     @Override
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket()) {
@@ -43,37 +45,45 @@ public class StandardDiscardServer implements DiscardServer {
     }
 
     private void worker(Socket socket) {
-        THREAD_POOL.submit(new Worker(socket));
+        THREAD_POOL.submit(new EchoWorker(socket));
     }
 }
 
 
 @Slf4j
-class Worker implements Runnable {
+class EchoWorker implements Runnable {
     private Socket socket;
 
-    public Worker(Socket socket) {
+    public EchoWorker(Socket socket) {
         this.socket = socket;
     }
 
     @Override
     public void run() {
         BufferedReader reader = null;
+        BufferedWriter writer = null;
         try {
             reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8),
+                    BUFFER_SIZE);
+            writer = new BufferedWriter(new OutputStreamWriter(socket.getOutputStream(), UTF_8),
                     BUFFER_SIZE);
             while (true) {
                 String msg = reader.readLine();
                 String remoteAddr = socket.getRemoteSocketAddress().toString();
-                log.info("recv from client:{},msg:{}", remoteAddr, msg);
+
                 if (EXIT.contains(msg)) {
                     log.info("disconnect from remote:{}", remoteAddr);
+                    writer.write("bye-bye" + "\n");
+                    writer.flush();
                     socket.close();
                     break;
                 }
+                log.info("recv from client:{},msg:{}", remoteAddr, msg);
+                writer.write(msg + "\n");
+                writer.flush();
             }
         } catch (Exception e) {
-            ResourceHandler.close(reader, socket);
+            ResourceHandler.close(reader, writer, socket);
         }
     }
 
