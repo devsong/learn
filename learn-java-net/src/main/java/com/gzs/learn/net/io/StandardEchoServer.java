@@ -36,7 +36,7 @@ public class StandardEchoServer implements EchoServer {
             serverSocket.bind(address);
             while (true) {
                 Socket socket = serverSocket.accept();
-                worker(socket);
+                handle(socket);
                 // socket.close();
             }
         } catch (IOException e) {
@@ -44,8 +44,10 @@ public class StandardEchoServer implements EchoServer {
         }
     }
 
-    private void worker(Socket socket) {
+    private void handle(Socket socket) {
         THREAD_POOL.submit(new EchoWorker(socket));
+        // handle user request
+        // new Thread(new EchoWorker(socket)).start();
     }
 }
 

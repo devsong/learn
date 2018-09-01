@@ -34,7 +34,7 @@ public class StandardDiscardServer implements DiscardServer {
             serverSocket.bind(address);
             while (true) {
                 Socket socket = serverSocket.accept();
-                worker(socket);
+                handle(socket);
                 // socket.close();
             }
         } catch (IOException e) {
@@ -42,8 +42,10 @@ public class StandardDiscardServer implements DiscardServer {
         }
     }
 
-    private void worker(Socket socket) {
+    private void handle(Socket socket) {
         THREAD_POOL.submit(new Worker(socket));
+        // new thread handle user request
+        // new Thread(new Worker(socket)).start();
     }
 }
 
