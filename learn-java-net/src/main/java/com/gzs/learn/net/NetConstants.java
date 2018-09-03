@@ -1,5 +1,6 @@
 package com.gzs.learn.net;
 
+import java.nio.charset.Charset;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
@@ -18,6 +19,8 @@ public interface NetConstants {
     int BUFFER_SIZE = 1024;
 
     String BIND_ADDR = "127.0.0.1";
+
+    Charset UTF8 = Charset.forName("UTF-8");
 
     List<String> EXIT = Lists.newArrayList("quit", "bye", "exit");
 

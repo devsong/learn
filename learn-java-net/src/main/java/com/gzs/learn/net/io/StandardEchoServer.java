@@ -85,6 +85,8 @@ class EchoWorker implements Runnable {
                 writer.flush();
             }
         } catch (Exception e) {
+            log.error("handle request error", e);
+        } finally {
             ResourceHandler.close(reader, writer, socket);
         }
     }

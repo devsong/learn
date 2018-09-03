@@ -1,11 +1,11 @@
 package com.gzs.learn.net.io;
 
-import static com.google.common.base.Charsets.UTF_8;
 import static com.gzs.learn.net.NetConstants.BIND_ADDR;
 import static com.gzs.learn.net.NetConstants.BUFFER_SIZE;
 import static com.gzs.learn.net.NetConstants.EXIT;
 import static com.gzs.learn.net.NetConstants.PORT;
 import static com.gzs.learn.net.NetConstants.THREAD_POOL;
+import static com.gzs.learn.net.NetConstants.UTF8;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -62,7 +62,7 @@ class Worker implements Runnable {
     public void run() {
         BufferedReader reader = null;
         try {
-            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF_8),
+            reader = new BufferedReader(new InputStreamReader(socket.getInputStream(), UTF8),
                     BUFFER_SIZE);
             while (true) {
                 String msg = reader.readLine();
@@ -74,8 +74,10 @@ class Worker implements Runnable {
                     break;
                 }
             }
-        } catch (Exception e) {
-            ResourceHandler.close(reader, socket);
+        } catch (IOException e) {
+            log.error("handle data error", e);
+        } finally {
+            ResourceHandler.close(reader);
         }
     }
 
