@@ -1,9 +1,7 @@
 package com.gzs.learn.net.io;
 
-import static com.gzs.learn.net.NetConstants.BIND_ADDR;
 import static com.gzs.learn.net.NetConstants.BUFFER_SIZE;
 import static com.gzs.learn.net.NetConstants.EXIT;
-import static com.gzs.learn.net.NetConstants.PORT;
 import static com.gzs.learn.net.NetConstants.THREAD_POOL;
 import static com.gzs.learn.net.NetConstants.UTF8;
 
@@ -14,8 +12,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.gzs.learn.net.AbstractServer;
 import com.gzs.learn.net.DiscardServer;
-import com.gzs.learn.net.ResourceHandler;
+import com.gzs.learn.net.NetUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -26,11 +25,20 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class StandardDiscardServer implements DiscardServer {
+public class StandardDiscardServer extends AbstractServer implements DiscardServer {
+
+    public StandardDiscardServer() {
+        super();
+    }
+
+    public StandardDiscardServer(int port) {
+        super(port);
+    }
+
     @Override
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket()) {
-            InetSocketAddress address = new InetSocketAddress(BIND_ADDR, PORT);
+            InetSocketAddress address = new InetSocketAddress(addr, port);
             serverSocket.bind(address);
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -44,8 +52,6 @@ public class StandardDiscardServer implements DiscardServer {
 
     private void handle(Socket socket) {
         THREAD_POOL.submit(new Worker(socket));
-        // new thread handle user request
-        // new Thread(new Worker(socket)).start();
     }
 }
 
@@ -77,7 +83,7 @@ class Worker implements Runnable {
         } catch (IOException e) {
             log.error("handle data error", e);
         } finally {
-            ResourceHandler.close(reader);
+            NetUtils.close(reader);
         }
     }
 

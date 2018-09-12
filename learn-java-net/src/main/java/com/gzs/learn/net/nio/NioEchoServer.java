@@ -9,23 +9,24 @@ import java.util.Iterator;
 import java.util.Set;
 
 import com.gzs.learn.net.AbstractServer;
-import com.gzs.learn.net.DiscardServer;
+import com.gzs.learn.net.EchoServer;
 import com.gzs.learn.net.NetUtils;
 import com.gzs.learn.net.nio.protocol.ProtocolHandler;
 
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NioDiscardServer extends AbstractServer implements DiscardServer {
+public class NioEchoServer extends AbstractServer implements EchoServer {
     private Selector selector;
     private ProtocolHandler handler;
 
-    public NioDiscardServer(ProtocolHandler handler) {
+    public NioEchoServer(ProtocolHandler handler) {
+        super();
         selector = NetUtils.getSelector();
         this.handler = handler;
     }
 
-    public NioDiscardServer(ProtocolHandler handler, String addr, int port) {
+    public NioEchoServer(ProtocolHandler handler, String addr, int port) {
         super(addr, port);
         selector = NetUtils.getSelector();
         this.handler = handler;

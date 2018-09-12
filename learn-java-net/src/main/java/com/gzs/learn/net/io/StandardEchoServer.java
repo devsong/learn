@@ -1,10 +1,8 @@
 package com.gzs.learn.net.io;
 
 import static com.google.common.base.Charsets.UTF_8;
-import static com.gzs.learn.net.NetConstants.BIND_ADDR;
 import static com.gzs.learn.net.NetConstants.BUFFER_SIZE;
 import static com.gzs.learn.net.NetConstants.EXIT;
-import static com.gzs.learn.net.NetConstants.PORT;
 import static com.gzs.learn.net.NetConstants.THREAD_POOL;
 
 import java.io.BufferedReader;
@@ -16,8 +14,9 @@ import java.net.InetSocketAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import com.gzs.learn.net.AbstractServer;
 import com.gzs.learn.net.EchoServer;
-import com.gzs.learn.net.ResourceHandler;
+import com.gzs.learn.net.NetUtils;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,11 +27,19 @@ import lombok.extern.slf4j.Slf4j;
  *
  */
 @Slf4j
-public class StandardEchoServer implements EchoServer {
+public class StandardEchoServer extends AbstractServer implements EchoServer {
+    public StandardEchoServer() {
+        super();
+    }
+
+    public StandardEchoServer(String addr, int port) {
+        super(addr, port);
+    }
+
     @Override
     public void start() {
         try (ServerSocket serverSocket = new ServerSocket()) {
-            InetSocketAddress address = new InetSocketAddress(BIND_ADDR, PORT);
+            InetSocketAddress address = new InetSocketAddress(addr, port);
             serverSocket.bind(address);
             while (true) {
                 Socket socket = serverSocket.accept();
@@ -46,8 +53,6 @@ public class StandardEchoServer implements EchoServer {
 
     private void handle(Socket socket) {
         THREAD_POOL.submit(new EchoWorker(socket));
-        // handle user request
-        // new Thread(new EchoWorker(socket)).start();
     }
 }
 
@@ -87,7 +92,7 @@ class EchoWorker implements Runnable {
         } catch (Exception e) {
             log.error("handle request error", e);
         } finally {
-            ResourceHandler.close(reader, writer, socket);
+            NetUtils.close(reader, writer, socket);
         }
     }
 
