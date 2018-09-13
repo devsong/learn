@@ -25,6 +25,12 @@ public class NioDiscardServer extends AbstractServer implements DiscardServer {
         this.handler = handler;
     }
 
+    public NioDiscardServer(ProtocolHandler handler, int port) {
+        super(port);
+        selector = NetUtils.getSelector();
+        this.handler = handler;
+    }
+
     public NioDiscardServer(ProtocolHandler handler, String addr, int port) {
         super(addr, port);
         selector = NetUtils.getSelector();

@@ -26,6 +26,12 @@ public class NioEchoServer extends AbstractServer implements EchoServer {
         this.handler = handler;
     }
 
+    public NioEchoServer(ProtocolHandler handler, int port) {
+        super(port);
+        selector = NetUtils.getSelector();
+        this.handler = handler;
+    }
+
     public NioEchoServer(ProtocolHandler handler, String addr, int port) {
         super(addr, port);
         selector = NetUtils.getSelector();
