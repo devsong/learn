@@ -48,22 +48,21 @@ public class NioEchoServer extends AbstractServer implements EchoServer {
             serverSocketChannel.register(selector, serverSocketChannel.validOps(), null);
             while (true) {
                 int numEvents = selector.select();
-                if (numEvents > 0) {
-                    Set<SelectionKey> keys = selector.selectedKeys();
-                    Iterator<SelectionKey> iterator = keys.iterator();
-                    while (iterator.hasNext()) {
-                        SelectionKey key = iterator.next();
-                        iterator.remove();
-                        if (!key.isValid()) {
-                            continue;
-                        }
-                        if (key.isAcceptable()) {
-                            handler.handleAccept(key, serverSocketChannel);
-                        } else if (key.isReadable()) {
-                            handler.handleRecv(key);
-                        } else if (key.isWritable()) {
-                            handler.handleWrite(key);
-                        }
+                if (numEvents <= 0) {
+                    continue;
+                }
+                Set<SelectionKey> keys = selector.selectedKeys();
+                Iterator<SelectionKey> iterator = keys.iterator();
+                while (iterator.hasNext()) {
+                    SelectionKey key = iterator.next();
+                    iterator.remove();
+                    if (!key.isValid()) {
+                        continue;
+                    }
+                    if (key.isAcceptable()) {
+                        handler.handleAccept(key, serverSocketChannel);
+                    } else if (key.isReadable()) {
+                        handler.handleRecv(key);
                     }
                 }
             }
