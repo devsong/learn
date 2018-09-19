@@ -1,11 +1,15 @@
 package com.gzs.learn.net.netty;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+
 import com.gzs.learn.net.EchoServer;
 import com.gzs.learn.net.NetConstants;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.channel.ChannelInitializer;
@@ -14,21 +18,20 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.util.CharsetUtil;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NettyEchoServer extends ChannelInboundHandlerAdapter implements EchoServer {
+public class NettyTimeServer extends ChannelInboundHandlerAdapter implements EchoServer {
     private String address;
     private int port;
 
-    public NettyEchoServer() {}
+    public NettyTimeServer() {}
 
-    public NettyEchoServer(int port) {
+    public NettyTimeServer(int port) {
         this(NetConstants.BIND_ADDR, port);
     }
 
-    public NettyEchoServer(String address, int port) {
+    public NettyTimeServer(String address, int port) {
         this.address = address;
         this.port = port;
     }
@@ -43,7 +46,7 @@ public class NettyEchoServer extends ChannelInboundHandlerAdapter implements Ech
                     .childHandler(new ChannelInitializer<SocketChannel>() {
                         @Override
                         public void initChannel(SocketChannel ch) throws Exception {
-                            ch.pipeline().addLast(new NettyEchoServer());
+                            ch.pipeline().addLast(new NettyTimeServer());
                         }
                     }).option(ChannelOption.SO_BACKLOG, 128)
                     .childOption(ChannelOption.SO_KEEPALIVE, true);
@@ -58,10 +61,17 @@ public class NettyEchoServer extends ChannelInboundHandlerAdapter implements Ech
     }
 
     @Override
-    public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-        ByteBuf buf = (ByteBuf) msg;
-        log.info("recv msg:{}", buf.toString(CharsetUtil.UTF_8));
-        ctx.writeAndFlush(msg);
+    public void channelActive(ChannelHandlerContext ctx) throws Exception {
+        String now = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+                + "\n";
+        ByteBuf buf = ctx.alloc().buffer().writeBytes(now.getBytes(), 0, now.getBytes().length);
+        ChannelFuture future = ctx.writeAndFlush(buf);
+        future.addListener(new ChannelFutureListener() {
+            @Override
+            public void operationComplete(ChannelFuture future) throws Exception {
+                ctx.close();
+            }
+        });
     }
 
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {

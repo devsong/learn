@@ -16,6 +16,7 @@ import java.net.Socket;
 
 import com.gzs.learn.net.AbstractServer;
 import com.gzs.learn.net.EchoServer;
+import com.gzs.learn.net.NetConstants;
 import com.gzs.learn.net.NetUtils;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,10 @@ public class StandardEchoServer extends AbstractServer implements EchoServer {
         super();
     }
 
+    public StandardEchoServer(int port) {
+        this(NetConstants.BIND_ADDR, port);
+    }
+
     public StandardEchoServer(String addr, int port) {
         super(addr, port);
     }
@@ -44,7 +49,6 @@ public class StandardEchoServer extends AbstractServer implements EchoServer {
             while (true) {
                 Socket socket = serverSocket.accept();
                 handle(socket);
-                // socket.close();
             }
         } catch (IOException e) {
             log.error("init server error", e);
@@ -95,5 +99,4 @@ class EchoWorker implements Runnable {
             NetUtils.close(reader, writer, socket);
         }
     }
-
 }
