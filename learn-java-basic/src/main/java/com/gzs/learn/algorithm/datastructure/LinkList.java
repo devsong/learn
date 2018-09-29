@@ -1,4 +1,4 @@
-package com.gzs.learn.datastructure;
+package com.gzs.learn.algorithm.datastructure;
 
 public class LinkList {
 
