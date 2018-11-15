@@ -10,7 +10,7 @@ public class BubbleSort implements Sortable<Integer> {
         for (int i = 0; i < len; i++) {
             for (int j = 0; j < len - 1 - i; j++) {
                 if (array[j] > array[j + 1]) {
-                    swap(array, i, j);
+                    swap(array, j, j + 1);
                 }
             }
         }

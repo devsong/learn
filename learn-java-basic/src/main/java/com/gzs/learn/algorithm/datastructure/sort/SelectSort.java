@@ -7,12 +7,14 @@ public class SelectSort implements Sortable<Integer> {
     @Override
     public Integer[] sort(Integer[] array) {
         int len = array.length;
-        for (int i = 0; i < len; i++) {
+        for (int i = 0; i < len-1; i++) {
+            int minIndex = i;
             for (int j = i + 1; j < len; j++) {
-                if (array[i] > array[j]) {
-                    swap(array, i, j);
+                if (array[minIndex] > array[j]) {
+                    minIndex = j;
                 }
             }
+            swap(array, i, minIndex);
         }
         return array;
     }
