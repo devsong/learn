@@ -1,5 +1,6 @@
 package com.gzs.learn.springboot;
 
+import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -7,6 +8,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.google.common.base.Stopwatch;
 
 @Controller
 @RequestMapping("/bench/")
@@ -32,21 +35,22 @@ public class BenchController {
     @RequestMapping("sync/{id}")
     @ResponseBody
     public long a(@PathVariable("id") int id) throws Exception {
-        final long start = System.currentTimeMillis();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         final int index = id % 100;
         long inner = 0;
         synchronized (lockObj[index]) {
             inner = this.test();
         }
-        final long result = System.currentTimeMillis() - start;
-        System.out.println("all: " + result + " inner: " + inner);
-        return result;
+        stopwatch.stop();
+        long cost = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("all: " + cost + " inner: " + inner);
+        return cost;
     }
 
     @RequestMapping("cas/{id}")
     @ResponseBody
     public long b(@PathVariable("id") int id) throws Exception {
-        final long start = System.currentTimeMillis();
+        Stopwatch stopwatch = Stopwatch.createStarted();
         id = id % 100;
         final AtomicInteger lock = locks[id];
         final int b = 0;
@@ -54,10 +58,11 @@ public class BenchController {
         }
         final long inner = this.test();
         final boolean flag = lock.compareAndSet(id, -1);
-        final long result = System.currentTimeMillis() - start;
-        System.out.println("all: " + result + " inner: " + inner + " flag:" + flag);
+        stopwatch.stop();
+        long cost = stopwatch.elapsed(TimeUnit.MILLISECONDS);
+        System.out.println("all: " + cost + " inner: " + inner + " flag:" + flag);
         System.out.println(b);
-        return result;
+        return cost;
     }
 
     @RequestMapping("c/{id}")
