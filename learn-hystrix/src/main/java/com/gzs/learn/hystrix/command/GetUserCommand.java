@@ -1,19 +1,20 @@
 package com.gzs.learn.hystrix.command;
 
-import org.springframework.stereotype.Component;
-
+import com.google.common.util.concurrent.RateLimiter;
 import com.netflix.hystrix.HystrixCommand;
 import com.netflix.hystrix.HystrixCommandGroupKey;
 
-@Component
 public class GetUserCommand extends HystrixCommand<String> {
+    RateLimiter rateLimiter;
 
-    protected GetUserCommand(HystrixCommandGroupKey group) {
-        super(group);
+    public GetUserCommand(String group, RateLimiter limiter) {
+        super(HystrixCommandGroupKey.Factory.asKey(group));
+        rateLimiter = limiter;
     }
 
     @Override
     protected String run() throws Exception {
+        rateLimiter.acquire(1);
         return "user";
     }
 
