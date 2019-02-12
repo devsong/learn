@@ -14,6 +14,7 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-test</artifactId>
+            <scope>test</scope>
         </dependency>
 
         <dependency>
@@ -60,5 +61,6 @@
         <module>learn-shiro</module>
         <module>learn-java-net</module>
         <module>learn-hystrix</module>
+        <module>learn-jquery-easyui</module>
     </modules>
 </project>
