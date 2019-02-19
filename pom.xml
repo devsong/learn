@@ -52,15 +52,20 @@
             <artifactId>fastjson</artifactId>
             <version>1.2.24</version>
         </dependency>
+
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+
     </dependencies>
 
     <modules>
         <module>learn-java-basic</module>
         <module>learn-elasticsearch</module>
         <module>learn-rocketmq</module>
-        <module>learn-shiro</module>
         <module>learn-java-net</module>
         <module>learn-hystrix</module>
-        <module>learn-jquery-easyui</module>
+        <module>learn-backend-admin</module>
     </modules>
 </project>

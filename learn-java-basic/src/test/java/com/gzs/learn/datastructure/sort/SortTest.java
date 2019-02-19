@@ -2,15 +2,12 @@ package com.gzs.learn.datastructure.sort;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.Reader;
 import java.util.Scanner;
 
 import org.junit.Assert;
 import org.junit.Test;
 
 import com.alibaba.fastjson.JSON;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.common.base.Stopwatch;
 
 public class SortTest {
@@ -32,6 +29,11 @@ public class SortTest {
             System.out.println(stopwatch.toString());
             scanner.close();
         }
+    }
+    
+    @Test
+    public void testSerize(){
+        System.out.println(JSON.toJSONString("123"));
     }
     
 }
