@@ -23,7 +23,7 @@
 				<div class="col-md-10">
 					<h2>资料修改</h2>
 					<hr>
-					<form id="formId" enctype="multipart/form-data" action="${basePath}/user/updateSelf.shtml" method="post">
+					<form id="formId" enctype="multipart/form-data" action="${basePath}/user/updateSelf" method="post">
 						  <input type="hidden" value="${token.id}" name="id"/>
 						  <div class="form-group">
 						    <label for="nickname">昵称</label>

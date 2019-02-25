@@ -69,7 +69,7 @@ public interface Consts {
     /**
      * 登录url
      */
-    String LOGIN_URL = "http://www.sojson.com/user/open/toLogin.shtml";
+    String LOGIN_URL = "http://www.sojson.com/user/open/toLogin";
     /**
      * 未认证url
      */

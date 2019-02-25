@@ -17,7 +17,7 @@
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
 				
-				<@shiro.hasPermission name="/role/deleteRoleById.shtml">
+				<@shiro.hasPermission name="/role/deleteRoleById">
 				//全选
 				so.id('deleteAll').on('click',function(){
 					var checkeds = $('[check=box]:checked');
@@ -32,12 +32,12 @@
 				});
 				</@shiro.hasPermission>
 			});
-			<@shiro.hasPermission name="/role/deleteRoleById.shtml">
+			<@shiro.hasPermission name="/role/deleteRoleById">
 			<#--根据ID数组删除角色-->
 			function deleteById(ids){
 				var index = layer.confirm("确定这"+ ids.length +"个角色？",function(){
 					var load = layer.load();
-					$.post('${basePath}/role/deleteRoleById.shtml',{ids:ids.join(',')},function(result){
+					$.post('${basePath}/role/deleteRoleById',{ids:ids.join(',')},function(result){
 						layer.close(load);
 						if(result && result.status != 200){
 							return layer.msg(result.message,so.default),!0;
@@ -52,7 +52,7 @@
 				});
 			}
 			</@shiro.hasPermission>
-			<@shiro.hasPermission name="/role/addRole.shtml">
+			<@shiro.hasPermission name="/role/addRole">
 			<#--添加角色-->
 			function addRole(){
 				var name = $('#name').val(),
@@ -65,7 +65,7 @@
 				}
 				<#--loding-->
 				var load = layer.load();
-				$.post('${basePath}/role/addRole.shtml',{name:name,type:type},function(result){
+				$.post('${basePath}/role/addRole',{name:name,type:type},function(result){
 					layer.close(load);
 					if(result && result.status != 200){
 						return layer.msg(result.message,so.default),!1;
@@ -97,10 +97,10 @@
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-				         	<@shiro.hasPermission name="/role/addRole.shtml">
+				         	<@shiro.hasPermission name="/role/addRole">
 				         		<a class="btn btn-success" onclick="$('#addrole').modal();">增加角色</a>
 				         	</@shiro.hasPermission>
-				         	<@shiro.hasPermission name="/role/deleteRoleById.shtml">
+				         	<@shiro.hasPermission name="/role/deleteRoleById">
 				         		<button type="button" id="deleteAll" class="btn  btn-danger">Delete</button>
 				         	</@shiro.hasPermission>
 				         </span>    
@@ -121,7 +121,7 @@
 									<td>${it.type?default('-')}</td>
 									<td>
 										<#if it.type != '888888'>
-											<@shiro.hasPermission name="/role/deleteRoleById.shtml">
+											<@shiro.hasPermission name="/role/deleteRoleById">
 												<i class="glyphicon glyphicon-remove"></i><a href="javascript:deleteById([${it.id}]);">删除</a>
 								         	</@shiro.hasPermission>
 								         	<#else>
@@ -145,7 +145,7 @@
 				</div>
 			</div><#--/row-->
 			
-			<@shiro.hasPermission name="/role/addRole.shtml">
+			<@shiro.hasPermission name="/role/addRole">
 				<#--添加弹框-->
 				<div class="modal fade" id="addrole" tabindex="-1" role="dialog" aria-labelledby="addroleLabel">
 				  <div class="modal-dialog" role="document">

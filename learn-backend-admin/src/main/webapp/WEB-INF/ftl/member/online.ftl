@@ -13,7 +13,7 @@
 		<script  src="${basePath}/js/common/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 		<script  src="${basePath}/js/shiro.demo.js"></script>
 		<script >
-			<@shiro.hasPermission name="/member/changeSessionStatus.shtml">
+			<@shiro.hasPermission name="/member/changeSessionStatus">
 			$(function(){
 				$("a[v=onlineDetails]").on('click',function(){
 					var self = $(this);
@@ -29,7 +29,7 @@
 				status = !parseInt(status);
 				//loading
 				var load = layer.load();
-				$.post("${basePath}/member/changeSessionStatus.shtml",{status:status,sessionIds:sessionIds},function(result){
+				$.post("${basePath}/member/changeSessionStatus",{status:status,sessionIds:sessionIds},function(result){
 					layer.close(load);
 					if(result && result.status == 200){
 						return self.text(result.sessionStatusText),
@@ -81,8 +81,8 @@
 									<td>${it.lastAccess?string('HH:mm:ss yy-MM-dd')}</td>
 									<td>${(it.sessionStatus)?string('有效','已踢出')}</td>
 									<td>
-										<a href="${basePath}/member/onlineDetails/${it.sessionId}.shtml">详情</a>
-										<@shiro.hasPermission name="/member/changeSessionStatus.shtml">
+										<a href="${basePath}/member/onlineDetails/${it.sessionId}">详情</a>
+										<@shiro.hasPermission name="/member/changeSessionStatus">
 											<a v="onlineDetails"href="javascript:void(0);" sessionId="${it.sessionId}" status="${(it.sessionStatus)?string(1,0)}">${(it.sessionStatus)?string('踢出','激活')}</a>
 										</@shiro.hasPermission>
 									</td>

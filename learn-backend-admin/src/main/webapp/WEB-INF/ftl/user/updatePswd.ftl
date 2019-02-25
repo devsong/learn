@@ -23,7 +23,7 @@
 				<div class="col-md-10">
 					<h2>密码修改</h2>
 					<hr>
-					<form id="formId" enctype="multipart/form-data" action="${basePath}/user/updatePswd.shtml" method="post">
+					<form id="formId" enctype="multipart/form-data" action="${basePath}/user/updatePswd" method="post">
 						  <div class="form-group">
 						    <label for="pswd">原密码</label>
 						    <input type="password" class="form-control" autocomplete="off" id="pswd" maxlength="20" name="pswd"  placeholder="请输入原密码">

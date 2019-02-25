@@ -33,7 +33,7 @@ public class PermissionFilter extends AccessControlFilter {
         HttpServletRequest httpRequest = ((HttpServletRequest) request);
         /**
          * 此处是改版后，为了兼容项目不需要部署到root下，也可以正常运行，但是权限没设置目前必须到root 的URI，
-         * 原因：如果你把这个项目叫 ShiroDemo，那么路径就是 /ShiroDemo/xxxx.shtml ，那另外一个人使用，又叫Shiro_Demo,那么就要这么控制/Shiro_Demo/xxxx.shtml 
+         * 原因：如果你把这个项目叫 ShiroDemo，那么路径就是 /ShiroDemo/xxxx ，那另外一个人使用，又叫Shiro_Demo,那么就要这么控制/Shiro_Demo/xxxx 
          * 理解了吗？
          * 所以这里替换了一下，使用根目录开始的URI
          */

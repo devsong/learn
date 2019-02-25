@@ -10,17 +10,11 @@ import java.util.Map;
 import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.concurrent.ThreadLocalRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-/**
- * String工具
- * 主要对 StringUtils 的一些方法进行重写,达到更方便的使用
- * @author zhou-baicheng
- *
- */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
-
     /**
      * 一次性判断多个或单个对象为空。
      * @param objects
@@ -40,7 +34,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
 
     public static String getRandom(int length) {
         String val = "";
-        Random random = new Random();
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         for (int i = 0; i < length; i++) {
             // 输出字母还是数字
             String charOrNum = random.nextInt(2) % 2 == 0 ? "char" : "num";
@@ -93,9 +87,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @return
      */
     public static int indexOf(String baseStr, String[] strings) {
-
-        if (null == baseStr || baseStr.length() == 0 || null == strings)
+        if (null == baseStr || baseStr.length() == 0 || null == strings) {
             return 0;
+        }
 
         int i = 0;
         for (String string : strings) {
@@ -177,7 +171,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         Map<String, Object> result = new HashMap<String, Object>();
         for (String ag : argsArray) {
             if (!isBlank(ag) && ag.indexOf("=") > 0) {
-
                 String[] keyValue = ag.split("=");
                 // 如果value或者key值里包含 "="号,以第一个"="号为主 ,如 name=0=3 转换后,{"name":"0=3"}, 如果不满足需求,请勿修改,自行解决.
 
@@ -188,7 +181,6 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
                 }
                 value = value.length() > 0 ? value.substring(0, value.length() - 1) : value;
                 result.put(key, value);
-
             }
         }
 

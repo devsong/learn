@@ -27,7 +27,7 @@ import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 @Component("kickoutSessionFilter")
 public class KickoutSessionFilter extends AccessControlFilter {
     // 静态注入
-    static String kickoutUrl = "/u/login.shtml?kickout";
+    static String kickoutUrl = "/u/login?kickout";
     // 在线用户
     final static String ONLINE_USER = KickoutSessionFilter.class.getCanonicalName() + "_online_user";
     // 踢出状态，true标示踢出

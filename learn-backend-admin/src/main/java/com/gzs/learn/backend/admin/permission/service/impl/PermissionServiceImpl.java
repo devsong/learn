@@ -25,7 +25,6 @@ import com.gzs.learn.backend.admin.permission.service.PermissionService;
 
 @Service
 public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> implements PermissionService {
-
     @Autowired
     UPermissionMapper permissionMapper;
     @Autowired

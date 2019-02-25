@@ -6,7 +6,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -14,21 +13,20 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UrlPathHelper;
 
 import com.google.common.collect.Maps;
+import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
+import com.gzs.learn.backend.admin.permission.service.RoleService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 import com.gzs.learn.backend.admin.utils.VerifyCodeUtils;
 import com.gzs.learn.backend.admin.utils.vcode.Captcha;
 import com.gzs.learn.backend.admin.utils.vcode.GifCaptcha;
 import com.gzs.learn.backend.admin.utils.vcode.SpecCaptcha;
-import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
 
 @Controller
-@Scope(value = "prototype")
 @RequestMapping("open")
 public class CommonController extends BaseController {
     @Resource
-    RoleService roleService;
+    private RoleService roleService;
 
     /**
      * 404错误

@@ -16,7 +16,7 @@
 			so.init(function(){
 				//初始化全选。
 				so.checkBoxInit('#checkAll','[check=box]');
-				<@shiro.hasPermission name="/member/deleteUserById.shtml">
+				<@shiro.hasPermission name="/member/deleteUserById">
 				//全选
 				so.id('deleteAll').on('click',function(){
 					var checkeds = $('[check=box]:checked');
@@ -31,12 +31,12 @@
 				});
 				</@shiro.hasPermission>
 			});
-			<@shiro.hasPermission name="/member/deleteUserById.shtml">
+			<@shiro.hasPermission name="/member/deleteUserById">
 			//根据ID数组，删除
 			function _delete(ids){
 				var index = layer.confirm("确定这"+ ids.length +"个用户？",function(){
 					var load = layer.load();
-					$.post('${basePath}/member/deleteUserById.shtml',{ids:ids.join(',')},function(result){
+					$.post('${basePath}/member/deleteUserById',{ids:ids.join(',')},function(result){
 						layer.close(load);
 						if(result && result.status != 200){
 							return layer.msg(result.message,so.default),!0;
@@ -51,7 +51,7 @@
 				});
 			}
 			</@shiro.hasPermission>
-			<@shiro.hasPermission name="/member/forbidUserById.shtml">
+			<@shiro.hasPermission name="/member/forbidUserById">
 			/*
 			*激活 | 禁止用户登录
 			*/
@@ -59,7 +59,7 @@
 				var text = status?'激活':'禁止';
 				var index = layer.confirm("确定"+text+"这个用户？",function(){
 					var load = layer.load();
-					$.post('${basePath}/member/forbidUserById.shtml',{status:status,id:id},function(result){
+					$.post('${basePath}/member/forbidUserById',{status:status,id:id},function(result){
 						layer.close(load);
 						if(result && result.status != 200){
 							return layer.msg(result.message,so.default),!0;
@@ -93,7 +93,7 @@
 					      </div>
 					     <span class=""> <#--pull-right -->
 				         	<button type="submit" class="btn btn-primary">查询</button>
-				         	<@shiro.hasPermission name="/member/deleteUserById.shtml">
+				         	<@shiro.hasPermission name="/member/deleteUserById">
 				         		<button type="button" id="deleteAll" class="btn  btn-danger">Delete</button>
 				         	</@shiro.hasPermission>
 				         </span>    
@@ -119,13 +119,13 @@
 									<td>${it.createTime?string('yyyy-MM-dd HH:mm')}</td>
 									<td>${it.lastLoginTime?string('yyyy-MM-dd HH:mm')}</td>
 									<td>
-										<@shiro.hasPermission name="/member/forbidUserById.shtml">
+										<@shiro.hasPermission name="/member/forbidUserById">
 										${(it.status==1)?string('<i class="glyphicon glyphicon-eye-close"></i>&nbsp;','<i class="glyphicon glyphicon-eye-open"></i>&nbsp;')}
 										<a href="javascript:forbidUserById(${(it.status==1)?string(0,1)},${it.id})">
 											${(it.status==1)?string('禁止登录','激活登录')}
 										</a>
 										</@shiro.hasPermission>
-										<@shiro.hasPermission name="/member/deleteUserById.shtml">
+										<@shiro.hasPermission name="/member/deleteUserById">
 										<a href="javascript:_delete([${it.id}]);">删除</a>
 										</@shiro.hasPermission>
 									</td>

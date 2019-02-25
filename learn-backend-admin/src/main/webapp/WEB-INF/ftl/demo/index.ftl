@@ -20,7 +20,7 @@
 					<h2>安全提交测试</h2>
 					<hr>
 					<div id="getPermissionTree" >
-						<form class=" col-md-8" method="post" action="${basePath}/demo/submit/${urlPart}.shtml" enctype="multipart/form-data" id="formId">
+						<form class=" col-md-8" method="post" action="${basePath}/demo/submit/${urlPart}" enctype="multipart/form-data" id="formId">
 						  <input type="hidden" name="id" value="1">
 						  <div class="form-group">
 						     <div class="input-group">

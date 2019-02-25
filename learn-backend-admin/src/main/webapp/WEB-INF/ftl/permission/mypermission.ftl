@@ -34,7 +34,7 @@
 			$(function(){
 				//加载 permission tree data
 				var load = layer.load();
-				$.post("getPermissionTree.shtml",{},function(data){
+				$.post("getPermissionTree",{},function(data){
 					layer.close(load);
 					if(data && !data.length){
 						return $("#getPermissionTree").html('<code>您没有任何权限。只有默认的个人中心。</code>'),!1;

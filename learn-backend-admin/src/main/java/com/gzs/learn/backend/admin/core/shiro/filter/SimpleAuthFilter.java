@@ -54,7 +54,7 @@ public class SimpleAuthFilter extends AccessControlFilter {
         subject.logout();
         WebUtils.saveRequest(request);
         // 再重定向
-        WebUtils.issueRedirect(request, response, "/open/kickedOut.shtml");
+        WebUtils.issueRedirect(request, response, "/open/kickedOut");
         return false;
     }
 

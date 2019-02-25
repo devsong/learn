@@ -42,7 +42,7 @@ public class SampleRealm extends AuthorizingRealm {
      */
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         ShiroToken token = (ShiroToken) authcToken;
-        UUser user = userService.login(token.getUsername(), token.getPswd());
+        UUser user = userService.login(token.getUsername(), new String(token.getPassword()));
         if (null == user) {
             throw new AccountException("帐号或密码不正确！");
             /**

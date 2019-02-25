@@ -33,7 +33,7 @@
                 <input type="password" id="re_password"  placeholder="Repeat the password">
                 <div style="text-align: left; margin-left: 10px;" id="vcode">
 	                <input type="text" name="vcode"   placeholder="Verification code" style="width: 110px; margin-left: -8px; margin-right: 8px;">
-                	<img src="${basePath}/open/getGifCode.shtml" />
+                	<img src="${basePath}/open/getGifCode" />
                 </div>
                 <button type="button" class="register">Register</button>
                 <button type="button" id="login" >Login</button>
@@ -53,9 +53,9 @@
 				$("#vcode").on("click",'img',function(){
 					/**动态验证码，改变地址，多次在火狐浏览器下，不会变化的BUG，故这样解决*/
 					var i = new Image();
-					i.src = '${basePath}/open/getGifCode.shtml?'  + Math.random();
+					i.src = '${basePath}/open/getGifCode?'  + Math.random();
 					$(i).replaceAll(this);
-					//$(this).clone(true).attr("src",'${basePath}/open/getGifCode.shtml?'  + Math.random()).replaceAll(this);
+					//$(this).clone(true).attr("src",'${basePath}/open/getGifCode?'  + Math.random()).replaceAll(this);
 				});
 			    $('.register').click(function(){
 			    	var form = $('#_form');
@@ -84,13 +84,13 @@
 			    		return layer.msg('验证码的长度为4位！',function(){}),!1;
 			    	}
 			    	var load = layer.load();
-			    	$.post("${basePath}/u/subRegister.shtml",$("#_form").serialize() ,function(result){
+			    	$.post("$/u/subRegister",$("#_form").serialize() ,function(result){
 			    		layer.close(load);
 			    		if(result && result.status!= 200){
 			    			return layer.msg(result.message,function(){}),!1;
 			    		}else{
 			    			layer.msg('注册成功！' );
-			    			window.location.href= result.back_url || "${basePath}/";
+			    			window.location.href= result.back_url || "/";
 			    		}
 			    	},"json");
 			        
@@ -100,10 +100,10 @@
 			    });
 			    //跳转
 			    $("#login").click(function(){
-			    	window.location.href="login.shtml";
+			    	window.location.href="login";
 			    });
 			    $("#register").click(function(){
-			    	window.location.href="register.shtml";
+			    	window.location.href="register";
 			    });
 			    
 			
