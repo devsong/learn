@@ -46,7 +46,7 @@ $(document).ready(function () {
 		var load = layer.load();
 
 		$.ajax({
-			url: "/u/submitLogin",
+			url: "/api/u/submitLogin",
 			data: data,
 			type: "post",
 			dataType: "json",
@@ -87,7 +87,7 @@ var baseUrl = $("script[baseUrl]").attr('baseUrl');
 /**退出*/
 function logout() {
 	var load = layer.load();
-	$.getJSON(baseUrl + '/u/logout', {}, function (result) {
+	$.getJSON(baseUrl + '/api/u/logout', {}, function (result) {
 		layer.close(load);
 		if (result && result.status == 200) {
 			$(".qqlogin").html('').next('ul').remove();

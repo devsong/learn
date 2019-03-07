@@ -2,7 +2,6 @@ package com.gzs.learn.backend.admin.utils;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
@@ -10,7 +9,6 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class SpringContextUtil implements ApplicationContextAware {
 
-    @Autowired
     private static ApplicationContext applicationContext;
 
     @Override

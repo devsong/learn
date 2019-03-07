@@ -23,7 +23,8 @@ public class TokenManager {
      * @return
      */
     public static UUser getToken() {
-        UUser token = (UUser) SecurityUtils.getSubject().getPrincipal();
+        Object principal = SecurityUtils.getSubject().getPrincipal();
+        UUser token = (UUser) principal;
         return token;
     }
 
