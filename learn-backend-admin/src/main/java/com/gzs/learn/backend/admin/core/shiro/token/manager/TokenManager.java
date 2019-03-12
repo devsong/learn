@@ -139,8 +139,9 @@ public class TokenManager {
      * @param id	用户ID
      */
     public static void clearUserAuthByUserId(Long... userIds) {
-        if (null == userIds || userIds.length == 0)
+        if (null == userIds || userIds.length == 0) {
             return;
+        }
         List<SimplePrincipalCollection> result = customSessionManager.getSimplePrincipalCollectionByUserId(userIds);
 
         for (SimplePrincipalCollection simplePrincipalCollection : result) {

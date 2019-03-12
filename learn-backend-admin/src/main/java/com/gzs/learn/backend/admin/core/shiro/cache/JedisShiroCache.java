@@ -8,16 +8,12 @@ import java.util.Set;
 import org.apache.shiro.cache.Cache;
 import org.apache.shiro.cache.CacheException;
 
+import com.gzs.learn.backend.admin.common.Consts;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.SerializeUtil;
 
 @SuppressWarnings("unchecked")
 public class JedisShiroCache<K, V> implements Cache<K, V> {
-    /**
-     * 为了不和其他的缓存混淆，采用追加前缀方式以作区分
-     */
-    private static final String REDIS_SHIRO_CACHE = "shiro-demo-cache:";
-
     private JedisManager jedisManager;
 
     private String name;
@@ -80,30 +76,28 @@ public class JedisShiroCache<K, V> implements Cache<K, V> {
 
     @Override
     public void clear() throws CacheException {
-        // TODO--
     }
 
     @Override
     public int size() {
-        if (keys() == null)
+        if (keys() == null) {
             return 0;
+        }
         return keys().size();
     }
 
     @Override
     public Set<K> keys() {
-        // TODO
         return null;
     }
 
     @Override
     public Collection<V> values() {
-        // TODO
         return null;
     }
 
     private String buildCacheKey(Object key) {
-        return REDIS_SHIRO_CACHE + getName() + ":" + key;
+        return Consts.REDIS_SHIRO_CACHE + getName() + ":" + key;
     }
 
 }

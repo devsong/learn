@@ -40,6 +40,7 @@ public class SampleRealm extends AuthorizingRealm {
     /**
      *  认证信息，主要针对用户登录， 
      */
+    @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         ShiroToken token = (ShiroToken) authcToken;
         UUser user = userService.login(token.getUsername(), new String(token.getPassword()));
@@ -82,6 +83,7 @@ public class SampleRealm extends AuthorizingRealm {
     /**
      * 指定principalCollection 清除
      */
+    @Override
     public void clearCachedAuthorizationInfo(PrincipalCollection principalCollection) {
         SimplePrincipalCollection principals = new SimplePrincipalCollection(principalCollection, getName());
         super.clearCachedAuthorizationInfo(principals);

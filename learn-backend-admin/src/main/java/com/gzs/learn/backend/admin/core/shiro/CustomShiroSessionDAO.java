@@ -25,17 +25,9 @@ public class CustomShiroSessionDAO extends AbstractSessionDAO {
         super.setSessionIdGenerator(sessionIdGenerator);
     }
 
-    public ShiroSessionRepository getShiroSessionRepository() {
-        return shiroSessionRepository;
-    }
-
-    public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
-        this.shiroSessionRepository = shiroSessionRepository;
-    }
-
     @Override
     public void update(Session session) throws UnknownSessionException {
-        getShiroSessionRepository().saveSession(session);
+        shiroSessionRepository.saveSession(session);
     }
 
     @Override
@@ -46,25 +38,25 @@ public class CustomShiroSessionDAO extends AbstractSessionDAO {
         }
         Serializable id = session.getId();
         if (id != null) {
-            getShiroSessionRepository().deleteSession(id);
+            shiroSessionRepository.deleteSession(id);
         }
     }
 
     @Override
     public Collection<Session> getActiveSessions() {
-        return getShiroSessionRepository().getAllSessions();
+        return shiroSessionRepository.getAllSessions();
     }
 
     @Override
     protected Serializable doCreate(Session session) {
         Serializable sessionId = this.generateSessionId(session);
         this.assignSessionId(session, sessionId);
-        getShiroSessionRepository().saveSession(session);
+        shiroSessionRepository.saveSession(session);
         return sessionId;
     }
 
     @Override
     protected Session doReadSession(Serializable sessionId) {
-        return getShiroSessionRepository().getSession(sessionId);
+        return shiroSessionRepository.getSession(sessionId);
     }
 }

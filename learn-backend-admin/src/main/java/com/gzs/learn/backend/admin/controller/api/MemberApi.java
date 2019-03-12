@@ -16,7 +16,7 @@ import com.gzs.learn.backend.admin.user.service.UUserService;
 public class MemberApi extends BaseController {
     /***
      * 用户手动操作Session
-     * */
+     */
     @Autowired
     private CustomSessionManager customSessionManager;
     @Autowired

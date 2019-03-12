@@ -7,7 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.core.shiro.session.ShiroSessionRepository;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component("customSessionListener")
+@Slf4j
 public class CustomSessionListener implements SessionListener {
 
     @Autowired
@@ -15,7 +18,7 @@ public class CustomSessionListener implements SessionListener {
 
     @Override
     public void onStart(Session session) {
-        System.out.println("on start");
+        log.info("on start");
     }
 
     /**
@@ -23,20 +26,11 @@ public class CustomSessionListener implements SessionListener {
      */
     @Override
     public void onStop(Session session) {
-        System.out.println("on stop");
+        log.info("on stop");
     }
 
     @Override
     public void onExpiration(Session session) {
         shiroSessionRepository.deleteSession(session.getId());
     }
-
-    public ShiroSessionRepository getShiroSessionRepository() {
-        return shiroSessionRepository;
-    }
-
-    public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
-        this.shiroSessionRepository = shiroSessionRepository;
-    }
-
 }

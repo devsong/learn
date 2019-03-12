@@ -366,7 +366,7 @@ public class VCache {
         return false;
     }
 
-    public static void returnResource(Jedis jedis, boolean isBroken) {
+    private static void returnResource(Jedis jedis, boolean isBroken) {
         if (jedis == null) {
             return;
         }

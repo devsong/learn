@@ -3,6 +3,7 @@ package com.gzs.learn.backend.admin.common;
 import java.util.Calendar;
 
 public interface Consts {
+    String REDIS_SHIRO_CACHE = "shiro-demo-cache:";
 
     String REDIS_SHIRO_SESSION = "sojson-shiro-demo-session:";
 

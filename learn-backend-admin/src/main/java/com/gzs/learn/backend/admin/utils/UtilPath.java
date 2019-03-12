@@ -8,25 +8,7 @@ import javax.servlet.http.HttpServletRequest;
 
 
 
-/**
- * 
- * 静态化路径工具类
- * 
- * <p>
- * 
- * <p>
- * 
- * 区分　责任人　日期　　　　说明<br/>
- * 创建　周柏成　2013-6-11　<br/>
- * <p>
- * 
- * @author
- * 
- * @version 1.0, 2013-6-11
- * 
- */
 public class UtilPath {
-
 	/**
 	 * 获取到classes目录
 	 * @return path

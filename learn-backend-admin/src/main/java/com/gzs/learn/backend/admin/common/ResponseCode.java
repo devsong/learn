@@ -29,8 +29,11 @@ public enum ResponseCode {
      */
     BUSINESS_ERROR(60000, "business error"),
 
+    /**
+     * 账号已禁用
+     */
     ACCOUNT_DISABLE(60001, "账号已禁用"),
-    
+
     ;
     private int code;
     private String desc;

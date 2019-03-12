@@ -26,7 +26,6 @@ public class APITemplateModel extends WYFTemplateModel {
             SuperCustomTag tag = SpringContextUtil.getBean(SuperCustomTag.class);
 
             Object result = tag.result(params);
-
             paramWrap.put(Consts.OUT_TAG_NAME, DEFAULT_WRAPPER.wrap(result));
         } else {
             LoggerUtils.error(getClass(), "Cannot be null, must include a 'name' attribute!");
