@@ -8,8 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
 import com.gzs.learn.backend.admin.permission.bo.UserRoleAllocationBo;
-import com.gzs.learn.backend.admin.permission.service.PermissionService;
-import com.gzs.learn.backend.admin.user.service.UUserService;
+import com.gzs.learn.backend.admin.service.PermissionService;
+import com.gzs.learn.backend.admin.service.UUserService;
 
 @Controller
 @RequestMapping("role")

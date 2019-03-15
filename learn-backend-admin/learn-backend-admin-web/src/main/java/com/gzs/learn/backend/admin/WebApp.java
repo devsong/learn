@@ -11,7 +11,7 @@ import org.springframework.context.annotation.ImportResource;
 
 @SpringBootApplication
 @EnableAspectJAutoProxy
-@ImportResource("/META-INF/spring.xml")
+@ImportResource("classpath:META-INF/spring.xml")
 @MapperScan(basePackages = { "com.gzs.learn.backend.admin.repository" })
 @ComponentScan(basePackages = { "com.gzs.learn.backend.admin" })
 public class WebApp extends SpringBootServletInitializer {

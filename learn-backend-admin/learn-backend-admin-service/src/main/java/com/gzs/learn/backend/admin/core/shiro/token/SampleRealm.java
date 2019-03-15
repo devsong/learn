@@ -20,9 +20,9 @@ import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 import com.gzs.learn.backend.admin.entity.UUser;
-import com.gzs.learn.backend.admin.permission.service.PermissionService;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
-import com.gzs.learn.backend.admin.user.service.UUserService;
+import com.gzs.learn.backend.admin.service.PermissionService;
+import com.gzs.learn.backend.admin.service.RoleService;
+import com.gzs.learn.backend.admin.service.UUserService;
 
 @Component("sampleRealm")
 public class SampleRealm extends AuthorizingRealm {

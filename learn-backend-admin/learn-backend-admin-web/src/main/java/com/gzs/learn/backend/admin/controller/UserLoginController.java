@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gzs.learn.backend.admin.user.service.UUserService;
+import com.gzs.learn.backend.admin.service.UUserService;
 
 @Controller
 @RequestMapping("u")

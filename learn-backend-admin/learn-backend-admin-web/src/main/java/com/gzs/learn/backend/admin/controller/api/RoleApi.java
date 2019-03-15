@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gzs.learn.backend.admin.controller.BaseController;
 import com.gzs.learn.backend.admin.entity.URole;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
-import com.gzs.learn.backend.admin.user.manager.UserManager;
+import com.gzs.learn.backend.admin.service.RoleService;
+import com.gzs.learn.backend.admin.service.manager.UserManager;
 
 @RestController
 @RequestMapping("api/role")

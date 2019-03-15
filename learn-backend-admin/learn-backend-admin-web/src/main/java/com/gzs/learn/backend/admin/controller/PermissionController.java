@@ -8,7 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
 import com.gzs.learn.backend.admin.entity.UPermission;
-import com.gzs.learn.backend.admin.permission.service.PermissionService;
+import com.gzs.learn.backend.admin.service.PermissionService;
 @Controller
 @RequestMapping("permission")
 public class PermissionController extends BaseController {

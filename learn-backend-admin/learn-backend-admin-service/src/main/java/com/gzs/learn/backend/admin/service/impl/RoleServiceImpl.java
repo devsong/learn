@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.permission.service.impl;
+package com.gzs.learn.backend.admin.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -14,10 +14,10 @@ import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 import com.gzs.learn.backend.admin.entity.URole;
 import com.gzs.learn.backend.admin.permission.bo.RolePermissionAllocationBo;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
 import com.gzs.learn.backend.admin.repository.URoleMapper;
 import com.gzs.learn.backend.admin.repository.URolePermissionMapper;
 import com.gzs.learn.backend.admin.repository.UUserMapper;
+import com.gzs.learn.backend.admin.service.RoleService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 

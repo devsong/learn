@@ -13,8 +13,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
 import com.gzs.learn.backend.admin.core.shiro.session.CustomSessionManager;
 import com.gzs.learn.backend.admin.entity.UUser;
+import com.gzs.learn.backend.admin.service.UUserService;
 import com.gzs.learn.backend.admin.user.bo.UserOnlineBo;
-import com.gzs.learn.backend.admin.user.service.UUserService;
 
 @Controller
 @RequestMapping("member")

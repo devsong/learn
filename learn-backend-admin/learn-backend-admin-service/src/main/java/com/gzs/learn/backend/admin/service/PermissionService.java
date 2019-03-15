@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.permission.service;
+package com.gzs.learn.backend.admin.service;
 
 import java.util.List;
 import java.util.Map;

@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.user.manager;
+package com.gzs.learn.backend.admin.service.manager;
 
 import java.util.LinkedHashMap;
 import java.util.LinkedList;

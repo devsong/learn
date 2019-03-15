@@ -25,7 +25,7 @@
     <!-- 配置freeMarker 拓展 -->
     <bean id="freemarkerConfig" class="com.gzs.learn.backend.admin.core.freemarker.extend.FreeMarkerConfigExtend">
         <property name="templateLoaderPath">
-            <value>/WEB-INF/ftl/</value>
+            <value>classpath:templates/ftl/</value>
         </property>
         <property name="freemarkerVariables">
             <map>

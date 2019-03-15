@@ -14,7 +14,7 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.google.common.collect.Maps;
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
+import com.gzs.learn.backend.admin.service.RoleService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 import com.gzs.learn.backend.admin.utils.VerifyCodeUtils;

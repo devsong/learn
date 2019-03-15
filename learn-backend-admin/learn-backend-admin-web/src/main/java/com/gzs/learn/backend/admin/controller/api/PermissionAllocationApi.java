@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.gzs.learn.backend.admin.controller.BaseController;
 import com.gzs.learn.backend.admin.permission.bo.UPermissionBo;
-import com.gzs.learn.backend.admin.permission.service.PermissionService;
+import com.gzs.learn.backend.admin.service.PermissionService;
 
 @RestController
 @RequestMapping("api/permission")

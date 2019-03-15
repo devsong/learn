@@ -9,7 +9,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
 import com.gzs.learn.backend.admin.entity.URole;
-import com.gzs.learn.backend.admin.permission.service.RoleService;
+import com.gzs.learn.backend.admin.service.RoleService;
 
 @Controller
 @RequestMapping("role")

@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.user.service.impl;
+package com.gzs.learn.backend.admin.service.impl;
 
 import java.util.HashMap;
 import java.util.List;
@@ -21,7 +21,7 @@ import com.gzs.learn.backend.admin.permission.bo.URoleBo;
 import com.gzs.learn.backend.admin.permission.bo.UserRoleAllocationBo;
 import com.gzs.learn.backend.admin.repository.UUserMapper;
 import com.gzs.learn.backend.admin.repository.UUserRoleMapper;
-import com.gzs.learn.backend.admin.user.service.UUserService;
+import com.gzs.learn.backend.admin.service.UUserService;
 
 @Service
 public class UUserServiceImpl extends BaseMybatisDao<UUserMapper> implements UUserService {

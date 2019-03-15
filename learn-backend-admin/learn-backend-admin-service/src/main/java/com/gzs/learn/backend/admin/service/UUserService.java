@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.user.service;
+package com.gzs.learn.backend.admin.service;
 
 import java.util.List;
 import java.util.Map;
