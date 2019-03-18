@@ -33,7 +33,7 @@ public class FreeMarkerViewExtend extends FreeMarkerView {
         model.put("NOW_YEAY", Consts.NOW_YEAY);// 今年
 
         model.put("_v", Consts.VERSION);// 版本号，重启的时间
-        model.put("cdn", Consts.DOMAIN_CDN);// CDN域名
+        // model.put("cdn", Consts.DOMAIN_CDN);// CDN域名
         model.put("basePath", request.getContextPath());// base目录。
     }
 }

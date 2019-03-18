@@ -59,9 +59,6 @@ public interface Consts {
     /**当前年份**/
     int NOW_YEAY = Calendar.getInstance().get(Calendar.YEAR);
 
-    /**地址域名**/
-    String DOMAIN_WWW = IConfig.get("domain.www");// 前端域名
-    String DOMAIN_CDN = IConfig.get("domain.cdn");// 静态资源域名
     String VERSION = String.valueOf(System.currentTimeMillis());// 版本号，重启的时间
 
     // 存储到缓存，标识用户的禁止状态，解决在线用户踢出的问题

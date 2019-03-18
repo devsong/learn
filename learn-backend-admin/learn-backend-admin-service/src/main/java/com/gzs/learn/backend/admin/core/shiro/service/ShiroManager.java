@@ -1,5 +1,7 @@
 package com.gzs.learn.backend.admin.core.shiro.service;
 
+import java.util.Map;
+
 public interface ShiroManager {
 
     /**
@@ -9,8 +11,14 @@ public interface ShiroManager {
     String loadFilterChainDefinitions();
 
     /**
+     * spring boot 配置
+     * @return
+     */
+    Map<String, String> loadFilterChainDefinitionsForSpringBoot();
+
+    /**
     * 重新构建权限过滤器
     * 一般在修改了用户角色、用户等信息时，需要再次调用该方法
     */
-    void reCreateFilterChains();
+    // void reCreateFilterChains();
 }

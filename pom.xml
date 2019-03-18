@@ -67,5 +67,6 @@
         <module>learn-java-net</module>
         <module>learn-hystrix</module>
         <module>learn-backend-admin</module>
+        <module>learn-springframework</module>
     </modules>
 </project>
