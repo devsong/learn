@@ -16,6 +16,7 @@ import org.apache.shiro.subject.Subject;
 import org.apache.shiro.web.filter.AccessControlFilter;
 import org.apache.shiro.web.util.WebUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.utils.JsonUtil;
@@ -26,14 +27,14 @@ import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 
 @Component("kickout")
 public class KickoutSessionFilter extends AccessControlFilter {
-    // 静态注入
-    static String kickoutUrl = "/u/login?kickout";
+    private static String kickoutUrl = "/u/login?kickout";
     // 在线用户
     final static String ONLINE_USER = KickoutSessionFilter.class.getCanonicalName() + "_online_user";
     // 踢出状态，true标示踢出
     final static String KICKOUT_STATUS = KickoutSessionFilter.class.getCanonicalName() + "_kickout_status";
 
     @Autowired
+    @Lazy
     private ShiroSessionRepository shiroSessionRepository;
 
     @Override
@@ -133,13 +134,4 @@ public class KickoutSessionFilter extends AccessControlFilter {
             LoggerUtils.error(getClass(), "KickoutSessionFilter.class 输出JSON异常，可以忽略。");
         }
     }
-
-    public static String getKickoutUrl() {
-        return kickoutUrl;
-    }
-
-    public static void setKickoutUrl(String kickoutUrl) {
-        KickoutSessionFilter.kickoutUrl = kickoutUrl;
-    }
-
 }

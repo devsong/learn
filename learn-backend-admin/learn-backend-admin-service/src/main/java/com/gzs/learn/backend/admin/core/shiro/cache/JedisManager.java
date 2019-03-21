@@ -6,6 +6,7 @@ import java.util.Set;
 
 import org.apache.shiro.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.common.Consts;
@@ -22,6 +23,7 @@ import redis.clients.jedis.exceptions.JedisConnectionException;
 @Slf4j
 public class JedisManager {
     @Autowired
+    @Lazy
     private JedisPool jedisPool;
 
     public Jedis getJedis() {

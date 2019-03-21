@@ -27,8 +27,8 @@
     </tx:advice>
 
     <aop:config>
-        <aop:pointcut id="myPointcut"
+        <aop:pointcut id="txPointcut"
             expression="execution(public * com.gzs.learn.backend.admin.service.impl.*.*(..))" />
-        <aop:advisor advice-ref="txAdvice" pointcut-ref="myPointcut" />
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut" />
     </aop:config>
 </beans>

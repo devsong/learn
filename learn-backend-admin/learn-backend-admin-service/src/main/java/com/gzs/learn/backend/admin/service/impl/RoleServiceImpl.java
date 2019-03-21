@@ -38,7 +38,8 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
 
     @Override
     public int insert(URole record) {
-        return roleMapper.insert(record);
+        roleMapper.insert(record);
+        throw new NullPointerException();
     }
 
     @Override

@@ -7,6 +7,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.ImportResource;
 
 import lombok.extern.slf4j.Slf4j;
@@ -16,6 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @MapperScan(basePackages = { "com.gzs.learn.backend.admin.repository" })
 @ComponentScan(basePackages = { "com.gzs.learn.backend.admin" })
 @Slf4j
+@EnableAspectJAutoProxy(proxyTargetClass = true)
 public class WebApp extends SpringBootServletInitializer {
 
     @Override

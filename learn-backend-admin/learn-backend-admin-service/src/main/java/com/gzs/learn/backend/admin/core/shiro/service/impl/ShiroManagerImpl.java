@@ -16,9 +16,6 @@ public class ShiroManagerImpl implements ShiroManager {
     // 注意/r/n前不能有空格
     private static final String CRLF = "\r\n";
 
-    // @Autowired
-    // private ShiroFilterFactoryBean shiroFilterFactoryBean;
-
     @Override
     public String loadFilterChainDefinitions() {
         StringBuffer sb = new StringBuffer();
@@ -53,7 +50,7 @@ public class ShiroManagerImpl implements ShiroManager {
     // 此方法加同步锁
     // @Override
     // public synchronized void reCreateFilterChains() {
-    // AbstractShiroFilter shiroFilter = null;
+    // AbstractShiroFilter shiroFilter = SpringContextUtil.getBean(ShiroFilter.class);
     // try {
     // shiroFilter = (AbstractShiroFilter) shiroFilterFactoryBean.getObject();
     // } catch (Exception e) {

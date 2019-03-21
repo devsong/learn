@@ -6,8 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.gzs.learn.backend.admin.annotation.PerformanceAnnotation;
+
 @Controller
 @RequestMapping("user")
+@PerformanceAnnotation
 public class UserCoreController extends BaseController {
     /**
      * 个人资料

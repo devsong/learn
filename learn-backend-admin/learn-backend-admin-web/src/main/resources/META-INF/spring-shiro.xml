@@ -32,9 +32,9 @@
     <bean id="sessionValidationScheduler"
         class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
         <property name="interval" value="${app.shiro.sessionTimeout}" />
-       <!--  <property name="sessionManager" ref="sessionManager" /> -->
+        <!-- <property name="sessionManager" ref="sessionManager" /> -->
     </bean>
-    
+
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
         <property name="sessionValidationInterval" value="${app.shiro.sessionTimeout}" />
         <property name="globalSessionTimeout" value="${app.shiro.sessionTimeout}" />
@@ -57,14 +57,14 @@
         <property name="cacheManager" ref="customShiroCacheManager" />
     </bean>
 
-    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" lazy-init="true">
         <property name="securityManager" ref="securityManager" />
         <property name="loginUrl" value="${app.shiro.loginUrl}" />
         <property name="successUrl" value="${app.shiro.successUrl}" />
         <property name="unauthorizedUrl" value="${app.shiro.loginUrl}" />
         <property name="filterChainDefinitions" value="#{shiroManager.loadFilterChainDefinitions()}" />
 
-        <!-- <property name="filters">
+        <property name="filters">
             <util:map>
                 <entry key="login" value-ref="login" />
                 <entry key="role" value-ref="role" />
@@ -72,8 +72,8 @@
                 <entry key="permission" value-ref="permission" />
                 <entry key="kickout" value-ref="kickout" />
             </util:map>
-        </property> -->
+        </property>
     </bean>
-    
+
     <bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 </beans>

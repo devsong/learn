@@ -21,8 +21,7 @@
             </list>
         </property>
     </bean>
-    <aop:aspectj-autoproxy proxy-target-class="true" />
-    
+
     <import resource="spring-mybatis.xml" />
     <import resource="spring-cache.xml" />
     <import resource="spring-shiro.xml" />

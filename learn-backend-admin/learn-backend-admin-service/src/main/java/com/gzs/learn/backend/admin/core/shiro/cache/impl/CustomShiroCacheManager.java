@@ -5,6 +5,7 @@ import org.apache.shiro.cache.CacheException;
 import org.apache.shiro.cache.CacheManager;
 import org.apache.shiro.util.Destroyable;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.core.shiro.cache.ShiroCacheManager;
@@ -12,6 +13,7 @@ import com.gzs.learn.backend.admin.core.shiro.cache.ShiroCacheManager;
 @Component
 public class CustomShiroCacheManager implements CacheManager, Destroyable {
     @Autowired
+    @Lazy
     private ShiroCacheManager shiroCacheManager;
 
     @Override

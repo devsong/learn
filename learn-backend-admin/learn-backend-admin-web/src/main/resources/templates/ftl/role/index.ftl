@@ -37,7 +37,7 @@
 			function deleteById(ids){
 				var index = layer.confirm("确定这"+ ids.length +"个角色？",function(){
 					var load = layer.load();
-					$.post('${basePath}/role/deleteRoleById',{ids:ids.join(',')},function(result){
+					$.post('${basePath}/api/role/deleteRoleById',{ids:ids.join(',')},function(result){
 						layer.close(load);
 						if(result && result.status != 200){
 							return layer.msg(result.message,so.default),!0;
@@ -65,7 +65,7 @@
 				}
 				<#--loding-->
 				var load = layer.load();
-				$.post('${basePath}/role/addRole',{name:name,type:type},function(result){
+				$.post('${basePath}/api/role/addRole',{name:name,type:type},function(result){
 					layer.close(load);
 					if(result && result.status != 200){
 						return layer.msg(result.message,so.default),!1;
