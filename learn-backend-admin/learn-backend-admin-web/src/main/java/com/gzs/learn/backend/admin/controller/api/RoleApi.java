@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.google.common.collect.Lists;
 import com.gzs.learn.backend.admin.controller.BaseController;
 import com.gzs.learn.backend.admin.entity.URole;
 import com.gzs.learn.backend.admin.service.RoleService;
@@ -39,14 +38,7 @@ public class RoleApi extends BaseController {
      */
     @RequestMapping(value = "deleteRoleById", method = RequestMethod.POST)
     public Map<String, Object> deleteRoleById(String ids) {
-        URole record = new URole();
-        record.setName("测试");
-        record.setType("1");
-        record.setPermissions(Lists.newArrayList());
-        record.setType("1");
-        roleService.insert(record);
-        throw new NullPointerException();
-        // return roleService.deleteRoleById(ids);
+        return roleService.deleteRoleById(ids);
     }
 
     /**

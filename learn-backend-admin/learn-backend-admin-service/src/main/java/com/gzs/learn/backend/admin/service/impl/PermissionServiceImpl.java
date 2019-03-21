@@ -7,6 +7,7 @@ import java.util.Set;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import com.gzs.learn.backend.admin.core.mybatis.BaseMybatisDao;
@@ -192,6 +193,7 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
 
     @Autowired
     @Override
+    @Lazy
     public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
         super.setSqlSessionFactory(sqlSessionFactory);
     }
