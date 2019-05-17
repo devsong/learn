@@ -32,7 +32,7 @@
     <bean id="sessionValidationScheduler"
         class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler">
         <property name="interval" value="${app.shiro.sessionTimeout}" />
-        <!-- <property name="sessionManager" ref="sessionManager" /> -->
+        <property name="sessionManager" ref="sessionManager" />
     </bean>
 
     <bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
