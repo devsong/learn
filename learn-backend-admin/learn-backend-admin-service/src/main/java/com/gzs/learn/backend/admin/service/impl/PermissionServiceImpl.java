@@ -5,35 +5,31 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import com.gzs.learn.backend.admin.core.mybatis.BaseMybatisDao;
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 import com.gzs.learn.backend.admin.entity.UPermission;
 import com.gzs.learn.backend.admin.entity.URolePermission;
 import com.gzs.learn.backend.admin.permission.bo.UPermissionBo;
 import com.gzs.learn.backend.admin.repository.UPermissionMapper;
 import com.gzs.learn.backend.admin.repository.URolePermissionMapper;
-import com.gzs.learn.backend.admin.repository.UUserMapper;
 import com.gzs.learn.backend.admin.repository.UUserRoleMapper;
 import com.gzs.learn.backend.admin.service.PermissionService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 
 @Service
-public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> implements PermissionService {
+public class PermissionServiceImpl implements PermissionService {
     @Autowired
-    UPermissionMapper permissionMapper;
+    private UPermissionMapper permissionMapper;
     @Autowired
-    UUserMapper userMapper;
+    private URolePermissionMapper rolePermissionMapper;
     @Autowired
-    URolePermissionMapper rolePermissionMapper;
-    @Autowired
-    UUserRoleMapper userRoleMapper;
+    private UUserRoleMapper userRoleMapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -109,10 +105,11 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
         return resultMap;
     }
 
-    @SuppressWarnings("unchecked")
     @Override
     public Pagination<UPermission> findPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
-        return super.findPage(resultMap, pageNo, pageSize);
+        PageInfo<UPermission> pageInfo = PageHelper.startPage(pageNo, pageSize, true)
+                .doSelectPageInfo(() -> permissionMapper.findAll(resultMap));
+        return new Pagination<>(pageNo, pageSize, (int) pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override
@@ -189,12 +186,5 @@ public class PermissionServiceImpl extends BaseMybatisDao<UPermissionMapper> imp
     @Override
     public Set<String> findPermissionByUserId(Long userId) {
         return permissionMapper.findPermissionByUserId(userId);
-    }
-
-    @Autowired
-    @Override
-    @Lazy
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        super.setSqlSessionFactory(sqlSessionFactory);
     }
 }

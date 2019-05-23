@@ -3,34 +3,27 @@ package com.gzs.learn.backend.admin.service.impl;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Set;
 
-import org.apache.ibatis.session.SqlSessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
-import com.gzs.learn.backend.admin.core.mybatis.BaseMybatisDao;
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
 import com.gzs.learn.backend.admin.entity.URole;
 import com.gzs.learn.backend.admin.permission.bo.RolePermissionAllocationBo;
 import com.gzs.learn.backend.admin.repository.URoleMapper;
-import com.gzs.learn.backend.admin.repository.URolePermissionMapper;
-import com.gzs.learn.backend.admin.repository.UUserMapper;
 import com.gzs.learn.backend.admin.service.RoleService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 
 @Service
-@SuppressWarnings("unchecked")
-public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements RoleService {
+public class RoleServiceImpl implements RoleService {
     @Autowired
-    URoleMapper roleMapper;
-    @Autowired
-    UUserMapper userMapper;
-    @Autowired
-    URolePermissionMapper rolePermissionMapper;
+    private URoleMapper roleMapper;
 
     @Override
     public int deleteByPrimaryKey(Long id) {
@@ -64,13 +57,15 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
 
     @Override
     public Pagination<URole> findPage(Map<String, Object> resultMap, Integer pageNo, Integer pageSize) {
-        return super.findPage(resultMap, pageNo, pageSize);
+        PageInfo<URole> pageInfo = PageHelper.startPage(pageNo, pageSize, true).doSelectPageInfo(() -> roleMapper.findAll(resultMap));
+        return new Pagination<>(pageNo, pageSize, (int) pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override
-    public Pagination<RolePermissionAllocationBo> findRoleAndPermissionPage(Map<String, Object> resultMap, Integer pageNo,
-            Integer pageSize) {
-        return super.findPage("findRoleAndPermission", "findCount", resultMap, pageNo, pageSize);
+    public Pagination<RolePermissionAllocationBo> findRoleAndPermissionPage(Map<String, Object> params, Integer pageNo, Integer pageSize) {
+        PageInfo<RolePermissionAllocationBo> pageInfo = PageHelper.startPage(pageNo, pageSize, true)
+                .doSelectPageInfo(() -> roleMapper.findRoleAndPermission(params));
+        return new Pagination<>(pageNo, pageSize, (int) pageInfo.getTotal(), pageInfo.getList());
     }
 
     @Override
@@ -86,11 +81,11 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
                 idArray = new String[] { ids };
             }
 
-            c: for (String idx : idArray) {
+            for (String idx : idArray) {
                 Long id = new Long(idx);
-                if (new Long(1).equals(id)) {
+                if (Objects.equals(id, 1L)) {
                     resultMsg = "操作成功，But'系统管理员不能删除。";
-                    continue c;
+                    continue;
                 } else {
                     count += this.deleteByPrimaryKey(id);
                 }
@@ -116,12 +111,5 @@ public class RoleServiceImpl extends BaseMybatisDao<URoleMapper> implements Role
         Map<String, Object> map = new HashMap<String, Object>();
         map.put("userId", TokenManager.getUserId());
         return roleMapper.findNowAllPermission(map);
-    }
-
-    @Autowired
-    @Override
-    @Lazy
-    public void setSqlSessionFactory(SqlSessionFactory sqlSessionFactory) {
-        super.setSqlSessionFactory(sqlSessionFactory);
     }
 }

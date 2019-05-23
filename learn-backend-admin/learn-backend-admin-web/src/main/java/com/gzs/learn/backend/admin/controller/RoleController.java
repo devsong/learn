@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.entity.URole;
 import com.gzs.learn.backend.admin.service.RoleService;
 
@@ -24,7 +24,7 @@ public class RoleController extends BaseController {
     @RequestMapping(value = "index")
     public ModelAndView index(String findContent, ModelMap modelMap) {
         modelMap.put("findContent", findContent);
-        Pagination<URole> role = roleService.findPage(modelMap, pageNo, pageSize);
+        Pagination<URole> role = roleService.findPage(modelMap, DEFAULT_PAGE_NO, DEFAULT_PAGE_SIZE);
         return new ModelAndView("role/index", "page", role);
     }
 

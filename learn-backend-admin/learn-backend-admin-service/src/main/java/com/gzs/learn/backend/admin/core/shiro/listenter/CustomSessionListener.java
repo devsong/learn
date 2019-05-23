@@ -3,7 +3,6 @@ package com.gzs.learn.backend.admin.core.shiro.listenter;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.session.SessionListener;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.core.shiro.session.ShiroSessionRepository;
@@ -15,7 +14,6 @@ import lombok.extern.slf4j.Slf4j;
 public class CustomSessionListener implements SessionListener {
 
     @Autowired
-    @Lazy
     private ShiroSessionRepository shiroSessionRepository;
 
     @Override

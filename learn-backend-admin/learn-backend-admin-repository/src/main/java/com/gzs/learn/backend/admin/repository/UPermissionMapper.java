@@ -1,6 +1,7 @@
 package com.gzs.learn.backend.admin.repository;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.gzs.learn.backend.admin.entity.UPermission;
@@ -22,4 +23,6 @@ public interface UPermissionMapper {
     List<UPermissionBo> selectPermissionById(Long id);
 
     Set<String> findPermissionByUserId(Long id);
+    
+    List<UPermission> findAll(Map<String, Object> params);
 }

@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.core.shiro.session.CustomSessionManager;
 import com.gzs.learn.backend.admin.entity.UUser;
 import com.gzs.learn.backend.admin.service.UUserService;
@@ -33,8 +33,9 @@ public class MemberController extends BaseController {
      */
     @RequestMapping(value = "list")
     public ModelAndView list(ModelMap map, Integer pageNo, String findContent) {
+        pageNo = pageNo == null ? DEFAULT_PAGE_NO : pageNo;
         map.put("findContent", findContent);
-        Pagination<UUser> page = userService.findByPage(map, pageNo, pageSize);
+        Pagination<UUser> page = userService.findByPage(map, pageNo, DEFAULT_PAGE_SIZE);
         map.put("page", page);
         return new ModelAndView("member/list");
     }

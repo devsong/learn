@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.core.mybatis.page;
+package com.gzs.learn.backend.admin.common;
 
 public interface Paginable {
     /**

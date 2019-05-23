@@ -23,14 +23,11 @@ public class SerializeUtil {
             bos = new ByteArrayOutputStream();
             os = new ObjectOutputStream(bos);
             os.writeObject(value);
-            os.close();
-            bos.close();
             rv = bos.toByteArray();
         } catch (Exception e) {
             LoggerUtils.fmtError(CLAZZ, e, "serialize error %s", JSON.toJSONString(value));
         } finally {
-            close(os);
-            close(bos);
+            close(os, bos);
         }
         return rv;
     }
@@ -53,14 +50,16 @@ public class SerializeUtil {
         } catch (Exception e) {
             LoggerUtils.fmtError(CLAZZ, e, "serialize error %s", in);
         } finally {
-            close(is);
-            close(bis);
+            close(is, bis);
         }
         return (T) rv;
     }
 
-    private static void close(Closeable closeable) {
-        if (closeable != null) {
+    private static void close(Closeable... closeables) {
+        for (Closeable closeable : closeables) {
+            if (closeable == null) {
+                continue;
+            }
             try {
                 closeable.close();
             } catch (IOException e) {

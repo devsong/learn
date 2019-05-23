@@ -47,9 +47,7 @@ public class RoleApi extends BaseController {
      */
     @RequestMapping(value = "getPermissionTree", method = RequestMethod.POST)
     public List<Map<String, Object>> getPermissionTree() {
-        // 查询我所有的角色 ---> 权限
         List<URole> roles = roleService.findNowAllPermission();
-        // 把查询出来的roles 转换成bootstarp 的 tree数据
         List<Map<String, Object>> data = UserManager.toTreeData(roles);
         return data;
     }

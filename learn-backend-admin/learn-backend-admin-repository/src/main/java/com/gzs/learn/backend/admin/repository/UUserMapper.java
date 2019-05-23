@@ -5,6 +5,7 @@ import java.util.Map;
 
 import com.gzs.learn.backend.admin.entity.UUser;
 import com.gzs.learn.backend.admin.permission.bo.URoleBo;
+import com.gzs.learn.backend.admin.permission.bo.UserRoleAllocationBo;
 
 public interface UUserMapper {
     int deleteByPrimaryKey(Long id);
@@ -19,10 +20,14 @@ public interface UUserMapper {
 
     int updateByPrimaryKey(UUser record);
 
-	UUser login(Map<String, Object> map);
+    UUser login(Map<String, Object> map);
 
-	UUser findUserByEmail(String email);
+    UUser findUserByEmail(String email);
 
-	List<URoleBo> selectRoleByUserId(Long id);
+    List<URoleBo> selectRoleByUserId(Long id);
+
+    List<UUser> findAll(Map<String, Object> params);
+
+    List<UserRoleAllocationBo> findUserAndRole(Map<String, Object> params);
 
 }

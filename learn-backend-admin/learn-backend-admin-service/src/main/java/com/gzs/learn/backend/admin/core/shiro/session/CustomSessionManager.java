@@ -160,12 +160,4 @@ public class CustomSessionManager {
             }
         }
     }
-
-    public void setShiroSessionRepository(ShiroSessionRepository shiroSessionRepository) {
-        this.shiroSessionRepository = shiroSessionRepository;
-    }
-
-    public void setCustomShiroSessionDAO(CustomShiroSessionDAO customShiroSessionDAO) {
-        this.customShiroSessionDAO = customShiroSessionDAO;
-    }
 }

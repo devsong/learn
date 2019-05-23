@@ -12,13 +12,13 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 public class BaseController {
-    protected int pageNo = 1;
-    public static int pageSize = 10;
+    public static final int DEFAULT_PAGE_NO = 1;
+    public static final int DEFAULT_PAGE_SIZE = 10;
     protected final static Logger log = LoggerFactory.getLogger(BaseController.class);
     protected Map<String, Object> resultMap = new LinkedHashMap<String, Object>();
     public static String URL404 = "/404.html";
 
-    protected String pageSizeName = "pageSize";
+    protected String pageSizeName = "DEFAULT_PAGE_SIZE";
 
     protected static void setValue2Request(HttpServletRequest request, String key, Object value) {
         request.setAttribute(key, value);
@@ -26,22 +26,6 @@ public class BaseController {
 
     public static HttpSession getSession(HttpServletRequest request) {
         return request.getSession();
-    }
-
-    public int getPageNo() {
-        return pageNo;
-    }
-
-    public void setPageNo(int pageNo) {
-        this.pageNo = pageNo;
-    }
-
-    public int getPageSize() {
-        return pageSize;
-    }
-
-    public void setPageSize(int pageSize) {
-        BaseController.pageSize = pageSize;
     }
 
     public ModelAndView redirect(String redirectUrl, Map<String, Object> params) {

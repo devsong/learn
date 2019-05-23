@@ -6,7 +6,7 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.permission.bo.RolePermissionAllocationBo;
 import com.gzs.learn.backend.admin.service.RoleService;
 
@@ -20,14 +20,14 @@ public class PermissionAllocationController extends BaseController {
     /**
      * 权限分配
      * @param modelMap
-     * @param pageNo
+     * @param DEFAULT_PAGE_NO
      * @param findContent
      * @return
      */
     @RequestMapping(value = "allocation")
     public ModelAndView allocation(ModelMap modelMap, Integer pageNo, String findContent) {
         modelMap.put("findContent", findContent);
-        Pagination<RolePermissionAllocationBo> boPage = roleService.findRoleAndPermissionPage(modelMap, pageNo, pageSize);
+        Pagination<RolePermissionAllocationBo> boPage = roleService.findRoleAndPermissionPage(modelMap, pageNo, DEFAULT_PAGE_SIZE);
         modelMap.put("page", boPage);
         return new ModelAndView("permission/allocation");
     }

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.entity.UPermission;
 import com.gzs.learn.backend.admin.permission.bo.UPermissionBo;
 

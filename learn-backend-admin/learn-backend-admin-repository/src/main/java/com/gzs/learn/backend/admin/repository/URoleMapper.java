@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.Set;
 
 import com.gzs.learn.backend.admin.entity.URole;
+import com.gzs.learn.backend.admin.permission.bo.RolePermissionAllocationBo;
 
 public interface URoleMapper {
     int deleteByPrimaryKey(Long id);
@@ -19,7 +20,11 @@ public interface URoleMapper {
 
     int updateByPrimaryKey(URole record);
 
-	Set<String> findRoleByUserId(Long id);
+    Set<String> findRoleByUserId(Long id);
 
-	List<URole> findNowAllPermission(Map<String, Object> map);
+    List<URole> findNowAllPermission(Map<String, Object> map);
+
+    List<URole> findAll(Map<String, Object> params);
+
+    List<RolePermissionAllocationBo> findRoleAndPermission(Map<String, Object> params);
 }

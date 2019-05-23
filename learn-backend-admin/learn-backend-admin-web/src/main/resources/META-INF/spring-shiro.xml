@@ -57,7 +57,7 @@
         <property name="cacheManager" ref="customShiroCacheManager" />
     </bean>
 
-    <bean id="shiroFilterFactoryBean" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" lazy-init="true">
+    <bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean" lazy-init="true">
         <property name="securityManager" ref="securityManager" />
         <property name="loginUrl" value="${app.shiro.loginUrl}" />
         <property name="successUrl" value="${app.shiro.successUrl}" />

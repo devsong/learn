@@ -1,6 +1,5 @@
 package com.gzs.learn.backend.admin.controller;
 
-import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,7 +13,6 @@ import org.springframework.web.util.UrlPathHelper;
 
 import com.google.common.collect.Maps;
 import com.gzs.learn.backend.admin.core.shiro.token.manager.TokenManager;
-import com.gzs.learn.backend.admin.service.RoleService;
 import com.gzs.learn.backend.admin.utils.LoggerUtils;
 import com.gzs.learn.backend.admin.utils.StringUtils;
 import com.gzs.learn.backend.admin.utils.VerifyCodeUtils;
@@ -25,9 +23,6 @@ import com.gzs.learn.backend.admin.utils.vcode.SpecCaptcha;
 @Controller
 @RequestMapping("open")
 public class CommonController extends BaseController {
-    @Resource
-    private RoleService roleService;
-
     /**
      * 404错误
      * @param request

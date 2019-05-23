@@ -24,6 +24,7 @@ public class SpringContextUtil implements ApplicationContextAware {
         try {
             return appContext.getBean(requiredType);
         } catch (Exception e) {
+            e.printStackTrace();
             throw new RuntimeException("获取的Bean不存在！");
         }
     }

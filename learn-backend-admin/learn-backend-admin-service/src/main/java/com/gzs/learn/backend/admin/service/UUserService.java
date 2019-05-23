@@ -5,7 +5,7 @@ import java.util.Map;
 
 import org.springframework.ui.ModelMap;
 
-import com.gzs.learn.backend.admin.core.mybatis.page.Pagination;
+import com.gzs.learn.backend.admin.common.Pagination;
 import com.gzs.learn.backend.admin.entity.UUser;
 import com.gzs.learn.backend.admin.permission.bo.URoleBo;
 import com.gzs.learn.backend.admin.permission.bo.UserRoleAllocationBo;

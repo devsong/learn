@@ -10,12 +10,6 @@
         id, name, type
     </sql>
 
-    <sql id="limit_sql">
-        <if test="page_sql != null and page_sql != ''">
-            ${page_sql}
-        </if>
-    </sql>
-
     <sql id="where_all">
         <where>
             <if test="findContent != null and findContent !='' ">
@@ -42,7 +36,6 @@
         from 
             u_role
             <include refid="where_all" />
-            <include refid="limit_sql" />
     </select>
     
     <select id="findCount" resultMap="BaseResultMap">
@@ -71,7 +64,6 @@
             </if>
         </where>
         group by ur.id
-        <include refid="limit_sql" />
     </select>
 
     <resultMap id="findNowAllPermission_resultMap" extends="BaseResultMap"

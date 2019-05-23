@@ -15,6 +15,8 @@ import org.apache.shiro.authz.SimpleAuthorizationInfo;
 import org.apache.shiro.realm.AuthorizingRealm;
 import org.apache.shiro.subject.PrincipalCollection;
 import org.apache.shiro.subject.SimplePrincipalCollection;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.DependsOn;
 import org.springframework.stereotype.Component;
 
 import com.gzs.learn.backend.admin.core.shiro.token.ShiroToken;
@@ -23,10 +25,18 @@ import com.gzs.learn.backend.admin.entity.UUser;
 import com.gzs.learn.backend.admin.service.PermissionService;
 import com.gzs.learn.backend.admin.service.RoleService;
 import com.gzs.learn.backend.admin.service.UUserService;
-import com.gzs.learn.backend.admin.utils.SpringContextUtil;
 
 @Component("sampleRealm")
+@DependsOn("springContextUtil")
 public class SampleRealm extends AuthorizingRealm {
+    @Autowired
+    private UUserService userService;
+
+    @Autowired
+    private RoleService roleService;
+
+    @Autowired
+    private PermissionService permissionService;
 
     public SampleRealm() {
         super();
@@ -38,7 +48,6 @@ public class SampleRealm extends AuthorizingRealm {
     @Override
     protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken authcToken) throws AuthenticationException {
         ShiroToken token = (ShiroToken) authcToken;
-        UUserService userService = SpringContextUtil.getBean(UUserService.class);
         UUser user = userService.login(token.getUsername(), new String(token.getPassword()));
         if (null == user) {
             throw new AccountException("帐号或密码不正确！");
@@ -57,8 +66,6 @@ public class SampleRealm extends AuthorizingRealm {
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
         Long userId = TokenManager.getUserId();
-        RoleService roleService = SpringContextUtil.getBean(RoleService.class);
-        PermissionService permissionService = SpringContextUtil.getBean(PermissionService.class);
         SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
         // 根据用户ID查询角色（role），放入到Authorization里。
         Set<String> roles = roleService.findRoleByUserId(userId);

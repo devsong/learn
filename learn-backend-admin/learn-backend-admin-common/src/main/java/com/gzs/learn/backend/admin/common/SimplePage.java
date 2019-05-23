@@ -1,4 +1,4 @@
-package com.gzs.learn.backend.admin.core.mybatis.page;
+package com.gzs.learn.backend.admin.common;
 
 public class SimplePage implements Paginable {
     public static final int DEF_COUNT = 20;
