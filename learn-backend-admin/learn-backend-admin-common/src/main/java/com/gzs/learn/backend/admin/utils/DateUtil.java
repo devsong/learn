@@ -1,7 +1,13 @@
 package com.gzs.learn.backend.admin.utils;
 
-import java.text.*;
-import java.util.*;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.TimeZone;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class DateUtil {
 
@@ -20,19 +26,14 @@ public class DateUtil {
      */
     public static String DATETIME_PATTERN = "yyyy-MM-dd HH:mm:ss";
     public static String DATE_PATTERN = "yyyyMMddHHmmss";
-   
-    /**
-     * 则个
-     */
+
     private static boolean LENIENT_DATE = false;
-
-
-    private static Random random = new java.util.Random();
     private static final int ID_BYTES = 10;
 
-    public synchronized static String generateId() {
+    public static String generateId() {
         StringBuffer result = new StringBuffer();
         result = result.append(System.currentTimeMillis());
+        ThreadLocalRandom random = ThreadLocalRandom.current();
         for (int i = 0; i < ID_BYTES; i++) {
             result = result.append(random.nextInt(10));
         }
@@ -40,9 +41,7 @@ public class DateUtil {
     }
 
     protected static final float normalizedJulian(float JD) {
-
         float f = Math.round(JD + 0.5f) - 0.5f;
-
         return f;
     }
 
@@ -56,12 +55,12 @@ public class DateUtil {
      */
     public static final Date toDate(float JD) {
 
-        /* To convert a Julian Day Number to a Gregorian date, assume that it is for 0 hours, Greenwich time (so
-         * that it ends in 0.5). Do the following calculations, again dropping the fractional part of all
-         * multiplicatons and divisions. Note: This method will not give dates accurately on the
-         * Gregorian Proleptic Calendar, i.e., the calendar you get by extending the Gregorian
-         * calendar backwards to years earlier than 1582. using the Gregorian leap year
-         * rules. In particular, the method fails if Y<400. */
+        /*
+         * To convert a Julian Day Number to a Gregorian date, assume that it is for 0 hours, Greenwich time (so that it ends in 0.5). Do
+         * the following calculations, again dropping the fractional part of all multiplicatons and divisions. Note: This method will not
+         * give dates accurately on the Gregorian Proleptic Calendar, i.e., the calendar you get by extending the Gregorian calendar
+         * backwards to years earlier than 1582. using the Gregorian leap year rules. In particular, the method fails if Y<400.
+         */
         float Z = (normalizedJulian(JD)) + 0.5f;
         float W = (int) ((Z - 1867216.25f) / 36524.25f);
         float X = (int) (W / 4f);
@@ -78,7 +77,7 @@ public class DateUtil {
             month = month - 12;
         }
 
-        int year = (int) (C - 4715); //(if Month is January or February) or C-4716 (otherwise)
+        int year = (int) (C - 4715); // (if Month is January or February) or C-4716 (otherwise)
 
         if (month > 2) {
             year--;
@@ -102,7 +101,6 @@ public class DateUtil {
      * @return the days between the two dates
      */
     public static final int daysBetween(Date early, Date late) {
-
         Calendar c1 = Calendar.getInstance();
         Calendar c2 = Calendar.getInstance();
         c1.setTime(early);
@@ -121,7 +119,6 @@ public class DateUtil {
      * @return the days between two dates.
      */
     public static final int daysBetween(Calendar early, Calendar late) {
-
         return (int) (toJulian(late) - toJulian(early));
     }
 
@@ -172,12 +169,10 @@ public class DateUtil {
      * @return
      * @throws ParseException
      */
-    public static final String dateIncrease(String isoString, String fmt,
-                                            int field, int amount) {
+    public static final String dateIncrease(String isoString, String fmt, int field, int amount) {
 
         try {
-            Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone(
-                    "GMT"));
+            Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
             cal.setTime(stringToDate(isoString, fmt, true));
             cal.add(field, amount);
 
@@ -198,11 +193,9 @@ public class DateUtil {
      * @param expanded use formating char's
      * @exception ParseException if an unknown field value is given.
      */
-    public static final String roll(String isoString, String fmt, int field,
-                                    boolean up) throws ParseException {
+    public static final String roll(String isoString, String fmt, int field, boolean up) throws ParseException {
 
-        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone(
-                "GMT"));
+        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
         cal.setTime(stringToDate(isoString, fmt));
         cal.roll(field, up);
 
@@ -218,8 +211,7 @@ public class DateUtil {
      * @param up Indicates if rolling up or rolling down the field value.
      * @exception ParseException if an unknown field value is given.
      */
-    public static final String roll(String isoString, int field, boolean up) throws
-            ParseException {
+    public static final String roll(String isoString, int field, boolean up) throws ParseException {
 
         return roll(isoString, DATETIME_PATTERN, field, up);
     }
@@ -231,8 +223,7 @@ public class DateUtil {
      * @param lenient  
      * @return
      */
-    public static Date stringToDate(String dateText, String format,
-                                    boolean lenient) {
+    public static Date stringToDate(String dateText, String format, boolean lenient) {
 
         if (dateText == null) {
 
@@ -351,12 +342,11 @@ public class DateUtil {
      * @param date
      * @return
      */
-    public static String dateToStringWithTime( ) {
+    public static String dateToStringWithTime() {
 
         return dateToString(new java.util.Date(), DATETIME_PATTERN);
     }
 
-    
     /**
      *   yyyy-MM-dd hh:mm:ss
      * @param date
@@ -375,8 +365,7 @@ public class DateUtil {
      */
     public static Date dateIncreaseByDay(Date date, int days) {
 
-        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone(
-                "GMT"));
+        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
         cal.setTime(date);
         cal.add(Calendar.DATE, days);
 
@@ -391,8 +380,7 @@ public class DateUtil {
      */
     public static Date dateIncreaseByMonth(Date date, int mnt) {
 
-        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone(
-                "GMT"));
+        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
         cal.setTime(date);
         cal.add(Calendar.MONTH, mnt);
 
@@ -407,8 +395,7 @@ public class DateUtil {
      */
     public static Date dateIncreaseByYear(Date date, int mnt) {
 
-        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone(
-                "GMT"));
+        Calendar cal = GregorianCalendar.getInstance(TimeZone.getTimeZone("GMT"));
         cal.setTime(date);
         cal.add(Calendar.YEAR, mnt);
 
@@ -442,8 +429,7 @@ public class DateUtil {
      * @param desfmt 
      * @return
      */
-    public static String stringToString(String src, String srcfmt,
-                                        String desfmt) {
+    public static String stringToString(String src, String srcfmt, String desfmt) {
         return dateToString(stringToDate(src, srcfmt), desfmt);
     }
 
@@ -453,8 +439,7 @@ public class DateUtil {
      * @return string
      */
     public static String getYear(Date date) {
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(
-                "yyyy");
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("yyyy");
         String cur_year = formater.format(date);
         return cur_year;
     }
@@ -465,8 +450,7 @@ public class DateUtil {
      * @return string
      */
     public static String getMonth(Date date) {
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(
-                "MM");
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("MM");
         String cur_month = formater.format(date);
         return cur_month;
     }
@@ -476,22 +460,20 @@ public class DateUtil {
      * @return string
      */
     public static String getDay(Date date) {
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(
-                "dd");
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("dd");
         String cur_day = formater.format(date);
         return cur_day;
     }
-    
+
     /**
      * @param date  
      * @return string
      */
     public static String getHour(Date date) {
-        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat(
-                "HH");
+        java.text.SimpleDateFormat formater = new java.text.SimpleDateFormat("HH");
         String cur_day = formater.format(date);
         return cur_day;
-    }    
+    }
 
     public static int getMinsFromDate(java.util.Date dt) {
         GregorianCalendar cal = new GregorianCalendar();
@@ -546,27 +528,20 @@ public class DateUtil {
         int day = Integer.parseInt(getDay(date));
         int hour = minute / 60;
         int min = minute % 60;
-        dateFormat = String.valueOf(year)
-                     +
-                     (month > 9 ? String.valueOf(month) :
-                      "0" + String.valueOf(month))
-                     +
-                     (day > 9 ? String.valueOf(day) : "0" + String.valueOf(day))
-                     + " "
-                     +
-                     (hour > 9 ? String.valueOf(hour) : "0" + String.valueOf(hour))
-                     +
-                     (min > 9 ? String.valueOf(min) : "0" + String.valueOf(min))
-                     + "00";
+        dateFormat = String.valueOf(year) + (month > 9 ? String.valueOf(month) : "0" + String.valueOf(month))
+                + (day > 9 ? String.valueOf(day) : "0" + String.valueOf(day)) + " "
+                + (hour > 9 ? String.valueOf(hour) : "0" + String.valueOf(hour))
+                + (min > 9 ? String.valueOf(min) : "0" + String.valueOf(min)) + "00";
         return dateFormat;
     }
+
     public static String sDateFormat() {
-    	return new SimpleDateFormat(DATE_PATTERN).format(Calendar.getInstance().getTime());	
+        return new SimpleDateFormat(DATE_PATTERN).format(Calendar.getInstance().getTime());
     }
-    public static void main(String[] args)
-	{
-    	String timeDir=DateUtil.dateToString(new Date(),DateUtil.ISO_EXPANDED_DATE_FORMAT);
-		System.out.println(timeDir);
-	}
-    
+
+    public static void main(String[] args) {
+        String timeDir = DateUtil.dateToString(new Date(), DateUtil.ISO_EXPANDED_DATE_FORMAT);
+        System.out.println(timeDir);
+    }
+
 }

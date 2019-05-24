@@ -45,8 +45,8 @@ public class HttpUtil {
     /**
      * Get请求
      *
-     * @param url
-     * @param headers
+     * @param url http url 请求地址
+     * @param headers 请求头
      * @return
      */
     public static <T> Response<T> doGet(String url, Class<? extends T> cls, Header... headers) {
@@ -55,44 +55,53 @@ public class HttpUtil {
 
     /**
      * Get请求
-     * @param url url地址
-     * @param cls response结果类型
-     * @param config http请求配置
-     * @param headers 请求头信息
+     * @param url http url请求地址
+     * @param cls 响应实体
+     * @param requestConfig http请求参数(链接超时时间、响应时间等)配置
+     * @param headers http请求头
      * @return
      */
-    public static <T> Response<T> doGet(String url, Class<? extends T> cls, RequestConfig config, Header... headers) {
-        config = config == null ? HttpClientFactory.getDefaultRequestConfig() : config;
-        HttpUriRequest request = RequestBuilder.get().setUri(url).setConfig(config).build();
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+    public static <T> Response<T> doGet(String url, Class<? extends T> cls, RequestConfig requestConfig, Header... headers) {
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
+        HttpUriRequest request = RequestBuilder.get().setUri(url).setConfig(requestConfig).build();
+        return execute(request, cls, headers);
     }
 
     /**
-     * 获取list列表
+     * doGet获取list列表
      * 
-     * @param url
-     * @param reference
-     * @param headers
+     * @param url http请求url地址
+     * @param reference 响应实体对象类型
+     * @param headers http请求头信息
      * @return
      */
     public static <T> Response<T> doGet(String url, TypeReference<List<T>> reference, Header... headers) {
-        HttpUriRequest request = RequestBuilder.get().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, reference);
+        return doGet(url, reference, null, headers);
     }
 
     /**
-     * Post Form请求
+     * doGet获取list列表
      * 
-     * @param url
-     * @param pairs
-     * @param cls
-     * @param headers
+     * @param url http请求url地址
+     * @param reference 响应实体对象类型
+     * @param requestConfig http请求参数(链接超时时间、响应时间等)配置
+     * @param headers http请求头信息
+     * @return
+     */
+    public static <T> Response<T> doGet(String url, TypeReference<List<T>> reference, RequestConfig requestConfig, Header... headers) {
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
+        HttpUriRequest request = RequestBuilder.get().setUri(url).setConfig(requestConfig).build();
+        return execute(request, reference, headers);
+    }
+
+    /**
+     * post请求
+     * 
+     * @param url http请求url地址
+     * @param pairs form表单数据
+     * @param cls 响应实体类型
+     * @param requestConfig 请求参数配置信息
+     * @param headers 请求头信息
      * @return
      */
     public static <T> Response<T> doPost(String url, List<? extends NameValuePair> pairs, Class<? extends T> cls, Header... headers) {
@@ -100,78 +109,99 @@ public class HttpUtil {
     }
 
     /**
-     * Post Form请求
+     * post请求
      * 
-     * @param url url地址
-     * @param pairs 参数列表
-     * @param cls 请求返回类型
-     * @param config http请求自定义参数设置
+     * @param url http请求url地址
+     * @param pairs form表单数据
+     * @param cls 响应实体类型
+     * @param requestConfig 请求参数配置信息
      * @param headers 请求头信息
      * @return
      */
-    public static <T> Response<T> doPost(String url, List<? extends NameValuePair> pairs, Class<? extends T> cls, RequestConfig config,
-            Header... headers) {
+    public static <T> Response<T> doPost(String url, List<? extends NameValuePair> pairs, Class<? extends T> cls,
+            RequestConfig requestConfig, Header... headers) {
         HttpUriRequest request;
-        config = config == null ? HttpClientFactory.getDefaultRequestConfig() : config;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (pairs != null && pairs.size() > 0) {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8);
-            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(config).build();
+            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.post().setUri(url).setConfig(config).build();
+            request = RequestBuilder.post().setUri(url).setConfig(requestConfig).build();
         }
-
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+        return execute(request, cls, headers);
     }
 
     /**
      * post请求
      * 
-     * @param url
-     * @param pairs
-     * @param reference
-     * @param headers
+     * @param url http请求url地址
+     * @param pairs Form表单数据
+     * @param cls 响应实体类型
+     * @param headers 请求头信息
      * @return
      */
     public static <T> Response<T> doPost(String url, List<? extends NameValuePair> pairs, TypeReference<List<T>> reference,
             Header... headers) {
+        return doPost(url, pairs, reference, null, headers);
+    }
+
+    /**
+     * post请求
+     * 
+     * @param url http请求url地址
+     * @param pairs Form表单数据
+     * @param cls 响应实体类型
+     * @param requestConfig 请求参数配置信息
+     * @param headers 请求头信息
+     * @return
+     */
+    public static <T> Response<T> doPost(String url, List<? extends NameValuePair> pairs, TypeReference<List<T>> reference,
+            RequestConfig requestConfig, Header... headers) {
         HttpUriRequest request;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (pairs != null && pairs.size() > 0) {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8);
-            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.post().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setConfig(requestConfig).build();
         }
-
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, reference);
+        return execute(request, reference, headers);
     }
 
     /**
      * post body请求体
      * 
-     * @param url
-     * @param requestBody
-     * @param cls
-     * @param headers
+     * @param url http请求url地址
+     * @param pairs Form表单数据
+     * @param cls 响应实体类型
+     * @param headers 请求头信息
      * @return
      */
     public static <T> Response<T> doPost(String url, String requestBody, Class<? extends T> cls, Header... headers) {
+        return doPost(url, requestBody, cls, null, headers);
+    }
+
+    /**
+     * post body请求体
+     * 
+     * @param url http请求url地址
+     * @param pairs Form表单数据
+     * @param cls 响应实体类型
+     * @param requestConfig 请求参数配置信息
+     * @param headers 请求头信息
+     * @return
+     */
+    public static <T> Response<T> doPost(String url, String requestBody, Class<? extends T> cls, RequestConfig requestConfig,
+            Header... headers) {
         HttpUriRequest request = null;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (StringUtils.isNotBlank(requestBody)) {
             StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8);
-            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.post().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setConfig(requestConfig).build();
         }
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+        return execute(request, cls, headers);
     }
 
     /**
@@ -184,17 +214,29 @@ public class HttpUtil {
      * @return
      */
     public static <T> Response<T> doPost(String url, String requestBody, TypeReference<List<T>> reference, Header... headers) {
+        return doPost(url, requestBody, reference, null, headers);
+    }
+
+    /**
+     * 
+     * @param url
+     * @param requestBody
+     * @param reference
+     * @param requestConfig
+     * @param headers
+     * @return
+     */
+    public static <T> Response<T> doPost(String url, String requestBody, TypeReference<List<T>> reference, RequestConfig requestConfig,
+            Header... headers) {
         HttpUriRequest request = null;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (StringUtils.isNotBlank(requestBody)) {
             StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8);
-            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.post().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.post().setUri(url).setConfig(requestConfig).build();
         }
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, reference);
+        return execute(request, reference, headers);
     }
 
     /**
@@ -207,18 +249,31 @@ public class HttpUtil {
      * @return
      */
     public static <T> Response<T> doPut(String url, List<? extends NameValuePair> pairs, Class<? extends T> cls, Header... headers) {
-        HttpUriRequest request;
+        return doPut(url, pairs, cls, null, headers);
+    }
+
+    /**
+     * put请求
+     *  
+     * @param url
+     * @param pairs
+     * @param cls
+     * @param requestConfig
+     * @param headers
+     * @return
+     */
+    public static <T> Response<T> doPut(String url, List<? extends NameValuePair> pairs, Class<? extends T> cls,
+            RequestConfig requestConfig, Header... headers) {
+        HttpUriRequest request = null;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (pairs != null && pairs.size() > 0) {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8);
-            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.put().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setConfig(requestConfig).build();
         }
 
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+        return execute(request, cls, headers);
     }
 
     /**
@@ -232,18 +287,30 @@ public class HttpUtil {
      */
     public static <T> Response<T> doPut(String url, List<? extends NameValuePair> pairs, TypeReference<List<T>> reference,
             Header... headers) {
+        return doPut(url, pairs, reference, null, headers);
+    }
+
+    /**
+     * 
+     * @param url
+     * @param pairs
+     * @param reference
+     * @param requestConfig
+     * @param headers
+     * @return
+     */
+    public static <T> Response<T> doPut(String url, List<? extends NameValuePair> pairs, TypeReference<List<T>> reference,
+            RequestConfig requestConfig, Header... headers) {
         HttpUriRequest request;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (pairs != null && pairs.size() > 0) {
             UrlEncodedFormEntity entity = new UrlEncodedFormEntity(pairs, StandardCharsets.UTF_8);
-            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.put().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setConfig(requestConfig).build();
         }
 
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, reference);
+        return execute(request, reference, headers);
     }
 
     /**
@@ -256,18 +323,21 @@ public class HttpUtil {
      * @return
      */
     public static <T> Response<T> doPut(String url, String requestBody, Class<? extends T> cls, Header... headers) {
+        return doPut(url, requestBody, cls, null, headers);
+    }
+
+    public static <T> Response<T> doPut(String url, String requestBody, Class<? extends T> cls, RequestConfig requestConfig,
+            Header... headers) {
         HttpUriRequest request;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (StringUtils.isNotBlank(requestBody)) {
             StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8);
-            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.put().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setConfig(requestConfig).build();
         }
 
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+        return execute(request, cls, headers);
     }
 
     /**
@@ -280,18 +350,21 @@ public class HttpUtil {
      * @return
      */
     public static <T> Response<T> doPut(String url, String requestBody, TypeReference<List<T>> reference, Header... headers) {
+        return doPut(url, requestBody, reference, null, headers);
+    }
+
+    public static <T> Response<T> doPut(String url, String requestBody, TypeReference<List<T>> reference, RequestConfig requestConfig,
+            Header... headers) {
         HttpUriRequest request;
+        requestConfig = requestConfig == null ? HttpClientFactory.getDefaultRequestConfig() : requestConfig;
         if (StringUtils.isNotBlank(requestBody)) {
             StringEntity entity = new StringEntity(requestBody, StandardCharsets.UTF_8);
-            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setEntity(entity).setConfig(requestConfig).build();
         } else {
-            request = RequestBuilder.put().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
+            request = RequestBuilder.put().setUri(url).setConfig(requestConfig).build();
         }
 
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, reference);
+        return execute(request, reference, headers);
     }
 
     /**
@@ -303,10 +376,7 @@ public class HttpUtil {
      */
     public static <T> Response<T> doDelete(String url, Class<? extends T> cls, Header... headers) {
         HttpUriRequest request = RequestBuilder.delete().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-        return execute(request, cls);
+        return execute(request, cls, headers);
     }
 
     /**
@@ -318,11 +388,7 @@ public class HttpUtil {
      */
     public static Integer doHead(String url, Header... headers) {
         HttpUriRequest request = RequestBuilder.head().setUri(url).setConfig(HttpClientFactory.getDefaultRequestConfig()).build();
-        if (headers != null && headers.length > 0) {
-            request.setHeaders(headers);
-        }
-
-        return execute(request, String.class).httpCode;
+        return execute(request, String.class, headers).httpCode;
     }
 
     /**
@@ -385,7 +451,10 @@ public class HttpUtil {
     }
 
     @SuppressWarnings("unchecked")
-    private static <T> Response<T> execute(HttpUriRequest request, Class<? extends T> cls) {
+    private static <T> Response<T> execute(HttpUriRequest request, Class<? extends T> cls, Header... headers) {
+        if (headers != null && headers.length > 0) {
+            request.setHeaders(headers);
+        }
         int code = 0;
         boolean success = false;
         T obj = null;
@@ -406,7 +475,7 @@ public class HttpUtil {
                 errMsg = resp;
             }
         } catch (Exception e) {
-            log.error("Catch exception when getResult,", e);
+            log.error("Catch exception when getResult {},", request.getURI(), e);
         }
         return new Response<T>(success, code, obj, errMsg);
     }
@@ -417,7 +486,10 @@ public class HttpUtil {
      * @param reference
      * @return
      */
-    private static <T> Response<T> execute(HttpUriRequest request, TypeReference<List<T>> reference) {
+    private static <T> Response<T> execute(HttpUriRequest request, TypeReference<List<T>> reference, Header... headers) {
+        if (headers != null && headers.length > 0) {
+            request.setHeaders(headers);
+        }
         int code = 0;
         boolean success = false;
         List<T> list = null;
@@ -433,7 +505,7 @@ public class HttpUtil {
                 errMsg = resp;
             }
         } catch (Exception e) {
-            log.error("Catch exception when getResult List,", e);
+            log.error("Catch exception when getResult List {},", request.getURI(), e);
         }
         return new Response<T>(success, code, list, errMsg);
     }

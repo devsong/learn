@@ -1,7 +1,7 @@
 so.init(function () {
-    //初始化全选。
+    // 初始化全选。
     so.checkBoxInit('#checkAll', '[check=box]');
-    //全选
+    // 全选
     so.id('deleteAll').on('click', function () {
         var checkeds = $('[check=box]:checked');
         if (!checkeds.length) {
@@ -62,7 +62,7 @@ function selectPermission() {
     });
 }
 /*
- *根据角色ID选择权限，分配权限操作。
+ * 根据角色ID选择权限，分配权限操作。
  */
 function selectPermissionById(id) {
     var load = layer.load();
@@ -87,7 +87,7 @@ function selectPermissionById(id) {
                 html.push(this.name);
                 html.push('</label></div>');
             });
-            //初始化全选。
+            // 初始化全选。
             return so.id('boxRoleForm').html(html.join('')),
                 so.checkBoxInit('[selectAllBox]', '[selectBox]'),
                 $('#selectPermission').modal(), $('#selectRoleId').val(id), !1;

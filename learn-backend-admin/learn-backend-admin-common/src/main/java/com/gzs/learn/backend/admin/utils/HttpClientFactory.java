@@ -29,28 +29,34 @@ import org.apache.http.ssl.SSLContexts;
  */
 public class HttpClientFactory {
     public final static int CONNECTION_TIMEOUT = 10 * 1000;
-    private static CloseableHttpClient defaultClient;
+    private static volatile CloseableHttpClient defaultClient;
     private static final int CONN_PER_ROUTE = 256;
     private static final int CONN_MAX_TOTAL = 1024;
     private static final String DEFAUL_USER_AGENT = "user-agent-hc";
     private static final int DEFAULT_RETRY = 3;
     private static final int KEEPALIVE = 30 * 1000;
 
-    public synchronized static CloseableHttpClient get() {
-        if (defaultClient == null) {
-            RegistryBuilder<ConnectionSocketFactory> builder = RegistryBuilder.<ConnectionSocketFactory> create();
-            builder.register("http", PlainConnectionSocketFactory.getSocketFactory());
-            SSLContext sslcontext = SSLContexts.createSystemDefault();
-            builder.register("https", new SSLConnectionSocketFactory(sslcontext, hostnameVerifier));
-            Registry<ConnectionSocketFactory> socketFactoryRegistry = builder.build();
+    public static CloseableHttpClient get() {
+        if (defaultClient != null) {
+            return defaultClient;
+        }
+        synchronized (HttpClientFactory.class) {
+            if (defaultClient == null) {
+                RegistryBuilder<ConnectionSocketFactory> builder = RegistryBuilder.<ConnectionSocketFactory> create();
+                builder.register("http", PlainConnectionSocketFactory.getSocketFactory());
+                SSLContext sslcontext = SSLContexts.createSystemDefault();
+                builder.register("https", new SSLConnectionSocketFactory(sslcontext, hostnameVerifier));
+                Registry<ConnectionSocketFactory> socketFactoryRegistry = builder.build();
 
-            PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
-            manager.setMaxTotal(CONN_MAX_TOTAL);
-            manager.setDefaultMaxPerRoute(CONN_PER_ROUTE);
+                PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager(socketFactoryRegistry);
+                manager.setMaxTotal(CONN_MAX_TOTAL);
+                manager.setDefaultMaxPerRoute(CONN_PER_ROUTE);
 
-            defaultClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setUserAgent(DEFAUL_USER_AGENT)
-                    .setRetryHandler(new StandardHttpRequestRetryHandler(DEFAULT_RETRY, true)).setKeepAliveStrategy(keepAliveStrategy)
-                    .setServiceUnavailableRetryStrategy(new DefaultServiceUnavailableRetryStrategy()).setConnectionManager(manager).build();
+                defaultClient = HttpClientBuilder.create().setDefaultRequestConfig(requestConfig).setUserAgent(DEFAUL_USER_AGENT)
+                        .setRetryHandler(new StandardHttpRequestRetryHandler(DEFAULT_RETRY, true)).setKeepAliveStrategy(keepAliveStrategy)
+                        .setServiceUnavailableRetryStrategy(new DefaultServiceUnavailableRetryStrategy()).setConnectionManager(manager)
+                        .build();
+            }
         }
         return defaultClient;
     }
