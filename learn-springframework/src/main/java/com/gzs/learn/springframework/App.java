@@ -1,18 +1,17 @@
 package com.gzs.learn.springframework;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 /**
  * Hello world!
  *
  */
+@SpringBootApplication
 public class App {
     public static void main(String[] args) throws Exception {
-        ConfigurableApplicationContext ctx = new ClassPathXmlApplicationContext("spring.xml");
-        FooForBpp bean = ctx.getBean(FooForBpp.class);
-        bean.hello();
+        ConfigurableApplicationContext ctx = SpringApplication.run(App.class, args);
         ctx.registerShutdownHook();
-        ctx.close();
     }
 }

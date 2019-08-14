@@ -16,7 +16,7 @@ public class Bar implements InitializingBean, DisposableBean {
 
     @Override
     public void afterPropertiesSet() throws Exception {
-        log.info("foo -->init bean");
+        log.info("foo -->init bean bar");
     }
 
     @Override
