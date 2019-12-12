@@ -1,7 +1,7 @@
 package com.gzs.learn.algorithm.datastructure.sort;
 
 public interface Sortable<T> {
-    Integer[] ARRAY = {24, 1, 23, 2, 3, 4, 1, 5, 6, 7};
+    Integer[] ARRAY = { 9, 7, 8, 5, 3, 2, 1, 4, 6, 0 };
 
     public T[] sort(T[] array);
 

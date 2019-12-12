@@ -2,11 +2,11 @@ package com.gzs.learn.springframework;
 
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
+import org.springframework.core.PriorityOrdered;
 import org.springframework.stereotype.Component;
 
-//@Component()
-// @Slf4j
-public class FooForBpp implements BeanPostProcessor {
+@Component()
+public class FooForBpp implements BeanPostProcessor,PriorityOrdered {
 
     public void hello() {
         System.out.println("hello foo");
@@ -25,5 +25,10 @@ public class FooForBpp implements BeanPostProcessor {
         // }
         // log.info("BeanPostProcessor--->postProcessBeforeInitialization {}", beanName);
         return bean;
+    }
+
+    @Override
+    public int getOrder() {
+        return HIGHEST_PRECEDENCE;
     }
 }

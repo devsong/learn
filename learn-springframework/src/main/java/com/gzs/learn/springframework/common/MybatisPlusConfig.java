@@ -12,6 +12,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.google.common.collect.Maps;
 import com.gzs.learn.springframework.DynamicDataSource;
+import com.gzs.learn.springframework.aop.AopOrder;
 
 import tk.mybatis.spring.annotation.MapperScan;
 
@@ -19,7 +20,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  * MybatisPlus配置
  */
 @Configuration
-@EnableTransactionManagement(order = 2, proxyTargetClass = true)
+@EnableTransactionManagement(order = AopOrder.TRANSACTION_ORDER, proxyTargetClass = true)
 // 由于引入多数据源，所以让spring事务的aop要在多数据源切换aop的后面
 @MapperScan(basePackages = { "com.gzs.learn.springframework.dao" })
 public class MybatisPlusConfig {
@@ -80,4 +81,9 @@ public class MybatisPlusConfig {
         dynamicDataSource.setDefaultTargetDataSource(dataSourceGuns);
         return dynamicDataSource;
     }
+
+    // @Bean
+    // public LifecycleBeanPostProcessor lifecycleBeanPostProcessor() {
+    // return new LifecycleBeanPostProcessor();
+    // }
 }
