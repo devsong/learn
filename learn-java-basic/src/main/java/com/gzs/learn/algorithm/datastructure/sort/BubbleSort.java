@@ -21,5 +21,4 @@ public class BubbleSort implements Sortable<Integer> {
     public void testBubbleSort() {
         print(sort(ARRAY));
     }
-
 }
