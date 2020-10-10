@@ -9,45 +9,80 @@ import com.google.common.collect.Lists;
 
 public class AvlTree {
 
-    public TreeNode createTreeNode(int a[]) {
-        if (a.length == 0) {
+    /**
+     * 
+     * @param data data for array
+     * @param isSort sort flag
+     * @return
+     */
+    public TreeNode createTreeNode(int data[], boolean isSort) {
+        if (data.length == 0) {
             return null;
         }
-        return createFromBinarySearch(a, 0, a.length, 0);
+        if (isSort) {
+            return createFromBinarySearch(data, 0, data.length, 0);
+        } else {
+            return createFromNormalArray(data, 0);
+        }
     }
-    
+
+    public TreeNode createFromNormalArray(int a[], int level) {
+        return null;
+    }
+
+    /**
+     * level for node
+     * @param node
+     * @return
+     */
+    public int level(TreeNode node) {
+        if (node == null) {
+            return -1;
+        } else {
+            return node.getLevel();
+        }
+    }
+
+    /**
+     *  二分法构造
+     * @param a array for data
+     * @param low low pos
+     * @param high high pos
+     * @param level level
+     * @return
+     */
     public TreeNode createFromBinarySearch(int a[], int low, int high, int level) {
         TreeNode node = null;
         if (low < high) {
             int mid = (low + high) / 2;
             node = new TreeNode(a[mid], level, false);
-            level++;
+            level = level + 1;
             node.setLeft(createFromBinarySearch(a, low, mid, level));
             node.setRight(createFromBinarySearch(a, mid + 1, high, level));
-        } 
+        }
         return node;
     }
 
-    public void frontLoop(TreeNode root) {
+    public void preOrder(TreeNode root) {
         if (root != null) {
             System.out.print(root.getVal() + " ");
-            frontLoop(root.getLeft());
-            frontLoop(root.getRight());
+            preOrder(root.getLeft());
+            preOrder(root.getRight());
         }
     }
 
-    public void midLoop(TreeNode root) {
+    public void midOrder(TreeNode root) {
         if (root != null) {
-            midLoop(root.getLeft());
+            midOrder(root.getLeft());
             System.out.print(root.getVal() + " ");
-            midLoop(root.getRight());
+            midOrder(root.getRight());
         }
     }
 
-    public void endLoop(TreeNode root) {
+    public void postOrder(TreeNode root) {
         if (root != null) {
-            endLoop(root.getLeft());
-            endLoop(root.getRight());
+            postOrder(root.getLeft());
+            postOrder(root.getRight());
             System.out.print(root.getVal() + " ");
         }
     }
@@ -55,12 +90,12 @@ public class AvlTree {
     @Test
     public void testCreateTreeNode() {
         int a[] = { 1, 2, 3, 4, 5, 6, 7 };
-        TreeNode root = createTreeNode(a);
-        frontLoop(root);
+        TreeNode root = createTreeNode(a, true);
+        preOrder(root);
         System.out.println();
-        midLoop(root);
+        midOrder(root);
         System.out.println();
-        endLoop(root);
+        postOrder(root);
     }
 
     @Test

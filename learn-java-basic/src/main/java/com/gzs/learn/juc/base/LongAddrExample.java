@@ -1,6 +1,9 @@
 package com.gzs.learn.juc.base;
 
+import java.lang.reflect.Field;
+import java.security.AccessController;
 import java.security.PrivilegedExceptionAction;
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.atomic.LongAdder;
 
 import org.junit.Test;
@@ -17,18 +20,17 @@ public class LongAddrExample {
         } catch (SecurityException tryReflectionInstead) {
         }
         try {
-            return java.security.AccessController
-                    .doPrivileged((PrivilegedExceptionAction<Unsafe>) () -> {
-                        Class<Unsafe> k = Unsafe.class;
-                        for (java.lang.reflect.Field f : k.getDeclaredFields()) {
-                            f.setAccessible(true);
-                            Object x = f.get(null);
-                            if (k.isInstance(x)) {
-                                return k.cast(x);
-                            }
-                        }
-                        throw new NoSuchFieldError("the Unsafe");
-                    });
+            return AccessController.doPrivileged((PrivilegedExceptionAction<Unsafe>) () -> {
+                Class<Unsafe> k = Unsafe.class;
+                for (Field f : k.getDeclaredFields()) {
+                    f.setAccessible(true);
+                    Object x = f.get(null);
+                    if (k.isInstance(x)) {
+                        return k.cast(x);
+                    }
+                }
+                throw new NoSuchFieldError("the Unsafe");
+            });
         } catch (java.security.PrivilegedActionException e) {
             throw new RuntimeException("Could not initialize intrinsics", e.getCause());
         }
@@ -51,13 +53,17 @@ public class LongAddrExample {
     }
 
     @Test
-    public synchronized void testMultiThread() throws NoSuchFieldException, SecurityException {
+    public void testMultiThread() throws NoSuchFieldException, SecurityException, InterruptedException {
         LongAdder adder = new LongAdder();
-
-        for (int i = 0; i < 10; i++) {
-            Thread t = new Example(adder);
+        int nthread = 1;
+        CountDownLatch latch = new CountDownLatch(nthread);
+        for (int i = 0; i < nthread; i++) {
+            Thread t = new Example(adder, latch);
             t.start();
         }
+
+        latch.await();
+        System.out.println(adder.longValue());
     }
 
     @Test
@@ -65,7 +71,6 @@ public class LongAddrExample {
         System.out.println(Runtime.getRuntime().availableProcessors());
     }
 }
-
 
 @Data
 class UnSafeTest {
@@ -76,16 +81,21 @@ class UnSafeTest {
     }
 }
 
-
 class Example extends Thread {
     private LongAdder adder;
 
-    public Example(LongAdder adder) throws NoSuchFieldException, SecurityException {
+    private CountDownLatch latch;
+
+    public Example(LongAdder adder, CountDownLatch latch) throws NoSuchFieldException, SecurityException {
         this.adder = adder;
+        this.latch = latch;
     }
 
     @Override
     public void run() {
-        adder.increment();
+        for (int i = 0; i < 10; i++) {
+            adder.increment();
+        }
+        latch.countDown();
     }
 }
