@@ -3,31 +3,34 @@ package com.gzs.learn.algorithm.tree;
 import lombok.Data;
 
 @Data
-public class TreeNode {
+public class TreeNode<T> {
     /**
      * 节点值
      */
-    private int val;
+    private T val;
     /**
      * 节点层数
      */
     private int level;
     /**
-     * 是否是叶子节点
-     */
-    private boolean isLeaf;
-    /**
      * 左子树
      */
-    private TreeNode left;
+    private TreeNode<T> left;
     /**
      * 右子树
      */
-    private TreeNode right;
+    private TreeNode<T> right;
 
-    public TreeNode(int val, int level, boolean isLeaf) {
+    public TreeNode(T val, int level) {
         this.val = val;
         this.level = level;
-        this.isLeaf = isLeaf;
+    }
+
+    /**
+     *  判断是否是叶子节点
+     * @return
+     */
+    public boolean isLeaf() {
+        return left == null && right == null;
     }
 }
