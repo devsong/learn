@@ -5,9 +5,9 @@ import org.junit.Test;
 public class SelectSort implements Sortable<Integer> {
 
     @Override
-    public Integer[] sort(Integer[] array) {
+    public void sort(Integer[] array) {
         int len = array.length;
-        for (int i = 0; i < len-1; i++) {
+        for (int i = 0; i < len - 1; i++) {
             int minIndex = i;
             for (int j = i + 1; j < len; j++) {
                 if (array[minIndex] > array[j]) {
@@ -16,12 +16,12 @@ public class SelectSort implements Sortable<Integer> {
             }
             swap(array, i, minIndex);
         }
-        return array;
     }
 
     @Test
     public void testSelectSort() {
-        print(sort(ARRAY));
+        sort(ARRAY);
+        print(ARRAY);
     }
 
 }

@@ -3,7 +3,7 @@ package com.gzs.learn.algorithm.datastructure.sort;
 public interface Sortable<T> {
     Integer[] ARRAY = { 9, 7, 8, 5, 3, 2, 1, 4, 6, 0 };
 
-    public T[] sort(T[] array);
+    public void sort(T[] array);
 
     default void print(T[] array) {
         for (T t : array) {
