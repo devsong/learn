@@ -4,6 +4,7 @@ import java.util.List;
 
 /**
  * 平衡树
+ * 
  * @author guanzhisong
  *
  * @param <T>
@@ -18,39 +19,73 @@ public interface IAvlTree<T extends Comparable<T>> {
 
     /**
      * 层级
+     * 
      * @return
      */
     int level();
 
+    /**
+     * 查找
+     * 
+     * @param node
+     * @return
+     */
     TreeNode<T> find(TreeNode<T> node);
 
     /**
      * 添加节点
+     * 
      * @param treeNode
      */
     void add(TreeNode<T> treeNode);
 
     /**
+     * 添加节点
+     * 
+     * @param val
+     */
+    void add(T val);
+
+    /**
      * 删除节点
+     * 
      * @param treeNode
      */
     void remove(TreeNode<T> treeNode);
 
+
+    /**
+     * 删除节点
+     * 
+     * @param val
+     */
+    void remove(T val);
+
     /**
      * 前序遍历
+     * 
      * @return
      */
     List<T> preOrder();
 
     /**
      * 中序遍历
+     * 
      * @return
      */
     List<T> midOrder();
 
     /**
      * 后序遍历
+     * 
      * @return
      */
     List<T> postOrder();
+
+    /**
+     * 层序遍历
+     * 
+     * @return
+     */
+    List<T> levelOrder();
 }

@@ -1,89 +1,239 @@
 package com.gzs.learn.algorithm.tree;
 
+import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.EH;
+import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.LH;
+import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.RH;
 import java.util.List;
+import com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode;
 
-/**
- * 普通平衡二叉树
- * @author guanzhisong
- *
- * @param <T>
- */
 public class SimpleAvlTree<T extends Comparable<T>> extends AbstractAvlTree<T> {
-    public SimpleAvlTree() {
+    private boolean taller = false;
 
-    }
-
-    public SimpleAvlTree(T data[]) {
-        this(data, false);
-    }
-
-    public SimpleAvlTree(T data[], boolean isSort) {
-        createTreeNode(data, isSort);
-    }
-
-    /**
-     * 
-     * @param data data for array
-     * @param isSort sort flag
-     * @return
-     */
-    private void createTreeNode(T data[], boolean isSort) {
-        if (data == null) {
-            throw new IllegalArgumentException("data must not be null");
+    private AVLTreeNode<T> leftBalance(AVLTreeNode<T> node, AVLTreeNode<T> preNode) {
+        AVLTreeNode<T> child = (AVLTreeNode<T>) node.getLeft();
+        AVLTreeNode<T> root = null;
+        switch (child.balanceFactor) {
+            case LH:
+                node.balanceFactor = child.balanceFactor = EH;
+                root = (AVLTreeNode<T>) RRotate(node);
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) < 0) {
+                    preNode.setLeft(root);
+                }
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) > 0) {
+                    preNode.setRight(root);
+                }
+                break;
+            case RH:
+                AVLTreeNode<T> rchild = (AVLTreeNode<T>) child.getRight();
+                switch (rchild.balanceFactor) {
+                    case EH:
+                        node.balanceFactor = child.balanceFactor = EH;
+                        break;
+                    case LH:
+                        node.balanceFactor = RH;
+                        child.balanceFactor = EH;
+                        break;
+                    case RH:
+                        node.balanceFactor = EH;
+                        child.balanceFactor = LH;
+                        break;
+                    default:
+                        break;
+                }
+                rchild.balanceFactor = EH;
+                node.setLeft(LRotate(child));
+                root = (AVLTreeNode<T>) RRotate(node);
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) < 0) {
+                    preNode.setLeft(root);
+                }
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) > 0) {
+                    preNode.setRight(root);
+                }
+                break;
+            default:
+                break;
         }
-        if (isSort) {
-            this.root = createFromBinarySearch(data, 0, data.length, 0);
-        } else {
-            this.root = createFromNormalArray(data, 0);
+        return root;
+    }
+
+    private AVLTreeNode<T> rightBalance(AVLTreeNode<T> node, AVLTreeNode<T> preNode) {
+        AVLTreeNode<T> child = (AVLTreeNode<T>) node.getRight();
+        AVLTreeNode<T> root = null;
+        switch (child.balanceFactor) {
+            case RH:
+                node.balanceFactor = child.balanceFactor = EH;
+                root = (AVLTreeNode<T>) LRotate(node);
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) < 0) {
+                    preNode.setLeft(root);
+                }
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) > 0) {
+                    preNode.setRight(root);
+                }
+                break;
+            case LH:
+                AVLTreeNode<T> lchild = (AVLTreeNode<T>) child.getLeft();
+                switch (lchild.balanceFactor) {
+                    case EH:
+                        node.balanceFactor = child.balanceFactor = EH;
+                        break;
+                    case RH:
+                        node.balanceFactor = LH;
+                        child.balanceFactor = EH;
+                        break;
+                    case LH:
+                        node.balanceFactor = EH;
+                        child.balanceFactor = RH;
+                        break;
+                    default:
+                        break;
+                }
+                lchild.balanceFactor = EH;
+                node.setRight(RRotate(child));
+                root = (AVLTreeNode<T>) LRotate(node);
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) < 0) {
+                    preNode.setLeft(root);
+                }
+                if (preNode != null && node.getVal().compareTo(preNode.getVal()) > 0) {
+                    preNode.setRight(root);
+                }
+                break;
+            default:
+                break;
         }
+        return root;
     }
 
-    private TreeNode<T> createFromNormalArray(T a[], int level) {
-        return null;
+    private boolean insertNode(T value) {
+        return insertNode((AVLTreeNode<T>) root, value, null);
     }
 
-    /**
-     * level for node
-     * @param node
-     * @return
-     */
+    private boolean insertNode(AVLTreeNode<T> node, T value, AVLTreeNode<T> preNode) {
+        if (node == null) {
+            node = new AVLTreeNode<>(value, 0, EH);
+            taller = true;
+            if (preNode != null && node.getVal().compareTo(preNode.getVal()) < 0) {
+                preNode.setLeft(node);
+            }
+            if (preNode != null && node.getVal().compareTo(preNode.getVal()) > 0) {
+                preNode.setRight(node);
+            }
+            super.root = node;
+            return true;
+        }
+
+        if (value == node.getVal()) {
+            super.root = node;
+            return false;
+        }
+
+        if (value.compareTo(node.getVal()) < 0) {
+            if (!insertNode((AVLTreeNode<T>) node.getLeft(), value, node)) {
+                super.root = node;
+                return false;
+            }
+            if (taller) {
+                switch (node.balanceFactor) {
+                    case EH:
+                        taller = true;
+                        node.balanceFactor = LH;
+                        break;
+                    case RH:
+                        taller = false;
+                        node.balanceFactor = EH;
+                        break;
+                    case LH:
+                        taller = false;
+                        node = leftBalance(node, preNode);
+                        if (preNode != null) {
+                            node = preNode;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        if (value.compareTo(node.getVal()) > 0) {
+            if (!insertNode((AVLTreeNode<T>) node.getRight(), value, node)) {
+                super.root = node;
+                return false;
+            }
+            if (taller) {
+                switch (node.balanceFactor) {
+                    case EH:
+                        taller = true;
+                        node.balanceFactor = RH;
+                        break;
+                    case LH:
+                        taller = false;
+                        node.balanceFactor = EH;
+                        break;
+                    case RH:
+                        taller = false;
+                        node = rightBalance(node, preNode);
+                        if (preNode != null) {
+                            node = preNode;
+                        }
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        super.root = node;
+        return true;
+    }
+
+
     @Override
     public int level() {
-        if (root == null) {
-            return -1;
-        } else {
-            return level;
-        }
+        return 0;
     }
 
-    /**
-     * 插入操作
-     * @param treeNode
-     */
     @Override
     public void add(TreeNode<T> treeNode) {
-
+        insertNode(treeNode.getVal());
     }
 
-    /**
-     * 删除操作
-     * @param treeNode
-     */
+    @Override
+    public void add(T val) {
+        insertNode(val);
+    }
+
     @Override
     public void remove(TreeNode<T> treeNode) {
 
     }
 
+    @Override
+    public void remove(T val) {}
+
     public static void main(String[] args) {
-        Integer a[] = { 1, 2, 3, 4, 5, 6, 7, 8 };
-        SimpleAvlTree<Integer> avlTree = new SimpleAvlTree<Integer>(a, true);
-        // List<Integer> result = avlTree.preOrder();
-        // List<Integer> result = avlTree.midOrder();
-        List<Integer> result = avlTree.postOrder();
-        for (Integer data : result) {
-            System.out.print(data + " ");
+        // int[] data={8,6,4};
+        // int[] data={8,6,9,5,7,3};
+        // int[] data={8,6,7};
+        // int[] data={8,5,9,4,6,7};
+        // int[] data={8,5,9,4,7,6};
+        int[] data = {8, 5, 9, 7, 6, 2, 3, 1};
+        SimpleAvlTree<Integer> avl = new SimpleAvlTree<>();
+        for (int i = 0; i < data.length; i++) {
+            avl.add(data[i]);
         }
+        List<Integer> levelOrder = avl.levelOrder();
+        for (Integer v : levelOrder) {
+            System.out.print(v + " ");
+        }
+        
         System.out.println();
-        System.out.println("AvlTree level is:" + avlTree.level());
+        List<Integer> preOrder = avl.preOrder();
+        for (Integer v : preOrder) {
+            System.out.print(v + " ");
+        }
+        
+        System.out.println();
+        List<Integer> midOrder = avl.midOrder();
+        for (Integer v : midOrder) {
+            System.out.print(v + " ");
+        }
     }
 }

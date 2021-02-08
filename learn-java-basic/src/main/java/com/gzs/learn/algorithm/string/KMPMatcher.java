@@ -11,7 +11,6 @@ public class KMPMatcher implements StringMatcher {
 
     @Override
     public List<Integer> match(String str, String pattern) {
-        // TODO Auto-generated method stub
         return null;
     }
 
