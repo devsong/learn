@@ -11,8 +11,8 @@ import com.google.common.collect.Lists;
  */
 public class BruteForceMatcher implements StringMatcher {
     public static void main(String[] args) {
-        String originStr = "ababababcdfddfabcdfababdssd";
-        String pattern = "ababdssd";
+        String originStr = "ababdababcdfddfabcdfababdssd";
+        String pattern = "ababd";
         StringMatcher matcher = new BruteForceMatcher();
         List<Integer> indexes = matcher.match(originStr, pattern);
         System.out.println(JSON.toJSONString(indexes));
@@ -20,7 +20,6 @@ public class BruteForceMatcher implements StringMatcher {
             int start = indexes.get(i);
             System.out.println(originStr.substring(start, start + pattern.length()));
         }
-
     }
 
     @Override

@@ -82,6 +82,21 @@ public class DateTimeTest {
         System.out.println(current + " cost:" + cost);
         System.out.println(System.currentTimeMillis());
     }
+    
+    @Test
+    public void testDateConvertLocalDate() {
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        System.out.println(localDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd")));
+    }
+
+    @Test
+    public void testLocalDateConvertDate() {
+        LocalDate localDate = LocalDate.now();
+        Date date = Date.from(localDate.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        System.out.println(df.format(date));
+    }
 
     @Test
     public void testDateConvertDateTime() {
