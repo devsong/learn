@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 public class Main {
     public static void main(String[] args) {
         String originStr = "ababdababcdfddfabcdfababdssd";
-        String pattern = "bdssd";
+        String pattern = "ababd";
         // StringMatcher matcher = new BruteForceMatcher();
         // StringMatcher matcher = new KMPMatcher();
         StringMatcher matcher = new SundayMatcher();

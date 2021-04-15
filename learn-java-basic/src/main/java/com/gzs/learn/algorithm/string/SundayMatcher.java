@@ -34,11 +34,8 @@ public class SundayMatcher implements StringMatcher {
             while (total[s + j] == part[j]) {
                 j++;
                 if (j >= pSize) {
-                    // result.add(s);
-                    // s = 0;
-                    // break;
                     result.add(s);
-                    return result;
+                    break;
                 }
             }
             s += move[total[s + pSize]];
