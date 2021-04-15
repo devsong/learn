@@ -2,7 +2,6 @@ package com.gzs.learn.algorithm.string;
 
 import java.util.List;
 import org.apache.commons.collections.CollectionUtils;
-import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Lists;
 
 /**
@@ -46,7 +45,7 @@ public class KMPMatcher implements StringMatcher {
                 }
             }
             for (int i = 0; i < next.length; i++) {
-                System.out.print(next[i]+" ");
+                System.out.print(next[i] + " ");
             }
             return next;
         }
@@ -122,7 +121,7 @@ public class KMPMatcher implements StringMatcher {
                 }
             }
             for (int i = 0; i < next.length; i++) {
-                System.out.print(next[i]+" ");
+                System.out.print(next[i] + " ");
             }
             return next;
         }
@@ -136,17 +135,5 @@ public class KMPMatcher implements StringMatcher {
             return Lists.newArrayList();
         }
         return index;
-    }
-
-    public static void main(String[] args) {
-        String originStr = "ababdababcdfddfabcdfababdssd";
-        String pattern = "ababd";
-        StringMatcher matcher = new KMPMatcher();
-        List<Integer> indexes = matcher.match(originStr, pattern);
-        System.out.println(JSON.toJSONString(indexes));
-        for (int i = 0; i < indexes.size(); i++) {
-            int start = indexes.get(i);
-            System.out.println(originStr.substring(start, start + pattern.length()));
-        }
     }
 }
