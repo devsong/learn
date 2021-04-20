@@ -25,7 +25,7 @@ public class ZeroOneBag {
         }
     }
 
-    public List<ZeroOneBag> getMaxWeight(int capacity,int index) {
+    public List<ZeroOneBag> getMaxWeight(int capacity, int index) {
         return null;
     }
 }

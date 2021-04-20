@@ -1,10 +1,15 @@
-package com.gzs.learn.algorithm.array;
+package com.gzs.learn.algorithm.search;
 
 import org.junit.Test;
+import com.alibaba.fastjson.JSON;
 
-public class SortArrMidNum {
-
-    public int findMidNum(int[] a, int[] b) {
+/**
+ * 有序数组中位数
+ * 
+ * @author guanzhisong
+ */
+public class MidNumberSearch {
+    public int[] findMidNum(int[] a, int[] b) {
         int m = a.length;
         int n = b.length;
         // ensure m is shorter array
@@ -17,7 +22,7 @@ public class SortArrMidNum {
             n = b.length;
         }
 
-        int min = 0, max = m, halfLen = (m + n + 1) / 2, mid = 0;
+        int min = 0, max = m, halfLen = (m + n + 1) / 2;
         while (min <= max) {
             int i = (min + max) / 2;
             int j = halfLen - i;
@@ -36,8 +41,7 @@ public class SortArrMidNum {
                 }
 
                 if ((m + n) % 2 == 1) {
-                    mid = maxLeft;
-                    return mid;
+                    return new int[] {maxLeft};
                 }
 
                 int minRight = 0;
@@ -49,17 +53,16 @@ public class SortArrMidNum {
                     minRight = Math.min(b[j], a[i]);
                 }
 
-                mid = (maxLeft + minRight) / 2;
-                return mid;
+                return new int[] {maxLeft, minRight};
             }
         }
-        return 0;
+        return null;
     }
 
     @Test
     public void testFind() {
-        int[] num1 = {1, 3, 5, 7, 19, 25};
+        int[] num1 = {1, 3, 5, 7, 19};
         int[] num2 = {0, 2, 3, 4, 6, 8};
-        System.out.println(findMidNum(num1, num2));
+        System.out.println(JSON.toJSONString(findMidNum(num1, num2)));
     }
 }
