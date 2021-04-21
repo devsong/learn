@@ -11,7 +11,7 @@ public class NotRepeatNumberFind {
 
     public int[] b = {1, 2, 3, 4, 5, 6, 4, 3, 2, 1};
 
-    public int[] c = {1, 1, 1, 6, 6, 6, 7};
+    public int[] c = {1, 1, 1, 6, 6, 6, 7, 9, 9, 9};
 
     public int findNoRepeatNumber() {
         int result = a[0];
@@ -88,11 +88,30 @@ public class NotRepeatNumberFind {
         return low;
     }
 
+    int singleNumberBitMap(int[] a) {
+        int[] count = new int[32];
+        int result = 0;
+
+        for (int i = 0; i < a.length; i++) {
+            int e = a[i];
+            for (int j = 0; j < 32; j++) {
+                count[j] += e >> j & 0x1;
+            }
+        }
+
+        for (int i = 0; i < 32; i++) {
+            result |= (count[i] % 3 << i);
+        }
+
+        return result;
+    }
+
 
     @Test
     public void testFind() {
         // System.out.println(findNoRepeatNumber());
-        System.out.println(JSON.toJSONString(findNoRepeatNumber2()));
-        System.out.println(singleNumber(c));
+        // System.out.println(JSON.toJSONString(findNoRepeatNumber2()));
+        // System.out.println(singleNumber(c));
+        System.out.println(singleNumberBitMap(c));
     }
 }
