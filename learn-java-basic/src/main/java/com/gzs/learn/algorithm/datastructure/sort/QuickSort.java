@@ -1,5 +1,11 @@
 package com.gzs.learn.algorithm.datastructure.sort;
 
-public class QuickSort {
+public class QuickSort implements Sortable<Integer> {
+
+    @Override
+    public void sort(Integer[] array) {
+        // TODO Auto-generated method stub
+        
+    }
 
 }

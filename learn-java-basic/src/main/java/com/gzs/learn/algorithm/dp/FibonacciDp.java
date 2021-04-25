@@ -1,7 +1,8 @@
 package com.gzs.learn.algorithm.dp;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
-import java.util.Map.Entry;
 import java.util.TreeMap;
 
 /**
@@ -26,11 +27,21 @@ public class FibonacciDp {
         return r;
     }
 
+    public List<Long> calcByDp(Long n) {
+        List<Long> result = new ArrayList<Long>(n.intValue());
+        result.add(0, 1L);
+        result.add(1, 1L);
+        for (int i = 2; i <= n; i++) {
+            result.add(i, result.get(i - 1) + result.get(i - 2));
+        }
+        return result;
+    }
+
     public static void main(String[] args) {
         FibonacciDp fibDp = new FibonacciDp();
-        fibDp.calc(10L);
-        for (Entry<Long, Long> entry : fibDp.result.entrySet()) {
-            System.out.print(entry.getValue() + " ");
+        List<Long> results = fibDp.calcByDp(10L);
+        for (long r : results) {
+            System.out.print(r + " ");
         }
     }
 }
