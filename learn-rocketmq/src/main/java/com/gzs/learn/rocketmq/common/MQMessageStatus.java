@@ -7,5 +7,7 @@ package com.gzs.learn.rocketmq.common;
  * @date 2018年1月2日
  */
 public enum MQMessageStatus {
-    SUCCESS, FAIL
+    SUCCESS,
+
+    FAIL
 }

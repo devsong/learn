@@ -1,20 +1,19 @@
 package com.gzs.learn.algorithm.dp;
 
-import org.apache.commons.lang3.builder.HashCodeBuilder;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
 
 /**
  * 背包条目对象
- * 
- * @author guanzhisong
  *
+ * @author guanzhisong
  */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class BagItem {
+public class BagItem implements Comparable<BagItem> {
     /**
      * 容量
      */
@@ -46,4 +45,17 @@ public class BagItem {
         return builder.build();
     }
 
+    /**
+     * 降序排列,按单价降序排列
+     *
+     * @param item
+     * @return
+     */
+    @Override
+    public int compareTo(BagItem item) {
+        if (item == null) {
+            throw new NullPointerException("item must not be null");
+        }
+        return this.getVol() - item.getVol();
+    }
 }

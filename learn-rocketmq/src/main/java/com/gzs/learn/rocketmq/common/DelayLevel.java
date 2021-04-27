@@ -1,5 +1,8 @@
 package com.gzs.learn.rocketmq.common;
 
+/**
+ * 详细定义需要参照服务端延时定义,此处根据枚举的ordinal值与服务器端对应
+ */
 public enum DelayLevel {
     /**
      * 实时消息
@@ -16,5 +19,5 @@ public enum DelayLevel {
     /**
      * 延时1小时
      */
-    HOUR_1, HOUR_2
+    HOUR_1, HOUR_2;
 }

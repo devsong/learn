@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ImportResource;
 
-@EnableAutoConfiguration
 @SpringBootApplication
 @ImportResource("classpath:/META-INF/applicationContext.xml")
 public class ElasticsearchApp {

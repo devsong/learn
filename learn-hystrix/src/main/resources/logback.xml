@@ -3,7 +3,6 @@
 	<property name="APP_NAME" value="learn"/>
 	<property name="LOG_HOME" value="${log.dir:-logs}/"/>
 	<property name="ENCODER_PATTERN" value="%d{yyyy-MM-dd  HH:mm:ss.SSS} %-5level [%thread] %logger{32} - %msg  %n"/>
-	<property name="PREFORM_PATTERN" value="%d{yyyy-MM-dd  HH:mm:ss.SSS} - %msg%n"/>
 	<contextName>${APP_NAME}</contextName>
 
 	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
