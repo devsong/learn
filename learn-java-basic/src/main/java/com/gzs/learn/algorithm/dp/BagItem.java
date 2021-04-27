@@ -42,7 +42,7 @@ public class BagItem implements Comparable<BagItem> {
     public int hashCode() {
         HashCodeBuilder builder = new HashCodeBuilder();
         builder.append(this.vol);
-        return builder.build();
+        return builder.toHashCode();
     }
 
     /**
@@ -57,5 +57,10 @@ public class BagItem implements Comparable<BagItem> {
             throw new NullPointerException("item must not be null");
         }
         return this.getVol() - item.getVol();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("vol:%s,value:%d,count:%d", this.vol, this.value, this.count);
     }
 }

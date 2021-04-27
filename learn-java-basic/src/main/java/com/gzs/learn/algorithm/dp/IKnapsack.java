@@ -7,18 +7,18 @@ public interface IKnapsack {
     /**
      * 计算得出最优组合
      * 
-     * @param maxVol
+     * @param vol
      * @return
      */
-    public List<BagItem> bestPrecept(int maxVol);
+    public List<BagItem> bestPrecept(int vol);
 
     /**
      * 计算最优组合的价值
      * 
-     * @param maxVol
+     * @param vol
      * @return
      */
-    public Integer maxValue(int maxVol);
+    public Integer maxValue(int vol);
 
     /**
      * 打印当前动态规划数据内容
