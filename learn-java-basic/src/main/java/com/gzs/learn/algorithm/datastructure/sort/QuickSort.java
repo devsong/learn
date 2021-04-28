@@ -4,8 +4,7 @@ public class QuickSort implements Sortable<Integer> {
 
     @Override
     public void sort(Integer[] array) {
-        // TODO Auto-generated method stub
-        
+
     }
 
 }
