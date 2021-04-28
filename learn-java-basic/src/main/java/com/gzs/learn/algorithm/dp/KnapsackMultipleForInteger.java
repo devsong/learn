@@ -35,10 +35,12 @@ public class KnapsackMultipleForInteger {
         for (int i = 1; i < len + 1; i++) {
             BagItem item = items.get(i - 1);
             for (int j = 1; j < maxVol + 1; j++) {
-                for (int k = 1; k < item.getCount(); k++) {
+                for (int k = 1; k <= item.getCount(); k++) {
                     if (item.getVol() * k > j) {
-                        dp[i][j] = dp[i - 1][j];
-                    } else {
+                        if(dp[i][j]<dp[i-1][j]){
+                            dp[i][j] = dp[i - 1][j];
+                        }
+                    } else  {
                         dp[i][j] = Math.max(dp[i - 1][j], dp[i - 1][j - item.getVol() * k] + item.getValue() * k);
                     }
                 }
@@ -59,18 +61,20 @@ public class KnapsackMultipleForInteger {
         }
         StringBuilder sbForVols = new StringBuilder();
         StringBuilder sbForValues = new StringBuilder();
+        StringBuilder sbForCounts = new StringBuilder();
         for (int i = 0; i < items.size(); i++) {
             BagItem item = items.get(i);
             sbForVols.append(item.getVol()).append(" ");
             sbForValues.append(item.getValue()).append(" ");
+            sbForCounts.append(item.getCount()).append(" ");
         }
         System.out.println("容量列表:");
         System.out.println(sbForVols.toString());
         System.out.println("价值列表:");
         System.out.println(sbForValues);
+        System.out.println("数量列表:");
+        System.out.println(sbForCounts);
 
-
-        System.out.println("动态规划数组列表:");
         System.out.println("动态规划数组列表:");
         for (int i = 0; i < dp.length; i++) {
             for (int j = 0; j < dp[0].length; j++) {

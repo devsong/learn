@@ -21,8 +21,8 @@ public class Main {
         }
         int maxVol = 6;
         // IKnapsack knapsack = new Knapsack01(items, maxVol);
-        // IKnapsack knapsack = new KnapsackComplete(items,maxVol);
-        IKnapsack knapsack = new KnapsackMultiple(items,maxVol);
+        IKnapsack knapsack = new KnapsackComplete(items, maxVol);
+        // IKnapsack knapsack = new KnapsackMultiple(items,maxVol);
         int maxValue = knapsack.maxValue(maxVol);
         knapsack.print();
 
@@ -33,7 +33,7 @@ public class Main {
             System.out.println(item);
         }
 
-        maxVol = 10;
+        maxVol = 9;
 
         maxValue = knapsack.maxValue(maxVol);
         knapsack.print();
@@ -44,6 +44,10 @@ public class Main {
         for (BagItem item : bestItems) {
             System.out.println(item);
         }
+
+        KnapsackMultipleForInteger knapsackMultipleForInteger = new KnapsackMultipleForInteger(items);
+        System.out.println("maxVol:" + maxVol + " maxValue:" + knapsackMultipleForInteger.maxValue(maxVol));
+        knapsackMultipleForInteger.print();
 
     }
 }
