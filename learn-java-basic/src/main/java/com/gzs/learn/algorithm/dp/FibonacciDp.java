@@ -15,7 +15,7 @@ public class FibonacciDp {
     Map<Long, Long> result = new TreeMap<>();
 
     public Long calc(Long n) {
-        Long r = 0L;
+        long r;
         if (n < 2) {
             r = n;
         } else {
@@ -28,7 +28,7 @@ public class FibonacciDp {
     }
 
     public List<Long> calcByDp(Long n) {
-        List<Long> result = new ArrayList<Long>(n.intValue());
+        List<Long> result = new ArrayList<>(n.intValue());
         result.add(0, 1L);
         result.add(1, 1L);
         for (int i = 2; i <= n; i++) {

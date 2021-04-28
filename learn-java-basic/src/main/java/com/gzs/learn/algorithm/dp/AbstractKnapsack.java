@@ -9,13 +9,13 @@ public abstract class AbstractKnapsack implements IKnapsack {
      *
      * @return
      */
-    protected abstract DpArrayItem[][] getDpArray();
+    protected abstract KnapsackItem[][] getDpArray();
 
     protected abstract List<BagItem> getItems();
 
     @Override
     public void print() {
-        DpArrayItem[][] dp = getDpArray();
+        KnapsackItem[][] dp = getDpArray();
         List<BagItem> items = getItems();
         if (dp == null) {
             return;
@@ -23,8 +23,7 @@ public abstract class AbstractKnapsack implements IKnapsack {
         StringBuilder sbForVols = new StringBuilder();
         StringBuilder sbForValues = new StringBuilder();
         StringBuilder sbForCounts = new StringBuilder();
-        for (int i = 0; i < items.size(); i++) {
-            BagItem item = items.get(i);
+        for (BagItem item : items) {
             sbForVols.append(item.getVol()).append(" ");
             sbForValues.append(item.getValue()).append(" ");
             sbForCounts.append(item.getCount()).append(" ");
@@ -40,13 +39,13 @@ public abstract class AbstractKnapsack implements IKnapsack {
         for (int i = 0; i < dp.length; i++) {
             for (int j = 0; j < dp[0].length; j++) {
                 if (i == 0 && j == 0) {
-                    System.out.print(String.format("%d ", i));
+                    System.out.printf("%d ", i);
                 } else if (i == 0) {
-                    System.out.print(String.format("% 5d ", j));
+                    System.out.printf("% 5d ", j);
                 } else if (j == 0) {
-                    System.out.print(String.format("%d ", i));
+                    System.out.printf("%d ", i);
                 } else {
-                    System.out.print(String.format("% 5d ", dp[i][j].getTotal()));
+                    System.out.printf("% 5d ", dp[i][j].getTotal());
                 }
             }
             System.out.println();

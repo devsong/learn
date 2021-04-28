@@ -10,11 +10,11 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class DpArrayItem {
+public class KnapsackItem {
     // 当前节点
     private BagItem bagItem;
     // 前置节点
-    private DpArrayItem prev;
+    private KnapsackItem prev;
     // 当前dp值
     private int total;
 }

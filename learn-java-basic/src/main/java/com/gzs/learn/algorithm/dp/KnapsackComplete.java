@@ -5,9 +5,7 @@ import com.google.common.collect.Lists;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.function.Function;
-import java.util.stream.Collectors;
+
 
 /**
  * 完全背包问题
@@ -16,11 +14,9 @@ import java.util.stream.Collectors;
  */
 public class KnapsackComplete extends AbstractKnapsack {
     private final List<BagItem> items;
-    private final Map<Integer, BagItem> itemMap;
-    private DpArrayItem[][] dp = null;
+    private KnapsackItem[][] dp = null;
     // 记录当前dp数组的最大容量,默认与dp数组的dp[0].length-1相等
     private int lastVol;
-    private boolean isInit = false;
 
     public KnapsackComplete(List<BagItem> items, int vol) {
         if (items == null || items.isEmpty()) {
@@ -28,8 +24,7 @@ public class KnapsackComplete extends AbstractKnapsack {
         }
         this.items = optimizeItems(items);
         this.lastVol = vol;
-        this.itemMap = items.stream().collect(Collectors.toMap(BagItem::getVol, Function.identity()));
-        this.isInit = init(vol);
+        init(vol);
     }
 
     /**
@@ -64,17 +59,16 @@ public class KnapsackComplete extends AbstractKnapsack {
      *
      * @param vol
      */
-    protected boolean init(int vol) {
+    protected void init(int vol) {
         int len = items.size();
         // 初始化dp数组
-        this.dp = new DpArrayItem[len + 1][vol + 1];
+        this.dp = new KnapsackItem[len + 1][vol + 1];
         for (int i = 0; i < dp.length; i++) {
             for (int j = 0; j < dp[0].length; j++) {
-                dp[i][j] = new DpArrayItem(null, null, 0);
+                dp[i][j] = new KnapsackItem(null, null, 0);
             }
         }
         buildDp(dp, 1, vol);
-        return true;
     }
 
     /**
@@ -90,12 +84,12 @@ public class KnapsackComplete extends AbstractKnapsack {
 
         int len = items.size();
         // 初始化dp数组
-        DpArrayItem[][] newDp = new DpArrayItem[len + 1][vol + 1];
+        KnapsackItem[][] newDp = new KnapsackItem[len + 1][vol + 1];
         for (int i = 0; i < newDp.length; i++) {
             for (int j = 0; j < newDp[0].length; j++) {
                 if (j > this.lastVol) {
                     // 扩容数组对象,初始化值
-                    newDp[i][j] = new DpArrayItem(null, null, 0);
+                    newDp[i][j] = new KnapsackItem(null, null, 0);
                 } else {
                     // 复用旧数组的对象
                     newDp[i][j] = dp[i][j];
@@ -107,7 +101,7 @@ public class KnapsackComplete extends AbstractKnapsack {
         this.lastVol = vol;
     }
 
-    protected void buildDp(DpArrayItem[][] dp, int startVol, int vol) {
+    protected void buildDp(KnapsackItem[][] dp, int startVol, int vol) {
         int len = dp.length;
 
         for (int i = 1; i < len; i++) {
@@ -115,8 +109,8 @@ public class KnapsackComplete extends AbstractKnapsack {
             // 当前元素最大的条目数量
             int maxK = (int) Math.ceil((double) vol / item.getVol());
             for (int j = startVol; j < vol + 1; j++) {
-                DpArrayItem prev = dp[i - 1][j];
-                DpArrayItem currentItem = dp[i][j];
+                KnapsackItem prev = dp[i - 1][j];
+                KnapsackItem currentItem = dp[i][j];
                 for (int k = 1; k <= maxK; k++) {
                     if (item.getVol() * k > j) {
                         if(prev.getTotal()>currentItem.getTotal()) {
@@ -125,7 +119,7 @@ public class KnapsackComplete extends AbstractKnapsack {
                             currentItem.setBagItem(null);
                         }
                     } else {
-                        DpArrayItem specifyItem = dp[i - 1][j - item.getVol() * k];
+                        KnapsackItem specifyItem = dp[i - 1][j - item.getVol() * k];
                         int prevTotal = prev.getTotal();
                         int newTotal = specifyItem.getTotal() + item.getValue() * k;
                         if (prevTotal > newTotal) {
@@ -154,7 +148,7 @@ public class KnapsackComplete extends AbstractKnapsack {
             adjust(vol);
         }
         List<BagItem> bestPrecepts = Lists.newArrayList();
-        DpArrayItem item = dp[dp.length - 1][vol];
+        KnapsackItem item = dp[dp.length - 1][vol];
         while (item.getPrev() != null) {
             if (item.getBagItem() == null) {
                 item = item.getPrev();
@@ -177,7 +171,7 @@ public class KnapsackComplete extends AbstractKnapsack {
     }
 
     @Override
-    protected DpArrayItem[][] getDpArray() {
+    protected KnapsackItem[][] getDpArray() {
         return this.dp;
     }
 

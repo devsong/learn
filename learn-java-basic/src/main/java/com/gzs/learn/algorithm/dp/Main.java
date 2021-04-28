@@ -26,7 +26,7 @@ public class Main {
         int maxValue = knapsack.maxValue(maxVol);
         knapsack.print();
 
-        System.out.println(String.format("maxVol:%d,maxValue:%d", maxVol, maxValue));
+        System.out.printf("maxVol:%d,maxValue:%d%n", maxVol, maxValue);
         List<BagItem> bestItems = knapsack.bestPrecept(maxVol);
         System.out.println("最佳容量组合:");
         for (BagItem item : bestItems) {
@@ -38,7 +38,7 @@ public class Main {
         maxValue = knapsack.maxValue(maxVol);
         knapsack.print();
 
-        System.out.println(String.format("maxVol:%d,maxValue:%d", maxVol, maxValue));
+        System.out.printf("maxVol:%d,maxValue:%d%n", maxVol, maxValue);
         bestItems = knapsack.bestPrecept(maxVol);
         System.out.println("最佳容量组合:");
         for (BagItem item : bestItems) {
