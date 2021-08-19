@@ -15,7 +15,6 @@ public class Knapsack01 extends AbstractKnapsack {
     private int lastVol;
     // 0-1背包问题最大容量上限
     private final int maxVol;
-    private boolean isInit = false;
 
     public Knapsack01(List<BagItem> items, int vol) {
         if (items == null || items.isEmpty()) {
@@ -27,7 +26,7 @@ public class Knapsack01 extends AbstractKnapsack {
             vol = maxVol;
         }
         this.lastVol = vol;
-        isInit = init(vol);
+        init(vol);
     }
 
     /**
@@ -35,7 +34,7 @@ public class Knapsack01 extends AbstractKnapsack {
      *
      * @param vol
      */
-    protected boolean init(int vol) {
+    protected void init(int vol) {
         int len = items.size();
         // 初始化dp数组
         this.dp = new KnapsackItem[len + 1][vol + 1];
@@ -45,7 +44,6 @@ public class Knapsack01 extends AbstractKnapsack {
             }
         }
         buildDp(dp, 1, vol);
-        return true;
     }
 
 
