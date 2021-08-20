@@ -6,7 +6,7 @@ import com.alibaba.fastjson.JSON;
 
 public class TwoSum {
 
-    public static int[] arr = {1, 3, 4, 2, 9, 7, 6, 8, 11, 20, 13};
+    public static int[] arr = {1, 100, 3, 4, 2, 9, 7, 6, 8, 11, 20, 13};
 
     public static int[] twoSum(int[] nums, int target) {
         // return bruteSolution(arr, 6);
@@ -56,8 +56,20 @@ public class TwoSum {
 
     public static void bubbleSort(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
-            for (int j = i; j < arr.length - i - 1; j++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
                 if (arr[j] > arr[j + 1]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void bubbleSort2(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length - 1 - i; j++) {
+                if (arr[j] < arr[j + 1]) {
                     int temp = arr[j];
                     arr[j] = arr[j + 1];
                     arr[j + 1] = temp;
@@ -84,6 +96,8 @@ public class TwoSum {
     public static void main(String[] args) {
         System.out.println(JSON.toJSONString(twoSum(new int[] {3, 3, 4}, 6)));
         bubbleSort(arr);
+        System.out.println(JSON.toJSONString(arr));
+        bubbleSort2(arr);
         // System.out.println("target index is:" + binarySearch(arr, 1));
         System.out.println(JSON.toJSONString(arr));
     }
