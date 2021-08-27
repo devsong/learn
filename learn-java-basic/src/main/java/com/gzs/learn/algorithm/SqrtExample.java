@@ -123,4 +123,12 @@ public class SqrtExample {
 			return mid;
 		}
 	}
+	
+	@Test
+	public void testPrintDoubleBinary() {
+	    float  f = 0b00000001000000000000000000001101;
+	    double b = 0b0000000010011000000000000000000001;
+	    System.out.println(f);
+	    System.out.println(b);
+	}
 }
