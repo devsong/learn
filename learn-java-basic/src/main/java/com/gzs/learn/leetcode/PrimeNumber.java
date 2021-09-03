@@ -30,34 +30,34 @@ public class PrimeNumber {
     }
 
     int[] excluedPrime(int n) {
-        int[] list = new int[n - 1];
-        int len = list.length;
-        for (int i = 2; i <= n; i++) {
-            list[i - 2] = i;
+        int[] a = new int[n - 1];
+        int len = a.length;
+        for (int i = 0; i < len; i++) {
+            a[i] = i + 2;
         }
         for (int k = 0; k < len; k++) {
-            Integer exclude = list[k];
+            int exclude = a[k];
             while (exclude == 0 && k < len - 1) {
                 k++;
-                exclude = list[k];
+                exclude = a[k];
             }
 
             if (exclude * exclude > n) {
                 break;
             }
             for (int j = k + 1; j < len - 1; j++) {
-                int elem = list[j];
+                int elem = a[j];
                 while (elem == 0 && j < len - 1) {
                     j++;
-                    elem = list[j];
+                    elem = a[j];
                 }
                 if (elem % exclude == 0) {
 
-                    list[j] = 0;
+                    a[j] = 0;
                 }
             }
         }
-        return list;
+        return a;
     }
 
     void print(int[] prime) {
