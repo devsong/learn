@@ -7,7 +7,7 @@ public interface Sortable<T> {
 
     default void print(T[] array) {
         for (T t : array) {
-            System.out.print(t.toString() + " ");
+            System.out.print(t.toString() + ",");
         }
     }
 
