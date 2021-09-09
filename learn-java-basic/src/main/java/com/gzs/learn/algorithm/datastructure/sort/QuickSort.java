@@ -10,8 +10,8 @@ public class QuickSort implements Sortable<Integer> {
     }
 
     private void quickSort(Integer[] array, int low, int high) {
+        if (low < high) {}
         int p = array[low], pos = low, left = low + 1;
-
 
         while (left <= high) {
             int elem = array[left];
@@ -26,7 +26,7 @@ public class QuickSort implements Sortable<Integer> {
             }
         }
 
-        if (low < high) {
+       
             quickSort(array, low, pos);
             if (pos < high) {
                 quickSort(array, pos + 1, high);
