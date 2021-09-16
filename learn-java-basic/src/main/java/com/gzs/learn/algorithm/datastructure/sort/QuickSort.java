@@ -10,28 +10,24 @@ public class QuickSort implements Sortable<Integer> {
     }
 
     private void quickSort(Integer[] array, int low, int high) {
-        if (low < high) {}
-        int p = array[low], pos = low, left = low + 1;
+        if (low >= high) {
+            return;
+        }
+        int pos = partition(array, low, high);
+        quickSort(array, low, pos - 1);
+        quickSort(array, pos + 1, high);
+    }
 
-        while (left <= high) {
-            int elem = array[left];
-            if (elem >= p) {
-                left++;
-            } else {
-                for (int j = left; j > low; j--) {
-                    array[j] = array[j - 1];
-                }
-                array[low] = elem;
+    private int partition(Integer[] array, int low, int high) {
+        int pivot = array[low], pos = low + 1;
+        for (int i = pos; i <= high; i++) {
+            if (array[i] < pivot) {
+                swap(array, i, pos);
                 pos++;
             }
         }
-
-       
-            quickSort(array, low, pos);
-            if (pos < high) {
-                quickSort(array, pos + 1, high);
-            }
-        }
+        swap(array, low, pos - 1);
+        return pos - 1;
     }
 
     public static void main(String[] args) {
