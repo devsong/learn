@@ -3,7 +3,6 @@ package com.gzs.learn.algorithm.tree;
 import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.EH;
 import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.LH;
 import static com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode.RH;
-import java.util.List;
 import com.gzs.learn.algorithm.tree.TreeNode.AVLTreeNode;
 
 public class SimpleAvlTree<T extends Comparable<T>> extends AbstractAvlTree<T> {
@@ -206,34 +205,11 @@ public class SimpleAvlTree<T extends Comparable<T>> extends AbstractAvlTree<T> {
     }
 
     @Override
-    public void remove(T val) {}
+    public void remove(T val) {
 
-    public static void main(String[] args) {
-        // int[] data={8,6,4};
-        // int[] data={8,6,9,5,7,3};
-        // int[] data={8,6,7};
-        // int[] data={8,5,9,4,6,7};
-        // int[] data={8,5,9,4,7,6};
-        int[] data = {8, 5, 9, 7, 6, 2, 3, 1};
-        SimpleAvlTree<Integer> avl = new SimpleAvlTree<>();
-        for (int i = 0; i < data.length; i++) {
-            avl.add(data[i]);
-        }
-        List<Integer> levelOrder = avl.levelOrder();
-        for (Integer v : levelOrder) {
-            System.out.print(v + " ");
-        }
-        
-        System.out.println();
-        List<Integer> preOrder = avl.preOrder();
-        for (Integer v : preOrder) {
-            System.out.print(v + " ");
-        }
-        
-        System.out.println();
-        List<Integer> midOrder = avl.midOrder();
-        for (Integer v : midOrder) {
-            System.out.print(v + " ");
-        }
+    }
+
+    public TreeNode<T> getRoot() {
+        return root;
     }
 }
