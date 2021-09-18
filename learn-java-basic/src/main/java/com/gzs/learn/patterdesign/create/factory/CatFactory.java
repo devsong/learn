@@ -1,9 +1,9 @@
 package com.gzs.learn.patterdesign.create.factory;
 
-public class CatFactory extends AbstractFactory {
+public class CatFactory implements AnimalFactory {
 
     @Override
-    Animal buildAnimal() {
+    public Animal buildAnimal() {
         return SimpleFactory.buildAnimal(SimpleFactory.KIND_CAT);
     }
 

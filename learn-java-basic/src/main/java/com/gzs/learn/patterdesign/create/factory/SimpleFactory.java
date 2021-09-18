@@ -22,6 +22,6 @@ public class SimpleFactory {
 
     public static void main(String[] args) {
         Animal animal = SimpleFactory.buildAnimal(SimpleFactory.KIND_DOG);
-        System.out.println(animal);
+        animal.sayHello();
     }
 }
