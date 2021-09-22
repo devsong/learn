@@ -1,12 +1,10 @@
 package com.gzs.learn.patterdesign.create.factory;
 
-import lombok.Data;
+public interface Animal {
 
-@Data
-public class Animal {
-    protected String name;
+    public default void sayHello() {
+        System.out.print(getName() + " ");
+    }
 
-    public void sayHello() {
-        System.out.println(this.name);
-    };
+    String getName();
 }
