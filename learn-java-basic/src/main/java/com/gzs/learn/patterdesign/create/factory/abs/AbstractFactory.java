@@ -7,4 +7,6 @@ public interface AbstractFactory {
     Animal buildAnimal();
 
     Action doAction();
+    
+    // anthoer method
 }
