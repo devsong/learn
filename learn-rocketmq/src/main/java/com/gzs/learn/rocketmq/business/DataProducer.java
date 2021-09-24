@@ -13,8 +13,8 @@ public class DataProducer implements MessageProducer {
     @Override
     public MQMessageStatus send(MQMessage msg) {
         try {
-            MessageProducerRegister.send(DataProducer.class, msg, DelayLevel.REAL_TIME);
-            return MQMessageStatus.SUCCESS;
+            MQMessageStatus status = MessageProducerRegister.send(DataProducer.class, msg, DelayLevel.REAL_TIME);
+            return status;
         } catch (Exception e) {
             return MQMessageStatus.FAIL;
         }

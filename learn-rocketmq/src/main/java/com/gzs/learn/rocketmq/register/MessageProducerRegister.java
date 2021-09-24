@@ -4,29 +4,23 @@ import java.nio.charset.Charset;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.concurrent.ConcurrentHashMap;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
-
-import com.alibaba.rocketmq.client.exception.MQBrokerException;
 import com.alibaba.rocketmq.client.exception.MQClientException;
 import com.alibaba.rocketmq.client.producer.DefaultMQProducer;
 import com.alibaba.rocketmq.client.producer.SendResult;
 import com.alibaba.rocketmq.common.message.Message;
-import com.alibaba.rocketmq.remoting.exception.RemotingException;
 import com.gzs.learn.rocketmq.annotation.RocketMQProducer;
 import com.gzs.learn.rocketmq.common.DelayLevel;
 import com.gzs.learn.rocketmq.common.MQMessage;
 import com.gzs.learn.rocketmq.common.MQMessageStatus;
 import com.gzs.learn.rocketmq.inf.MessageProducer;
-
 import lombok.extern.slf4j.Slf4j;
 
 @Component
@@ -34,8 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class MessageProducerRegister implements ApplicationContextAware {
     public static final Charset UTF_8 = Charset.forName("UTF-8");
     private static ApplicationContext ctx;
-    private static ConcurrentHashMap<Class<? extends MessageProducer>, DefaultMQProducer> holder =
-            new ConcurrentHashMap<>();
+    private static ConcurrentHashMap<String, DefaultMQProducer> holder = new ConcurrentHashMap<>();
 
     @Value("${com.gzs.learn.rocketmq.nameserver:''}")
     private String defaultNameServer;
@@ -71,7 +64,7 @@ public class MessageProducerRegister implements ApplicationContextAware {
             } catch (MQClientException e) {
                 log.error("start producer {} error", beanName, e);
             }
-            holder.put(messageProducer.getClass(), producer);
+            holder.put(messageProducer.getClass().getCanonicalName(), producer);
             log.info("register mq producer:{},nameserver:{} success", beanName, nameServer);
         }
     }
@@ -81,8 +74,8 @@ public class MessageProducerRegister implements ApplicationContextAware {
         if (holder == null || holder.isEmpty()) {
             return;
         }
-        for (Entry<Class<? extends MessageProducer>, DefaultMQProducer> entry : holder.entrySet()) {
-            Class<? extends MessageProducer> cls = entry.getKey();
+        for (Entry<String, DefaultMQProducer> entry : holder.entrySet()) {
+            String key = entry.getKey();
             DefaultMQProducer producer = entry.getValue();
             if (producer == null) {
                 continue;
@@ -90,7 +83,7 @@ public class MessageProducerRegister implements ApplicationContextAware {
             try {
                 producer.shutdown();
             } catch (Exception e) {
-                log.error("shutdown producer:{} error", cls.getName(), e);
+                log.error("shutdown producer:{} error", key, e);
             }
         }
     }
@@ -100,9 +93,8 @@ public class MessageProducerRegister implements ApplicationContextAware {
         ctx = applicationContext;
     }
 
-    public static MQMessageStatus send(Class<? extends MessageProducer> cls, MQMessage msg,
-            DelayLevel delay) {
-        DefaultMQProducer producer = holder.get(cls);
+    public static MQMessageStatus send(Class<? extends MessageProducer> cls, MQMessage msg, DelayLevel delay) {
+        DefaultMQProducer producer = holder.get(cls.getCanonicalName());
         if (producer == null) {
             log.error("register {} producer error", cls.getName());
             return MQMessageStatus.FAIL;
@@ -126,8 +118,7 @@ public class MessageProducerRegister implements ApplicationContextAware {
             SendResult send = producer.send(message);
             msg.setMsgId(send.getMsgId());
             return MQMessageStatus.SUCCESS;
-        } catch (MQClientException | MQBrokerException | RemotingException
-                | InterruptedException e) {
+        } catch (Exception e) {
             log.error("send msg error,client:{}", cls.getName(), e);
             return MQMessageStatus.FAIL;
         }
