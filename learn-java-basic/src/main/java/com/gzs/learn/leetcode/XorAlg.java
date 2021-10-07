@@ -32,8 +32,4 @@ public class XorAlg {
         System.out.println(result);
     }
 
-    @Test
-    public void testAnd() {
-        System.out.println((27023796797964800L & 2199023255552L) == 2199023255552L);
-    }
 }
