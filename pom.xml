@@ -56,7 +56,7 @@
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
         </dependency>
-        
+
         <dependency>
             <groupId>org.apache.shiro</groupId>
             <artifactId>shiro-core</artifactId>
@@ -86,7 +86,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        
+
 
     </dependencies>
 
@@ -96,7 +96,6 @@
         <module>learn-rocketmq</module>
         <module>learn-java-net</module>
         <module>learn-hystrix</module>
-        <module>learn-backend-admin</module>
         <module>learn-springframework</module>
     </modules>
 </project>
