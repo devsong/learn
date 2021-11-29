@@ -1,18 +1,22 @@
+server:
+  port: 8871
 spring:
-  server:
-    port:8871
   application:
     name: example
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/example
+    username: admin
+    password: 1RNbTI@m$zIE114s
     hikari:
-      jdbc-url: jdbc://mysql:12.0.0.1:3306/example
-      username: w_account
-      password: qvYx8OaG
-      maximum-pool-size: 100
-      minimum-idle: 5
-      driver-class-name: com.mysql.jdbc.Driver
+      maximum-pool-size: 20
+      minimum-idle: 2
   jpa:
     hibernate:
       ddl-auto: update
+      use-new-id-generator-mappings: false
+    properties:
+      hibernate:
+        format_sql: true
     show-sql: true
 

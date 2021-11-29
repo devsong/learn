@@ -8,11 +8,11 @@ import org.springframework.data.domain.Pageable;
 import java.util.List;
 
 public interface IUserService {
-    boolean saveUser(User user);
+    User saveUser(User user);
 
-    boolean saveAddress(Address address);
+    Address saveAddress(Address address);
 
-    boolean saveBatchAddreass(List<Address> addresses);
+    List<Address> saveBatchAddreass(List<Address> addresses);
 
     Page<Address> findAllByUserId(long userId, Pageable pageable);
 }

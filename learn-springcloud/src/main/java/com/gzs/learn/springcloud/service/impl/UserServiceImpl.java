@@ -1,5 +1,6 @@
 package com.gzs.learn.springcloud.service.impl;
 
+import com.google.common.collect.Lists;
 import com.gzs.learn.springcloud.entity.Address;
 import com.gzs.learn.springcloud.entity.User;
 import com.gzs.learn.springcloud.repository.AddressRepository;
@@ -23,23 +24,22 @@ public class UserServiceImpl implements IUserService {
 
     private final AddressRepository addressRepository;
 
-    public boolean saveUser(User user) {
-        User u = userRepository.save(user);
-        return u.getId()>0;
+    public User saveUser(User user) {
+        return userRepository.save(user);
     }
 
-    public boolean saveAddress(Address address) {
+    public Address saveAddress(Address address) {
         Address addr = addressRepository.save(address);
-        return addr.getId()>0;
+        return addr;
     }
 
-    public boolean saveBatchAddreass(List<Address> addresses) {
-        addressRepository.saveAll(addresses);
-        return true;
+    public List<Address> saveBatchAddreass(List<Address> addresses) {
+        Iterable<Address> iterable = addressRepository.saveAll(addresses);
+        return Lists.newArrayList(iterable);
     }
 
     public Page<Address> findAllByUserId(long userId, Pageable pageable) {
-        return null;
+        return addressRepository.findByUserId(userId,pageable);
     }
 
 }

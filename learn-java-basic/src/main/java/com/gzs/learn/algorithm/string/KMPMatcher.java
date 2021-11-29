@@ -1,26 +1,26 @@
 package com.gzs.learn.algorithm.string;
 
 import java.util.List;
-import org.apache.commons.collections.CollectionUtils;
 import com.google.common.collect.Lists;
+import org.springframework.util.CollectionUtils;
 
 /**
  * kmp字符串匹配
- * 
+ *
  * @author guanzhisong
  *
  */
 public class KMPMatcher implements StringMatcher {
     /**
      * KMP模式匹配
-     * 
+     *
      * @author Tianma
      *
      */
     static class KMPStringMatcher {
         /**
          * 获取KMP算法中pattern字符串对应的next数组
-         * 
+         *
          * @param p 模式字符串对应的字符数组
          * @return
          */
@@ -86,7 +86,7 @@ public class KMPMatcher implements StringMatcher {
 
     /**
      * 优化的KMP算法(对next数组的获取进行优化)
-     * 
+     *
      * @author Tianma
      *
      */

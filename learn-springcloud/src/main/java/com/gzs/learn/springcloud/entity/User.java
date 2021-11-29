@@ -1,21 +1,31 @@
 package com.gzs.learn.springcloud.entity;
 
-import lombok.Data;
+import lombok.*;
 
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.io.Serializable;
+import java.util.Date;
 import java.util.List;
 
 @Data
 @Table(name = "t_user")
-public class User {
+@Builder
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+public class User implements Serializable {
+    private static final long serialVersionUID = 0L;
     @Id
-    private  Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
     private String name;
-    private String mainPhone;
+    @Column(name = "main_mobile")
+    private String mainMobile;
     @OneToMany()
-    @JoinColumn()
+    @JoinColumn(name = "user_id", foreignKey = @ForeignKey(ConstraintMode.NO_CONSTRAINT))
     private List<Address> addresses;
+    @Column(name = "create_time")
+    private Date createTime;
+    @Column(name = "update_time")
+    private Date updateTime;
 }

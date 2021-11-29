@@ -5,15 +5,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 
-/**
- * Hello world!
- */
+
 @SpringBootApplication
 @EnableAspectJAutoProxy(exposeProxy = true)
 @Slf4j
-public class App {
+public class ExampleApp {
     public static void main(String[] args) {
-        SpringApplication.run(App.class);
+        SpringApplication.run(ExampleApp.class);
         log.info("start app success");
     }
 }
