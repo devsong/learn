@@ -1,0 +1,18 @@
+spring:
+  server:
+    port:8871
+  application:
+    name: example
+  datasource:
+    hikari:
+      jdbc-url: jdbc://mysql:12.0.0.1:3306/example
+      username: w_account
+      password: qvYx8OaG
+      maximum-pool-size: 100
+      minimum-idle: 5
+      driver-class-name: com.mysql.jdbc.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+

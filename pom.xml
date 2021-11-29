@@ -97,5 +97,6 @@
         <module>learn-java-net</module>
         <module>learn-hystrix</module>
         <module>learn-springframework</module>
+        <module>learn-springcloud</module>
     </modules>
 </project>
